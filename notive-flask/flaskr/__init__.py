@@ -10,6 +10,11 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    app.config['ENV'] = 'development'
+    app.config['TESTING'] = True
+    app.config['DEBUG'] = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['TRAP_BAD_REQUEST_ERRORS'] = True
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -25,17 +30,11 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
+    @app.route('/')
     def hello():
         return 'Hello, World!'
 
-    from .database import db_session, init_db_command
-
-    @app.teardown_appcontext
-    def shutdown_session(exception=None):
-        db_session.remove()
-
-    # type 'flask init-db' to initialize database with tables
-    app.cli.add_command(init_db_command)
+    from . import db
+    db.init_app(app)
 
     return app
