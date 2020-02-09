@@ -5,7 +5,7 @@ USE notive;
 CREATE TABLE `User` (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
 	`email` varchar(50) NOT NULL UNIQUE,
-	`password` varchar(64) NOT NULL,
+	`password` varchar(100) NOT NULL,
 	`name` varchar(50),
 	`surname` varchar(50),
 	`date_of_birth` DATE,

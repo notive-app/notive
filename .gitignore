@@ -1,12 +1,3 @@
-# Global
-.*.swp
-.DS_Store
-
-# PHPStorm
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/
-
 venv/
 
 *.pyc
@@ -20,6 +11,4 @@ htmlcov/
 
 dist/
 build/
-*.egg-info/
-
-env.py
+flaskr/*.egg-info/

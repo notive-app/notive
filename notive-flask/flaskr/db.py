@@ -6,7 +6,7 @@ from flask.cli import with_appcontext
 
 
 def get_db():
-    if 'db' not in g:
+    if 'engine' not in g:
         g.engine = create_engine('mysql://admin:admin@localhost:33060/notive', convert_unicode=True)
         g.metadata = MetaData(bind=g.engine)
         g.con = g.engine.connect()
