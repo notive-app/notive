@@ -5,6 +5,7 @@ from flask import (
     Blueprint, g, request, session, jsonify
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.exceptions import abort
 from sqlalchemy import Table
 
 from .db import get_db
@@ -27,11 +28,11 @@ def register():
     msg = ""
     if not name or not surname or not password or not email or not date_of_birth:
         msg = {"status": {"type": "failure", "message": "missing data"}}
-        return jsonify(msg)
+        abort(400, msg)
 
     if users.select(users.c.email == email).execute().first():
         msg = {"status": {"type": "failure", "message": "email already taken"}}
-        return jsonify(msg)
+        abort(400, msg)
 
     con.execute(users.insert(), name=name, surname=surname, email=email, password=generate_password_hash(password)
                 , date_of_birth=date_of_birth, created_at=int(time.time()))
@@ -48,7 +49,7 @@ def login():
     msg = ""
     if not email or not password:
         msg = {"status": {"type": "failure", "message": "Missing Data"}}
-        return jsonify(msg)
+        abort(400, msg)
 
     db = get_db()
     con, engine, metadata = db['con'], db['engine'], db['metadata']
@@ -57,6 +58,7 @@ def login():
 
     if user is None or not check_password_hash(user['password'], password):
         msg = {"status": {"type": "failure", "message": "Username or password incorrect"}}
+        abort(400, msg)
     else:
         msg = {"status": {"type": "success",
                           "message": "You logged in"},
