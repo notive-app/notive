@@ -1,12 +1,3 @@
-# Global
-.*.swp
-.DS_Store
-
-# PHPStorm
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/
-
 venv/
 
 *.pyc
@@ -20,6 +11,19 @@ htmlcov/
 
 dist/
 build/
-*.egg-info/
-
-env.py
+flaskr/*.egg-info/
+/.idea/.gitignore
+/notive-flask/flaskr.egg-info/dependency_links.txt
+/.idea/dictionaries
+/.idea/misc.xml
+/.idea/modules.xml
+/notive-flask/flaskr.egg-info/not-zip-safe
+/.idea/notive.iml
+/notive-flask/flaskr.egg-info/PKG-INFO
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/notive-flask/flaskr.egg-info/requires.txt
+/notive-flask/flaskr.egg-info/SOURCES.txt
+/.idea/sqldialects.xml
+/notive-flask/flaskr.egg-info/top_level.txt
+/.idea/vcs.xml

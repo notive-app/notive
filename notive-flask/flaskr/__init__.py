@@ -10,11 +10,6 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-    app.config['ENV'] = 'development'
-    app.config['TESTING'] = True
-    app.config['DEBUG'] = True
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.config['TRAP_BAD_REQUEST_ERRORS'] = True
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -23,12 +18,6 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
     # a simple page that says hello
     @app.route('/')
     def hello():
@@ -36,5 +25,8 @@ def create_app(test_config=None):
 
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
