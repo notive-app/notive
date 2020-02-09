@@ -2,10 +2,9 @@ import functools
 import time
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
+    Blueprint, g, request, session, jsonify
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from .db import get_db
 from sqlalchemy import Table
 
 from .db import get_db
@@ -55,8 +54,6 @@ def login():
     con, engine, metadata = db['con'], db['engine'], db['metadata']
     users = Table('User', metadata, autoload=True)
     user = users.select(users.c.email == email).execute().first()
-    print(generate_password_hash(password))
-    print(check_password_hash(generate_password_hash(password), password))
 
     if user is None or not check_password_hash(user['password'], password):
         msg = {"status": {"type": "failure", "message": "Username or password incorrect"}}
