@@ -2,11 +2,12 @@ import functools
 import time
 
 from flask import (
-    Blueprint, g, request, session, jsonify
+    Blueprint, g, request, session, jsonify, make_response, Response
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import abort
 from sqlalchemy import Table
+from .env import valid_auth
 
 from .db import get_db
 
@@ -15,30 +16,49 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=['POST'])
 def register():
-    name = request.form.get('name')
-    surname = request.form.get('surname')
-    password = request.form.get('password')
-    email = request.form.get('email')
-    date_of_birth = request.form.get('date_of_birth')
+    if 'Auth-Key' in request.headers:
+        auth_key = request.headers['Auth-Key']
+        if valid_auth(auth_key):
+            if request.method == 'POST':
+                if not request.is_json:  # JSON control.
+                    return make_response(jsonify(
+                        {"message": "Request body must be JSON."}), 400)
 
-    db = get_db()
-    con, engine, metadata = db['con'], db['engine'], db['metadata']
-    users = Table('User', metadata, autoload=True)
+                json_data = request.get_json()
+                if 'name' in json_data and 'surname' in json_data and\
+                        'password' in json_data and 'email' in json_data and 'date_of_birth' in json_data:
+                    name = json_data['name']
+                    surname = json_data['surname']
+                    password_plain = json_data['password']
+                    email = json_data['email']
+                    dob = json_data['date_of_birth']
 
-    msg = ""
-    if not name or not surname or not password or not email or not date_of_birth:
-        msg = {"status": {"type": "failure", "message": "missing data"}}
-        abort(400, msg)
+                    db = get_db()
+                    con, engine, metadata = db['con'], db['engine'], db['metadata']
+                    users = Table('User', metadata, autoload=True)
 
-    if users.select(users.c.email == email).execute().first():
-        msg = {"status": {"type": "failure", "message": "email already taken"}}
-        abort(400, msg)
+                    msg = {"message": "Something went wrong."}
+                    if not name or not surname or not password_plain or not email or not dob:
+                        msg = {"message": "Error: Missing parameters!"}
+                        return make_response(jsonify(msg, 400))
 
-    con.execute(users.insert(), name=name, surname=surname, email=email, password=generate_password_hash(password)
-                , date_of_birth=date_of_birth, created_at=int(time.time()))
+                    if users.select(users.c.email == email).execute().first():
+                        msg = {"message": "There is an existing user with this e-mail address!"}
+                        return make_response(jsonify(msg, 400))
 
-    msg = {"status": {"type": "success", "message": "You have registered"}}
-    return jsonify(msg)
+                    con.execute(users.insert(), name=name, surname=surname, email=email,
+                                password=generate_password_hash(password_plain), date_of_birth=dob,
+                                created_at=int(time.time()))
+                    msg = {"message": "You have registered successfully!"}
+                    return make_response(jsonify(msg, 200))
+                else:
+                    return make_response(jsonify({"message": "Invalid parameters."}), 400)
+            else:
+                return Response(status=405)
+        else:
+            return Response(status=401)
+    else:
+        return Response(status=401)
 
 
 @bp.route('/login', methods=['POST'])
