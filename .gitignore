@@ -12,6 +12,7 @@ htmlcov/
 dist/
 build/
 flaskr/*.egg-info/
+notive-flask/flaskr/env.py
 /.idea/.gitignore
 /notive-flask/flaskr.egg-info/dependency_links.txt
 /.idea/dictionaries
