@@ -2,7 +2,7 @@ import functools
 import time
 
 from flask import (
-    Blueprint, g, request, session, jsonify
+    Blueprint, g, request, jsonify
 )
 from sqlalchemy import Table
 from werkzeug.exceptions import abort
@@ -20,13 +20,16 @@ def index():
     con, engine, metadata = db['con'], db['engine'], db['metadata']
     list_table = Table('List', metadata, autoload=True)
     user = g.user
-    result = {}
+    result = dict()
+    result["lists"] = []
     count = 0
     lists = list_table.select(list_table.c.user_id == user['id']).execute()
 
     for l in lists:
-        result[count] = (dict(l))
+        result["lists"].append(dict(l))
         count += 1
+
+    result["number_of_lists"] = count
 
     return jsonify(result)
 
@@ -65,13 +68,13 @@ def get_list(id, check_user=True):
     if check_user and list['user_id'] != g.user['id']:
         abort(403)
 
-    return jsonify(dict(list))
+    return list
 
 
-@bp.route('/<int:id>/update', methods=['POST'])
+@bp.route('/<int:id>/update', methods=['PUT'])
 @login_required
 def update(id):
-    list = get_list(id)
+    get_list(id)
     name = request.form.get('name')
 
     if name is None:
@@ -87,7 +90,7 @@ def update(id):
     return jsonify(msg)
 
 
-@bp.route('/<int:id>/delete', methods=['POST'])
+@bp.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def delete(id):
     get_list(id)
