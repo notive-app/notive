@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/screens/settings_screen.dart';
+import 'package:notive_app/screens/listview_screen.dart';
+import 'package:notive_app/screens/dashboard_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer();
@@ -30,21 +32,49 @@ class CustomDrawer extends StatelessWidget {
               leading: Icon(Icons.map),
               title: Text('Map'),
               selected: true,
+              onTap: () {
+                //why is this giving an error?
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.view_list),
               title: Text('Lists'),
               selected: true,
+              onTap: () {
+                //why is this giving an error?
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListViewScreen()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.playlist_add_check),
               title: Text('Archived Lists'),
               selected: true,
+              onTap: () {
+                //why is this giving an error?
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardScreen()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
               title: Text('Account'),
               selected: true,
+              onTap: () {
+                //why is this giving an error?
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings),
