@@ -28,3 +28,4 @@ notive-flask/flaskr/env.py
 /.idea/sqldialects.xml
 /notive-flask/flaskr.egg-info/top_level.txt
 /.idea/vcs.xml
+/.idea/workspace.xml
