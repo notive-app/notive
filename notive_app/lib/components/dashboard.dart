@@ -15,35 +15,47 @@ class Dashboard extends StatelessWidget {
 
     return Consumer<NotiveModel>(
       builder: (context, listData, child) {
-        return ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: ReusableListCard(
+        return GridView.count(
+          crossAxisCount: 2,
+          children: List.generate(listData.listsCount, (index){
+            return ReusableListCard(
                     color: RandomColor().randomColor(),
                     listName: listData.lists[index].listName,
                     //TODO add Function onPress here
                     onPress: openListView,
-                  ),
-                ),
-              ),
-            );
-
-//              ReusableListCard(
-//              color: RandomColor().randomColor(),
-//              listName: listData.lists[index].listName,
-////              checkCallback: (bool isMuted) {
-////                listData.changeListName(listData.lists[index]);
-////              },
-////              deleteCallback: () {
-////                listData.deleteList(listData.lists[index]);
-////              },
-//            );
-          },
-          itemCount: listData.itemsCount,
+                  );
+            }),
         );
+
+//         return ListView.builder(
+//           shrinkWrap: true,
+//           itemBuilder: (context, index) {
+//             return Container(
+//               child: SingleChildScrollView(
+//                 child: Center(
+//                   child: ReusableListCard(
+//                     color: RandomColor().randomColor(),
+//                     listName: listData.lists[index].listName,
+//                     //TODO add Function onPress here
+//                     onPress: openListView,
+//                   ),
+//                 ),
+//               ),
+//             );
+
+// //              ReusableListCard(
+// //              color: RandomColor().randomColor(),
+// //              listName: listData.lists[index].listName,
+// ////              checkCallback: (bool isMuted) {
+// ////                listData.changeListName(listData.lists[index]);
+// ////              },
+// ////              deleteCallback: () {
+// ////                listData.deleteList(listData.lists[index]);
+// ////              },
+// //            );
+//           },
+//           itemCount: listData.itemsCount,
+//         );
       },
     );
   }

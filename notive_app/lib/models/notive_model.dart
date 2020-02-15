@@ -7,6 +7,10 @@ class NotiveModel extends ChangeNotifier {
   User user;
   List<NotiveList> _lists = [];
 
+  int get listsCount {
+    return _lists.length;
+  }
+
   void updateDatabase() {
     //TODO set DB list to _lists
   }
