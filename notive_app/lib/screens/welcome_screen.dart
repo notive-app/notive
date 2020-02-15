@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/login_screen.dart';
+import 'package:notive_app/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -19,20 +20,20 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(duration: Duration(seconds: 1), vsync: this);
-    animation = ColorTween(begin: Colors.blueGrey, end: Colors.black)
-        .animate(controller);
-    controller.forward();
-    controller.addListener(() {
-      setState(() {});
-    });
-  }
+//
+//  @override
+//  void initState() {
+//    super.initState();
+//
+//    controller =
+//        AnimationController(duration: Duration(seconds: 1), vsync: this);
+//    animation = ColorTween(begin: Colors.blueGrey, end: Colors.black45)
+//        .animate(controller);
+//    controller.forward();
+//    controller.addListener(() {
+//      setState(() {});
+//    });
+//  }
 
   @override
   void dispose() {
@@ -43,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation.value,
+      //backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

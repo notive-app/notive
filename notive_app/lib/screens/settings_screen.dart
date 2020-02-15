@@ -18,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Settings',
         ),
         leading: BackButton(
-          color: Colors.white,
+          //color: Colors.white,
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -39,10 +39,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text("Change Default Range Settings"),
             subtitle: Text("Rating, Price, Distance"),
             onTap: () {
-               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RangeSettingsScreen()),
-                ); 
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RangeSettingsScreen()),
+              );
             },
           ),
           SwitchListTile(
@@ -54,10 +54,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text("Account"),
             subtitle: Text("Change Password, Change Email"),
             onTap: () {
-               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                ); 
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
             },
           ),
         ]),

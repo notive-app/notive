@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:notive_app/models/item.dart';
 import 'dart:collection';
 
-class ItemData extends ChangeNotifier {
+//TODO update DB first then local
+class ListModel extends ChangeNotifier {
   List<Item> _items = [];
 
   UnmodifiableListView<Item> get items {

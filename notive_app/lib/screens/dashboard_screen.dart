@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/dashboard.dart';
+import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/screens/profile_screen.dart';
 import 'add_item_screen.dart';
 import 'add_list_screen.dart';
-import 'package:notive_app/models/list_data.dart';
+import 'package:notive_app/models/notive_model.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/components/custom_drawer.dart';
 import 'package:notive_app/screens/settings_screen.dart';
@@ -54,19 +56,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: <Widget>[
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
+                    //color: Colors.black,
+                    ),
                 child: Text(
                   'MENU',
                   style: TextStyle(
-                    color: Colors.white,
+                    //color: Colors.white,
                     fontSize: 24,
                   ),
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.map),
-                title: Text('Map'),
+                leading: Icon(
+                  Icons.map,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Map',
+                  style: TextStyle(color: kOrangeColor),
+                ),
                 selected: true,
                 onTap: () {
                   //why is this giving an error?
@@ -77,8 +85,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.view_list),
-                title: Text('Lists'),
+                leading: Icon(
+                  Icons.view_list,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Lists',
+                  style: TextStyle(color: kOrangeColor),
+                ),
                 selected: true,
                 onTap: () {
                   //why is this giving an error?
@@ -89,20 +103,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.playlist_add_check),
-                title: Text('Archived Lists'),
+                leading: Icon(
+                  Icons.playlist_add_check,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Archived Lists',
+                  style: TextStyle(color: kOrangeColor),
+                ),
                 selected: true,
                 onTap: () {
                   //why is this giving an error?
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ArchivedListsScreen()),
                   );
                 },
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Account'),
+                leading: Icon(
+                  Icons.account_circle,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Account',
+                  style: TextStyle(color: kOrangeColor),
+                ),
+                selected: true,
+                onTap: () {
+                  //why is this giving an error?
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Settings',
+                  style: TextStyle(color: kOrangeColor),
+                ),
                 selected: true,
                 onTap: () {
                   //why is this giving an error?
@@ -113,20 +158,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                selected: true,
-                onTap: () {
-                  //why is this giving an error?
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Log Out'),
+                leading: Icon(
+                  Icons.exit_to_app,
+                  color: kOrangeColor,
+                ),
+                title: Text(
+                  'Log Out',
+                  style: TextStyle(color: kOrangeColor),
+                ),
                 selected: true,
               ),
             ],
@@ -138,7 +177,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          backgroundColor: kOrangeColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
           // color: Colors.orangeAccent,
           elevation: 5.0,
           onPressed: () async {
@@ -147,7 +190,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               print(listName);
               if (listName != null) {
                 //Create reusable list card
-                Provider.of<ListData>(context, listen: false).addList(listName);
+                Provider.of<NotiveModel>(context, listen: false)
+                    .addList(listName);
                 //Navigator.pop(context);
               }
             });

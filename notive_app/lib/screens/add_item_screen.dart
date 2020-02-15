@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/models/item_data.dart';
+import 'package:notive_app/models/list_model.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
-//import 'package:notive_app/models/item_data.dart';
+//import 'package:notive_app/models/list_model.dart';
 
 class AddItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String newItemString;
     return Container(
-      color: Colors.black54,
+      //color: Colors.black54,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
         decoration: BoxDecoration(
-          color: Colors.black,
+          //color: Colors.black,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(40.0),
             topLeft: Radius.circular(40.0),
@@ -46,7 +46,7 @@ class AddItemScreen extends StatelessWidget {
               ),
               color: kOrangeColor,
               onPressed: () {
-                Provider.of<ItemData>(context, listen: false)
+                Provider.of<ListModel>(context, listen: false)
                     .addItem(newItemString);
                 Navigator.pop(context);
               },

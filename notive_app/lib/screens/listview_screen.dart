@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notive_app/components/item_list.dart';
 import 'package:notive_app/screens/add_item_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:notive_app/models/item_data.dart';
+import 'package:notive_app/models/list_model.dart';
 import 'constants.dart';
 
 class ListViewScreen extends StatefulWidget {
@@ -16,6 +16,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //TODO add drawer here
       appBar: AppBar(
         title: Text('List Items'),
       ),
@@ -67,7 +68,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${Provider.of<ItemData>(context).itemsCount} Items',
+                  '${Provider.of<ListModel>(context).itemsCount} Items',
                   style: TextStyle(
                     //color: Colors.white,
                     fontSize: 18.0,

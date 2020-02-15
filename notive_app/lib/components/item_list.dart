@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/item_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:notive_app/models/item_data.dart';
+import 'package:notive_app/models/list_model.dart';
 
 class ItemsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ItemData>(
+    return Consumer<ListModel>(
       builder: (context, itemData, child) {
         return ListView.builder(
           itemBuilder: (context, index) {
