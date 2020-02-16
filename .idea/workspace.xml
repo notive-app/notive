@@ -1,10 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="49272d76-f3aa-4f60-8806-e32fec429919" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notive-flask/flaskr/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/notive-flask/flaskr/auth.py" afterDir="false" />
+    <list default="true" id="be5f4a29-4e12-42d0-8425-d800392040bf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/notive_app/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/android/local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/App" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/AssetManifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/FontManifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/fonts/MaterialIcons-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/isolate_snapshot_data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/App.framework/flutter_assets/vm_snapshot_data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Flutter" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/Flutter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterAppDelegate.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterBinaryMessenger.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterCallbackCache.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterChannels.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterCodecs.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterDartProject.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterEngine.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterHeadlessDartRunner.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterMacros.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterPlatformViews.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterPlugin.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterPluginAppLifeCycleDelegate.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterTexture.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Headers/FlutterViewController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/Modules/module.modulemap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/_CodeSignature/CodeResources" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.framework/icudtl.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Flutter.podspec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/Generated.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Local Podspecs/Flutter.podspec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Manifest.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Pods.xcodeproj/project.pbxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Pods.xcodeproj/xcuserdata/hygertaimeri.xcuserdatad/xcschemes/Flutter.xcscheme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Pods.xcodeproj/xcuserdata/hygertaimeri.xcuserdatad/xcschemes/Pods-Runner.xcscheme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Pods.xcodeproj/xcuserdata/hygertaimeri.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Flutter/Flutter.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-Info.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-acknowledgements.markdown" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-acknowledgements.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-dummy.m" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner-umbrella.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner.modulemap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notive_app/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notive_app/lib/screens/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/notive_app/lib/screens/login_screen.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,71 +65,96 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/__init__.py">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/screens/listview_screen.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="9" lean-forward="true" selection-start-column="9" selection-end-column="9" />
+            <state relative-caret-position="90">
+              <caret line="11" column="63" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/models/notive_model.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/models/notive_list.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/models/list_model.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/auth.py">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/screens/login_screen.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+            <state relative-caret-position="105">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
-                <element signature="e#0#16#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/util.py">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/util/request.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/env.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="77" selection-start-line="1" selection-start-column="77" selection-end-line="1" selection-end-column="77" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/db.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state>
               <folding>
-                <element signature="e#0#53#0" expanded="true" />
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/notive-flask/setup.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/models/user.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notive_app/lib/screens/dashboard_screen.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="21" selection-start-line="21" selection-end-line="46" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#1958#5777#0" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -99,6 +177,7 @@
         <option value="$PROJECT_DIR$/notive-flask/flaskr/env.py" />
         <option value="$PROJECT_DIR$/notive-flask/flaskr/util.py" />
         <option value="$PROJECT_DIR$/notive-flask/flaskr/auth.py" />
+        <option value="$PROJECT_DIR$/notive_app/lib/screens/login_screen.dart" />
       </list>
     </option>
   </component>
@@ -108,7 +187,7 @@
     <option name="height" value="877" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
@@ -134,6 +213,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -144,26 +224,47 @@
             <path>
               <item name="notive" type="b2602c69:ProjectViewProjectNode" />
               <item name="notive" type="462c0819:PsiDirectoryNode" />
-              <item name="notive-flask" type="462c0819:PsiDirectoryNode" />
+              <item name="notive_app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="notive" type="b2602c69:ProjectViewProjectNode" />
               <item name="notive" type="462c0819:PsiDirectoryNode" />
-              <item name="notive-flask" type="462c0819:PsiDirectoryNode" />
-              <item name="flaskr" type="462c0819:PsiDirectoryNode" />
+              <item name="notive_app" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notive" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notive" type="462c0819:PsiDirectoryNode" />
+              <item name="notive_app" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notive" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notive" type="462c0819:PsiDirectoryNode" />
+              <item name="notive_app" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/notive_app/lib" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -176,6 +277,12 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Flutter" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
+      <option name="filePath" value="$PROJECT_DIR$/notive_app/lib/main.dart" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -196,10 +303,9 @@
     <option name="totallyTimeSpent" value="8339000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1680" height="969" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1996337" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -224,6 +330,38 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/database.py" />
@@ -262,19 +400,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/env.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="77" selection-start-line="1" selection-start-column="77" selection-end-line="1" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/env.py" />
     <entry file="file://$PROJECT_DIR$/notive-flask/flaskr/auth.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/notive_app/lib/models/user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/notive_app/lib/util/request.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/notive_app/lib/screens/login_screen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
