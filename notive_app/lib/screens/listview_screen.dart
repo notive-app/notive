@@ -67,13 +67,6 @@ class _ListViewScreenState extends State<ListViewScreen> {
                       fontSize: 40.0,
                       fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  '${Provider.of<ListModel>(context).itemsCount} Items',
-                  style: TextStyle(
-                    //color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                ),
               ],
             ),
           ),

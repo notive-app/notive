@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
-import 'models/notive_model.dart';
+import 'models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
@@ -18,8 +18,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<NotiveModel>(create: (context) => NotiveModel()),
-        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
+        ChangeNotifierProvider<UserModel>(create: (context) => UserModel()),
+//        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
         //Provider(create: (context) => Dashboard()),
       ],
       child: NotiveApp(),

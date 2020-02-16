@@ -4,7 +4,7 @@ import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:random_color/random_color.dart';
-import 'package:notive_app/models/notive_model.dart';
+import 'package:notive_app/models/user_model.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -13,18 +13,22 @@ class Dashboard extends StatelessWidget {
       Navigator.pushNamed(context, ListViewScreen.id);
     }
 
-    return Consumer<NotiveModel>(
-      builder: (context, listData, child) {
+    return Consumer<UserModel>(
+      builder: (context, user, child) {
         return GridView.count(
           crossAxisCount: 2,
-          children: List.generate(listData.listsCount, (index){
+          children: List.generate(user.listsCount, (index) {
             return ReusableListCard(
-                    color: RandomColor().randomColor(),
-                    listName: listData.lists[index].listName,
-                    //TODO add Function onPress here
-                    onPress: openListView,
-                  );
-            }),
+              color: RandomColor().randomColor(),
+              listName: user.lists[index].name,
+              //TODO add Function onPress here
+              onPress: () {
+                UserModel.curListIndex = index;
+                print(UserModel.curListIndex);
+                openListView();
+              },
+            );
+          }),
         );
 
 //         return ListView.builder(

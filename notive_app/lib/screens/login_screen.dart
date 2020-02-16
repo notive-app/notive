@@ -3,6 +3,8 @@ import 'package:notive_app/components/rounded_button.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'dashboard_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:http/http.dart';
+import 'package:notive_app/util/request.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -12,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
-  //final _auth = FirebaseAuth.instance;
   String email;
   String password;
 
@@ -71,6 +72,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: 'Log In',
                 colour: kLightBlueColor,
                 onPressed: () async {
+                  //print(email);
+                  // String data = "{'password': '" + password + "', 'email': '" + email + "'}";
+                  Map<String, dynamic> data = {
+                    'password': password,
+                    'email': email
+                  };
+
+                  Future<List<dynamic>> response =
+                      sendRequest('auth/login', data, 'POST');
+                  response.then((onValue) {
+                    print(onValue[0]);
+                    if (onValue[0] != 200) {
+                      print("Error!");
+                    } else {
+                      Map<String, dynamic> result = onValue[1];
+                      String message = result['message'];
+                      String userEmail = result['data']['user']['email'];
+                      //Navigator.pushNamed(context, DashboardScreen.id);
+                    }
+                  });
+
                   setState(() {
                     showSpinner = true;
                   });
@@ -78,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //                    final user = await _auth.signInWithEmailAndPassword(
 //                        email: email, password: password);
 //                    if (user != null) {
-//                      Navigator.pushNamed(context, DashboardScreen.id);
+//
 //                    }
 //
 //                    setState(() {
