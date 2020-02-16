@@ -90,9 +90,6 @@ def login():
 
             passcheck = check_password(password, user['password'])
             if email != user['email'] or passcheck is False:
-                print(email)
-                print(user['email'])
-                print(passcheck)
                 msg = {"message": "Error: Invalid e-mail or password!"}
                 return make_response(jsonify(msg), 400)
             else:
