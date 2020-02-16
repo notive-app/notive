@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, MetaData, Table
-
+from .env import DB_DATABASE, DB_PORT, DB_HOST, DB_PASSWORD, DB_USERNAME
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
@@ -7,7 +7,8 @@ from flask.cli import with_appcontext
 
 def get_db():
     if 'engine' not in g:
-        g.engine = create_engine('mysql://admin:admin@localhost:33060/notive', convert_unicode=True)
+        g.engine = create_engine('mysql://'+DB_USERNAME+':'+DB_PASSWORD+'@' + DB_HOST + ':' + str(DB_PORT) + '/' +
+                                 DB_DATABASE, convert_unicode=True)
         g.metadata = MetaData(bind=g.engine)
         g.con = g.engine.connect()
 
