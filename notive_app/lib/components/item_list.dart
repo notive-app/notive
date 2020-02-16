@@ -11,7 +11,7 @@ class ItemsList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (context, index) {
             return ItemTile(
-              itemString: itemData.items[index].itemString,
+              itemString: itemData.items[index].name,
               isChecked: itemData.items[index].isCompleted,
               checkCallback: (bool checkBoxState) {
                 itemData.updateItem(itemData.items[index]);
