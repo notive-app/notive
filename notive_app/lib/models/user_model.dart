@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'dart:collection';
 import 'package:notive_app/models/list_model.dart';
+import 'package:notive_app/models/item_model.dart';
 
 class UserModel extends ChangeNotifier {
   final int id;
@@ -8,14 +9,10 @@ class UserModel extends ChangeNotifier {
   final String password;
   final String name;
   final String surname;
+  static int curListIndex;
   List<ListModel> _lists = [];
 
-  UserModel(
-      {@required this.id,
-      @required this.email,
-      @required this.password,
-      this.name,
-      this.surname});
+  UserModel({this.id, this.email, this.password, this.name, this.surname});
 
   int get listsCount {
     return _lists.length;
@@ -39,6 +36,10 @@ class UserModel extends ChangeNotifier {
     return UnmodifiableListView(_lists);
   }
 
+  void setLists(List<ListModel> lists) {
+    this._lists = lists;
+  }
+
   int get itemsCount {
     return _lists.length;
   }
@@ -47,9 +48,9 @@ class UserModel extends ChangeNotifier {
     //TODO API call to get List Id, then create a list with this ID
     final int listId = 0;
     final list = ListModel(id: listId, name: newListName);
-    _lists.add(list);
+    this._lists.add(list);
     //TODO how to handle db operations inside the same fxn
-    updateDatabase();
+//    updateDatabase();
     notifyListeners();
   }
 
@@ -64,6 +65,21 @@ class UserModel extends ChangeNotifier {
   void deleteList(ListModel list) {
     //TODO DB(list.id) this will delete the list in DB , then update local lists
     _lists.remove(list);
+    notifyListeners();
+  }
+
+  void addItem(int listIndex, String itemName) {
+    this._lists[listIndex].addItem(itemName);
+    notifyListeners();
+  }
+
+  void checkItem(int listIndex, ItemModel item) {
+    this._lists[listIndex].checkItem(item);
+    notifyListeners();
+  }
+
+  void deleteItem(int listIndex, ItemModel item) {
+    this._lists[listIndex].deleteItem(item);
     notifyListeners();
   }
 }

@@ -14,17 +14,17 @@ class Dashboard extends StatelessWidget {
     }
 
     return Consumer<UserModel>(
-      builder: (context, listData, child) {
+      builder: (context, user, child) {
         return GridView.count(
           crossAxisCount: 2,
-          children: List.generate(listData.listsCount, (index) {
+          children: List.generate(user.listsCount, (index) {
             return ReusableListCard(
               color: RandomColor().randomColor(),
-              listName: listData.lists[index].name,
+              listName: user.lists[index].name,
               //TODO add Function onPress here
               onPress: () {
-                print(listData.lists[index].name);
-                print(listData.lists[index].items);
+                UserModel.curListIndex = index;
+                print(UserModel.curListIndex);
                 openListView();
               },
             );

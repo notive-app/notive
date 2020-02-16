@@ -187,7 +187,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           onPressed: () async {
             //print(createDialogBox(context));
             createDialogBox(context).then((String listName) {
-              print(listName);
               if (listName != null) {
                 //Create reusable list card
                 Provider.of<UserModel>(context, listen: false)

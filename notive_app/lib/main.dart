@@ -19,7 +19,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<UserModel>(create: (context) => UserModel()),
-        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
+//        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
         //Provider(create: (context) => Dashboard()),
       ],
       child: NotiveApp(),
