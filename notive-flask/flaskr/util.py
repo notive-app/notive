@@ -10,8 +10,8 @@ def valid_auth(auth_key):
 
 
 def validate_auth_key(request):
-    if 'Auth-Key' in request.headers:
-        auth_key = request.headers['Auth-Key']
+    if 'Authorization' in request.headers:
+        auth_key = request.headers['Authorization']
         if not valid_auth(auth_key):
             return False
         else:
