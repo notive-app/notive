@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+//import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -61,5 +62,50 @@ Future<List<dynamic>> sendRequest(
     return responseJson;
   }
 
-  //TODO  check return time (if none of conditions is satisfied
+  //??
+}
+
+Future<List<dynamic>> loginUser(Map<String, dynamic> data) async {
+  List<dynamic> response = await sendRequest('auth/login', data, 'POST');
+  Map<String, dynamic> result = response[1]; // Response from API.
+  if (response[0] != 200) {
+    // Status code from API.
+    return [response[0], result['message']]; // Return error message from API.
+  } else {
+    String message = result['message'];
+    int userID = result['data']['user']['id'];
+    String email = result['data']['user']['email'];
+    String name = result['data']['user']['name'];
+    String surname = result['data']['user']['surname'];
+    Map<String, dynamic> userDetails = {
+      'user_id': userID,
+      'email': email,
+      'name': name,
+      'surname': surname
+    };
+    return [response[0], message, userDetails];
+  }
+}
+
+Future<List<dynamic>> signupUser(Map<String, dynamic> data) async {
+  List<dynamic> response = await sendRequest('auth/register', data, 'POST');
+  Map<String, dynamic> result = response[1]; //Response from API.
+  if (response[0] != 200) {
+    //Status code from API.
+    return [response[0], result['message']]; //Return error message from API.
+  } else {
+    String message = result['message'];
+    int userID = result['data']['lists']['id'];
+    //String
+  }
+}
+
+Future<List<dynamic>> getUserLists(Map<String, dynamic> data) async {
+  List<dynamic> response = await sendRequest('list', data, 'GET');
+  Map<String, dynamic> result = response[1];
+  if (response[0] != 200) {
+    return [response[0], result['message']];
+  } else {
+    String message = result['message'];
+  }
 }
