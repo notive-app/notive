@@ -79,22 +79,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     'email': email
                   };
 
-                  Future<List<dynamic>> response =
-                      sendRequest('auth/login', data, 'POST');
-                  response.then((onValue) {
-                    print(onValue[0]);
-                    if (onValue[0] != 200) {
-                      print("Error!");
-                    } else {
-                      Map<String, dynamic> result = onValue[1];
-                      String message = result['message'];
-                      String userEmail = result['data']['user']['email'];
-                      //Navigator.pushNamed(context, DashboardScreen.id);
-                    }
-                  });
+                  int userID;
+                  String user_email, name, surname;
+                  List<dynamic> response = await loginUser(data);
+                  int status = response[0];
+                  String msg = response[1];
+                  if (status == 200) {
+                    Map<String, dynamic> data = response[2];
+                    user_email = data['email'];
+                    name = data['name'];
+                    surname = data['surname'];
+                  } else {
+                    // Error message with msg variable message.
+                  }
 
                   setState(() {
                     showSpinner = true;
+                    print(response);
                   });
 //                  try {
 //                    final user = await _auth.signInWithEmailAndPassword(

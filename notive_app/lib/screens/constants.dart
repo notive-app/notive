@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //from input_page.dart
 const double kBottomContainerHeight = 80;
 const Color kOrangeColor = Color(0xFFFB8C00);
-const Color kLightBlueColor = Color(0xFF64B5F6);
+const Color kLightBlueColor = Color(0xFF009688);
 const Color kPurpleColor = Color(0xFF7C4DFF);
 const Color kRedColor = Color(0xFFEB1555);
 
