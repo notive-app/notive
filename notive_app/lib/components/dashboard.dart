@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/reusable_list_card.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
+import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:random_color/random_color.dart';
@@ -19,7 +20,7 @@ class Dashboard extends StatelessWidget {
           crossAxisCount: 2,
           children: List.generate(user.listsCount, (index) {
             return ReusableListCard(
-              color: RandomColor().randomColor(),
+              color: kLightBlueColor,
               listName: user.lists[index].name,
               //TODO add Function onPress here
               onPress: () {

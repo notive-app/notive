@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/screens/mapview_screen.dart';
 import 'package:notive_app/screens/profile_screen.dart';
 import 'add_item_screen.dart';
 import 'add_list_screen.dart';
@@ -9,7 +10,6 @@ import 'package:notive_app/models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/components/custom_drawer.dart';
 import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: kOrangeColor,
                 ),
                 title: Text(
-                  'Map',
+                  'Map View',
                   style: TextStyle(color: kOrangeColor),
                 ),
                 selected: true,
@@ -80,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   //why is this giving an error?
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                    MaterialPageRoute(builder: (context) => MapViewScreen()),
                   );
                 },
               ),
@@ -90,7 +90,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   color: kOrangeColor,
                 ),
                 title: Text(
-                  'Lists',
+                  'Dashboard',
                   style: TextStyle(color: kOrangeColor),
                 ),
                 selected: true,
@@ -98,7 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   //why is this giving an error?
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ListViewScreen()),
+                    MaterialPageRoute(builder: (context) => DashboardScreen()),
                   );
                 },
               ),

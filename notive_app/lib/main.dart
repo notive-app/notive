@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
+import 'package:notive_app/screens/mapview_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'models/user_model.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +51,7 @@ class NotiveApp extends StatelessWidget {
         ListViewScreen.id: (context) => ListViewScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
+        MapViewScreen.id: (context) => MapViewScreen(),
       },
     );
   }
