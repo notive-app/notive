@@ -23,7 +23,10 @@ class _ListViewScreenState extends State<ListViewScreen> {
       //backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: kOrangeColor,
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
         onPressed: () {
           // Add a new item
           showModalBottomSheet(
@@ -63,7 +66,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                 Text(
                   'List Name',
                   style: TextStyle(
-                      color: Colors.white,
+                      //color: Colors.white,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w700),
                 ),

@@ -28,6 +28,7 @@ class AddItemScreen extends StatelessWidget {
               style: TextStyle(fontSize: 25.0, color: kOrangeColor),
             ),
             TextField(
+              //TODO check the maximum length that the string can take here
               autofocus: true,
               textAlign: TextAlign.center,
               onChanged: (newValue) {

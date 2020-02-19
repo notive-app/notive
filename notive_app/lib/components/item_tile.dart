@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:notive_app/screens/constants.dart';
 
 class ItemTile extends StatelessWidget {
   final bool isChecked;
@@ -23,7 +24,7 @@ class ItemTile extends StatelessWidget {
             : null,
       ),
       trailing: Checkbox(
-        activeColor: Colors.lightBlueAccent,
+        activeColor: kLightBlueColor,
         value: isChecked,
         onChanged: checkCallback,
       ),
