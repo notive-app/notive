@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7b8148fd-ed6a-4a11-abed-cf2f10c94ede" name="Default Changelist" comment="" />
-    <list id="494a6228-4dd7-4f41-966c-af0a26848f58" name="ignore" comment="">
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Pods/Manifest.lock" beforeDir="false" />
+    <list default="true" id="7b8148fd-ed6a-4a11-abed-cf2f10c94ede" name="Default Changelist" comment="git ignore is configured">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+    <list id="494a6228-4dd7-4f41-966c-af0a26848f58" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +75,7 @@
       <workItem from="1581864841558" duration="2602000" />
       <workItem from="1581886248963" duration="527000" />
       <workItem from="1581928537582" duration="2387000" />
-      <workItem from="1581970582486" duration="1860000" />
+      <workItem from="1581970582486" duration="2812000" />
     </task>
     <task id="LOCAL-00001" summary="git ignore">
       <created>1581928674726</created>
@@ -138,29 +138,29 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="419" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1581929602447" />
-    <state x="303" y="52" key="CommitChangelistDialog2" timestamp="1582141421743">
+    <state x="303" y="52" key="CommitChangelistDialog2" timestamp="1582143011410">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="303" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1582141421743" />
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom" timestamp="1581944582805">
+    <state x="303" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1582143011410" />
+    <state width="1398" height="247" key="GridCell.Tab.0.bottom" timestamp="1582142149666">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="247" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1581944582805" />
+    <state width="1398" height="247" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1582142149666" />
     <state width="1398" height="560" key="GridCell.Tab.0.bottom/0.23.1440.800@0.23.1440.800" timestamp="1581866059572" />
-    <state width="1398" height="247" key="GridCell.Tab.0.center" timestamp="1581944582804">
+    <state width="1398" height="247" key="GridCell.Tab.0.center" timestamp="1582142149665">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="247" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1581944582804" />
+    <state width="1398" height="247" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1582142149665" />
     <state width="1398" height="560" key="GridCell.Tab.0.center/0.23.1440.800@0.23.1440.800" timestamp="1581866059571" />
-    <state width="1398" height="247" key="GridCell.Tab.0.left" timestamp="1581944582803">
+    <state width="1398" height="247" key="GridCell.Tab.0.left" timestamp="1582142149663">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="247" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1581944582803" />
+    <state width="1398" height="247" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1582142149663" />
     <state width="1398" height="560" key="GridCell.Tab.0.left/0.23.1440.800@0.23.1440.800" timestamp="1581866059570" />
-    <state width="1398" height="247" key="GridCell.Tab.0.right" timestamp="1581944582804">
+    <state width="1398" height="247" key="GridCell.Tab.0.right" timestamp="1582142149666">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="247" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1581944582804" />
+    <state width="1398" height="247" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1582142149666" />
     <state width="1398" height="560" key="GridCell.Tab.0.right/0.23.1440.800@0.23.1440.800" timestamp="1581866059571" />
     <state x="221" y="101" key="SettingsEditor" timestamp="1581866055245">
       <screen x="0" y="23" width="1440" height="800" />
@@ -179,9 +179,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="503" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1581928555944" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1581930131298">
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1582142786305">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1581930131298" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1582142786305" />
   </component>
 </project>
