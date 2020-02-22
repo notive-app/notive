@@ -8,6 +8,7 @@
 .dart_tool/
 .packages
 build/
+
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 
@@ -23,6 +24,23 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
 
 ### Flutter ###
 # Flutter/Dart/Pub related
@@ -67,6 +85,9 @@ doc/api/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 **/ios/Runner/AppDelegate.swift
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/flutter_export_environment.sh
+
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
