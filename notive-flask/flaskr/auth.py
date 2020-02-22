@@ -28,7 +28,7 @@ def register():
     if not validate_auth_key(request):
         return Response(status=401)
     else:
-        json_data = get_json_from_keys(request, ['name', 'surname', 'password', 'email', 'date_of_birth'])
+        json_data = get_json_from_keys(request, ['name', 'surname', 'password', 'email'])
         if json_data is False:
             return make_response(jsonify(
                 {"message": "Request body must be JSON."}), 400)
@@ -39,14 +39,13 @@ def register():
             surname = json_data['surname']
             password_plain = json_data['password']
             email = json_data['email']
-            dob = json_data['date_of_birth']
 
             db = get_db()
             con, engine, metadata = db['con'], db['engine'], db['metadata']
             users = Table('User', metadata, autoload=True)
 
             msg = {"message": "Something went wrong."}
-            if not name or not surname or not password_plain or not email or not dob:
+            if not name or not surname or not password_plain or not email:
                 msg = {"message": "Error: Missing parameters!"}
                 return make_response(jsonify(msg), 400)
 
@@ -54,7 +53,7 @@ def register():
                 msg = {"message": "There is an existing user with this e-mail address!"}
                 return make_response(jsonify(msg), 400)
             con.execute(users.insert(), name=name, surname=surname, email=email,
-                        password=get_hashed_password(json_data['password']).decode("utf-8"), date_of_birth=dob,
+                        password=get_hashed_password(json_data['password']).decode("utf-8"),
                         created_at=int(time.time()))
             msg = {"message": "You have registered successfully!"}
             return make_response(jsonify(msg), 200)
@@ -94,7 +93,8 @@ def login():
                 return make_response(jsonify(msg), 400)
             else:
                 msg = {"message": "You have been logged in successfully!",
-                       "data": {"user": {"email": user['email'],
+                       "data": {"user": {"id": user['id'],
+                                         "email": user['email'],
                                          "name": user['name'],
                                          "surname": user['surname']}
                                 }}
@@ -145,6 +145,8 @@ def load_logged_in_user():
 @bp.route('/logout')
 def logout():
     session.clear()
+    msg = {"message": "Successfully logged out!."}
+    return make_response(jsonify(msg), 200)
 
 
 def login_required(view):
