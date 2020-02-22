@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/dashboard.dart';
+import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/mapview_screen.dart';
 import 'package:notive_app/screens/profile_screen.dart';
-import 'add_item_screen.dart';
-import 'add_list_screen.dart';
-import 'package:notive_app/models/user_model.dart';
-import 'package:provider/provider.dart';
-import 'package:notive_app/components/custom_drawer.dart';
 import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/dashboard_screen.dart';
+import 'package:notive_app/screens/welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const String id = 'dashboard_screen';
@@ -167,6 +164,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   style: TextStyle(color: kOrangeColor),
                 ),
                 selected: true,
+                onTap: () {
+                  Provider.of<UserModel>(context, listen: false).logout();
+                  Navigator.pushNamed(context, WelcomeScreen.id);
+                },
               ),
             ],
           ),

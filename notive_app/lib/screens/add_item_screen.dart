@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/models/list_model.dart';
-import 'package:provider/provider.dart';
-import 'constants.dart';
 import 'package:notive_app/models/user_model.dart';
+import 'package:provider/provider.dart';
+
+import 'constants.dart';
 
 class AddItemScreen extends StatelessWidget {
   @override
@@ -48,7 +48,7 @@ class AddItemScreen extends StatelessWidget {
               color: kOrangeColor,
               onPressed: () {
                 Provider.of<UserModel>(context, listen: false)
-                    .addItem(UserModel.curListIndex, newItemString);
+                    .addItem(newItemString);
                 Navigator.pop(context);
               },
             ),

@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-//import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-String apiUrl = "http://139.179.206.249/"; //temp
+String apiUrl = "http://127.0.0.1/"; //temp
 
 Future<List<dynamic>> sendRequest(
     String url, Map<String, dynamic> reqBody, String method) async {
@@ -20,8 +19,7 @@ Future<List<dynamic>> sendRequest(
     final responseJson = json.decode(response.body);
     return [response.statusCode, responseJson];
   }
-
-  if (method == "GET") {
+  else if (method == "GET") {
     final response = await http.get(
       apiUrl + url,
       headers: {
@@ -32,10 +30,9 @@ Future<List<dynamic>> sendRequest(
       },
     );
     final responseJson = json.decode(response.body);
-    return responseJson;
+    return [response.statusCode, responseJson];
   }
-
-  if (method == "DELETE") {
+  else if (method == "DELETE") {
     final response = await http.delete(
       apiUrl + url,
       headers: {
@@ -46,10 +43,9 @@ Future<List<dynamic>> sendRequest(
       },
     );
     final responseJson = json.decode(response.body);
-    return responseJson;
+    return [response.statusCode, responseJson];
   }
-
-  if (method == "PUT") {
+  else if (method == "PUT") {
     final response = await http.put(apiUrl + url,
         headers: {
           'Content-type': 'application/json',
@@ -59,10 +55,11 @@ Future<List<dynamic>> sendRequest(
         },
         body: reqBody);
     final responseJson = json.decode(response.body);
-    return responseJson;
+    return [response.statusCode, responseJson];
   }
-
-  //??
+  else{
+    return null;
+  }
 }
 
 Future<List<dynamic>> loginUser(Map<String, dynamic> data) async {
@@ -90,22 +87,19 @@ Future<List<dynamic>> loginUser(Map<String, dynamic> data) async {
 Future<List<dynamic>> signupUser(Map<String, dynamic> data) async {
   List<dynamic> response = await sendRequest('auth/register', data, 'POST');
   Map<String, dynamic> result = response[1]; //Response from API.
-  if (response[0] != 200) {
-    //Status code from API.
-    return [response[0], result['message']]; //Return error message from API.
-  } else {
-    String message = result['message'];
-    int userID = result['data']['lists']['id'];
-    //String
-  }
+  return [response[0], result['message']]; //Return error message from API.
 }
 
-Future<List<dynamic>> getUserLists(Map<String, dynamic> data) async {
-  List<dynamic> response = await sendRequest('list', data, 'GET');
-  Map<String, dynamic> result = response[1];
-  if (response[0] != 200) {
-    return [response[0], result['message']];
-  } else {
-    String message = result['message'];
-  }
+void logoutUser() async {
+  await sendRequest('/logout', {}, 'POST');
 }
+
+//Future<List<dynamic>> getUserLists(Map<String, dynamic> data) async {
+//  List<dynamic> response = await sendRequest('list', data, 'GET');
+//  Map<String, dynamic> result = response[1];
+//  if (response[0] != 200) {
+//    return [response[0], result['message']];
+//  } else {
+//    String message = result['message'];
+//  }
+//}

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/reusable_list_card.dart';
-import 'package:notive_app/screens/archived_lists_screen.dart';
+import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:random_color/random_color.dart';
-import 'package:notive_app/models/user_model.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -24,8 +22,8 @@ class Dashboard extends StatelessWidget {
               listName: user.lists[index].name,
               //TODO add Function onPress here
               onPress: () {
-                UserModel.curListIndex = index;
-                print(UserModel.curListIndex);
+                user.curListIndex = index;
+                print(user.curListIndex);
                 openListView();
               },
             );

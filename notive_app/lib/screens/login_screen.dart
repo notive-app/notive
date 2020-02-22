@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/components/rounded_button.dart';
-import 'package:notive_app/screens/constants.dart';
-import 'dashboard_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:http/http.dart';
-import 'package:notive_app/util/request.dart';
+import 'package:notive_app/components/rounded_button.dart';
+import 'package:notive_app/models/user_model.dart';
+import 'package:notive_app/screens/constants.dart';
+import 'package:provider/provider.dart';
+
+import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -72,44 +73,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: 'Log In',
                 colour: kLightBlueColor,
                 onPressed: () async {
-                  //print(email);
-                  // String data = "{'password': '" + password + "', 'email': '" + email + "'}";
-                  Map<String, dynamic> data = {
-                    'password': password,
-                    'email': email
-                  };
+                  setState(() {
+                    showSpinner = true;
+                  });
 
-                  int userID;
-                  String user_email, name, surname;
-                  List<dynamic> response = await loginUser(data);
-                  int status = response[0];
-                  String msg = response[1];
-                  if (status == 200) {
-                    Map<String, dynamic> data = response[2];
-                    user_email = data['email'];
-                    name = data['name'];
-                    surname = data['surname'];
-                  } else {
-                    // Error message with msg variable message.
+                  var data = Map<String,dynamic>();
+                  data["email"] = email;
+                  data["password"] = password;
+                  var result = await Provider.of<UserModel>(context, listen: false).
+                      login(data);
+
+                  if(result){
+                    Navigator.pushNamed(context, DashboardScreen.id);
                   }
 
                   setState(() {
-                    showSpinner = true;
-                    print(response);
+                    showSpinner = false;
                   });
-//                  try {
-//                    final user = await _auth.signInWithEmailAndPassword(
-//                        email: email, password: password);
-//                    if (user != null) {
-//
-//                    }
-//
-//                    setState(() {
-//                      showSpinner = false;
-//                    });
-//                  } catch (e) {
-//                    print(e);
-//                  }
                 },
               ),
               Text(

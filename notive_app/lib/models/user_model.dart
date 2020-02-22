@@ -1,35 +1,61 @@
-import 'package:flutter/foundation.dart';
 import 'dart:collection';
-import 'package:notive_app/models/list_model.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:notive_app/models/item_model.dart';
+import 'package:notive_app/models/list_model.dart';
+import 'package:notive_app/util/request.dart';
 
 class UserModel extends ChangeNotifier {
-  final int id;
-  final String email;
-  final String password;
-  final String name;
-  final String surname;
-  static int curListIndex;
+  int id;
+  String email;
+  String name;
+  String surname;
+  int curListIndex;
   List<ListModel> _lists = [];
+  bool isLoggedIn = false;
 
-  UserModel({this.id, this.email, this.password, this.name, this.surname});
+  UserModel({this.id, this.email, this.name, this.surname});
+
+  Future<bool> login(Map<String,dynamic> data) async{
+    var response = await loginUser(data);
+    var status = response[0];
+
+    if(status == 200){
+      var user = response[2];
+      this.id = user["user_id"];
+      this.email = user["email"];
+      this.name = user["name"];
+      this.surname = user["surname"];
+      isLoggedIn = true;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> signUp(Map<String,dynamic> data) async{
+    var response = await signupUser(data);
+    var status = response[0];
+
+    if(status == 200){
+      var loginData = new Map<String,dynamic>();
+      loginData["email"] = data["email"];
+      loginData["password"] = data["password"];
+      return login(loginData);
+    }
+    return false;
+  }
+
+  void logout() {
+    logoutUser();
+    isLoggedIn = true;
+    notifyListeners();
+  }
+
+
 
   int get listsCount {
     return _lists.length;
-  }
-
-  void updateDatabase() {
-    //TODO set DB list to _lists
-  }
-
-  void updateLocal() {
-    //TODO set _lists to DB list
-  }
-
-  //get lists from database
-  //TODO check if async or await
-  void initializeLists() async {
-    //TODO API call if API returns 200 , update lists (dashboard)
   }
 
   UnmodifiableListView<ListModel> get lists {
@@ -68,18 +94,18 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addItem(int listIndex, String itemName) {
-    this._lists[listIndex].addItem(itemName);
+  void addItem(String itemName) {
+    this._lists[curListIndex].addItem(itemName);
     notifyListeners();
   }
 
-  void checkItem(int listIndex, ItemModel item) {
-    this._lists[listIndex].checkItem(item);
+  void checkItem(ItemModel item) {
+    this._lists[curListIndex].checkItem(item);
     notifyListeners();
   }
 
-  void deleteItem(int listIndex, ItemModel item) {
-    this._lists[listIndex].deleteItem(item);
+  void deleteItem(ItemModel item) {
+    this._lists[curListIndex].deleteItem(item);
     notifyListeners();
   }
 }
