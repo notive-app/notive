@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, session
 from . import db, auth, list, item
 
 
@@ -29,6 +29,7 @@ def create_app(test_config=None):
     app.register_blueprint(list.bp)
     app.register_blueprint(item.bp)
 
+    app.url_map.strict_slashes = False
     return app
 
 

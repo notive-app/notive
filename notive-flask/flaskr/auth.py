@@ -100,6 +100,7 @@ def login():
                                 }}
                 session.clear()
                 session['user_id'] = user['id']
+                print('login', session['user_id'])
 
                 return make_response(jsonify(msg), 200)
 
@@ -132,6 +133,7 @@ def update_pass():
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
+    print('load', user_id)
 
     if user_id is None:
         g.user = None

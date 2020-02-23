@@ -81,7 +81,8 @@ def create():
                 con, engine, metadata = db['con'], db['engine'], db['metadata']
                 item_table = Table('Item', metadata, autoload=True)
                 res = con.execute(item_table.insert(), name=name, list_id=list_id, created_at=created_at)
-                data = {'item_id': res.lastrowid}
+                data = {'item_id': res.lastrowid,
+                        'created_at': created_at}
                 msg = {"message": "An item has been successfully added to list named '" + list_name + "'.",
                        "data": data}
                 return make_response(jsonify(msg), 200)

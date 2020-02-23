@@ -66,7 +66,8 @@ def create():
 
             res = con.execute(list_table.insert(), name=name, user_id=user_id, created_at=created_at)
 
-            result = {'list_id': res.lastrowid}
+            result = {'list_id': res.lastrowid,
+                      'created_at': created_at}
             msg = {"message": "New list is created successfully!",
                    "data": result}
             return make_response(jsonify(msg), 200)
