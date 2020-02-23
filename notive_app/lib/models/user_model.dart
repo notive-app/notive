@@ -27,6 +27,10 @@ class UserModel extends ChangeNotifier {
       this.name = user["name"];
       this.surname = user["surname"];
       isLoggedIn = true;
+      print('listeleri almaya geldim');
+      response = await fillUserLists();
+      setLists(response);
+
       notifyListeners();
       return true;
     }
@@ -34,7 +38,7 @@ class UserModel extends ChangeNotifier {
   }
 
   Future<bool> signUp(Map<String,dynamic> data) async{
-    var response = await signupUser(data);
+    var response = await signUpUser(data);
     var status = response[0];
 
     if(status == 200){
@@ -48,11 +52,9 @@ class UserModel extends ChangeNotifier {
 
   void logout() {
     logoutUser();
-    isLoggedIn = true;
+    isLoggedIn = false;
     notifyListeners();
   }
-
-
 
   int get listsCount {
     return _lists.length;
@@ -62,21 +64,25 @@ class UserModel extends ChangeNotifier {
     return UnmodifiableListView(_lists);
   }
 
-  void setLists(List<ListModel> lists) {
-    this._lists = lists;
-  }
-
   int get itemsCount {
     return _lists.length;
   }
 
-  void addList(String newListName) async {
-    //TODO API call to get List Id, then create a list with this ID
-    final int listId = 0;
-    final list = ListModel(id: listId, name: newListName);
-    this._lists.add(list);
-    //TODO how to handle db operations inside the same fxn
-//    updateDatabase();
+  void addList(String listName) async {
+    Map<String,dynamic> data = {
+      'name': listName
+    };
+
+    List<int> result= await createList(data);
+    ListModel newList = new ListModel(
+      id: result[0],
+      name: listName,
+      userId: this.id,
+      isDone: false,
+      createdAt: result[1]
+    );
+
+    _lists.add(newList);
     notifyListeners();
   }
 
@@ -94,8 +100,22 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addItem(String itemName) {
-    this._lists[curListIndex].addItem(itemName);
+  void addItem(String itemName) async {
+    Map<String,dynamic> data = {
+      'name': itemName,
+      'list_id': this._lists[this.curListIndex].id
+    };
+
+    List<int> result= await createItem(data);
+    ItemModel item = new ItemModel(
+        id: result[0],
+        name: itemName,
+        isCompleted: false,
+        listId: this.curListIndex,
+        createdAt: result[1]
+    );
+
+    this._lists[curListIndex].addItem(item);
     notifyListeners();
   }
 
@@ -108,4 +128,10 @@ class UserModel extends ChangeNotifier {
     this._lists[curListIndex].deleteItem(item);
     notifyListeners();
   }
+
+  //just being used after login, therefore there is no need for notifying listeners
+  void setLists(List<ListModel> lists) {
+    this._lists = lists;
+  }
+
 }
