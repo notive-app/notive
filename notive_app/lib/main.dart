@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
-import 'package:notive_app/screens/mapview_screen.dart';
-import 'package:notive_app/screens/settings_screen.dart';
-import 'models/user_model.dart';
-import 'package:provider/provider.dart';
-import 'package:notive_app/screens/profile_screen.dart';
-import 'package:notive_app/screens/welcome_screen.dart';
-import 'package:notive_app/screens/login_screen.dart';
-import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
 import 'package:notive_app/screens/listview_screen.dart';
-import 'components/dashboard.dart';
+import 'package:notive_app/screens/login_screen.dart';
+import 'package:notive_app/screens/mapview_screen.dart';
+import 'package:notive_app/screens/profile_screen.dart';
+import 'package:notive_app/screens/settings_screen.dart';
+import 'package:notive_app/screens/signup_screen.dart';
+import 'package:notive_app/screens/welcome_screen.dart';
+import 'package:provider/provider.dart';
+
+import 'models/user_model.dart';
 
 //import 'package:http/http.dart' as http;
 
@@ -31,6 +30,8 @@ void main() {
 class NotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+//    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
+
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
