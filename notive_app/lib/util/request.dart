@@ -46,7 +46,7 @@ Future<List<dynamic>> sendRequest(
   else if (method == "PUT") {
     final response = await http.put(apiUrl + url,
         headers: headers,
-        body: reqBody);
+        body: json.encode(reqBody));
     updateCookie(response);
     final responseJson = json.decode(response.body);
     return [response.statusCode, responseJson];
@@ -152,23 +152,42 @@ void updateCookie(http.Response response) {
   }
 }
 
-Future<List<int>> createList(Map<String, dynamic> data) async{
+Future<List<dynamic>> createUserList(Map<String, dynamic> data) async{
   List<dynamic> response = await sendRequest('list/create', data, 'POST');
-
-  if(response[0] == 200){
-    return [response[1]['data']['list_id'],response[1]['data']['created_at']];
-  }else{
-    throw Exception;
-  }
+  return [response[0], response[1]];
 }
 
-Future<List<int>> createItem(Map<String, dynamic> data) async{
+Future<List<dynamic>> createUserItem(Map<String, dynamic> data) async{
   List<dynamic> response = await sendRequest('item/create', data, 'POST');
-
-  if(response[0] == 200){
-    return [response[1]['data']['item_id'],response[1]['data']['created_at']];
-  }else{
-    throw Exception;
-  }
+  return [response[0], response[1]];
 }
+
+Future<List<dynamic>> deleteUserList(int listId) async{
+  List<dynamic> response = await sendRequest('list/$listId', {}, 'DELETE');
+  return [response[0], response[1]];
+}
+
+Future<List<dynamic>> deleteUserItem(int itemId) async{
+  List<dynamic> response = await sendRequest('item/$itemId', {}, 'DELETE');
+  return [response[0], response[1]];
+}
+
+Future<List<dynamic>> checkUserItem(ItemModel item) async{
+
+  Map<String,dynamic> data = {
+    'item_id': item.id,
+    'list_id': item.listId
+  };
+  List<dynamic> response;
+
+  if(item.isCompleted){
+    response = await sendRequest('item/uncheck', data, 'PUT');
+  }else{
+    response = await sendRequest('item/check', data, 'PUT');
+  }
+
+  return [response[0], response[1]];
+}
+
+
 

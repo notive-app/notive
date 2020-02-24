@@ -44,11 +44,17 @@ class ListModel {
   }
 
   factory ListModel.fromJson(Map<String, dynamic> json) {
+    bool flag = false;
+
+    if(json['is_done'] == 1){
+      flag = true;
+    }
+
     return ListModel(
       id: json['id'],
       name: json['name'],
       userId: json['user_id'],
-      isDone: false,
+      isDone: flag,
       createdAt: json['created_at']
     );
   }

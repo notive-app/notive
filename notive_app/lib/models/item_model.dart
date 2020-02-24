@@ -13,10 +13,15 @@ class ItemModel {
   }
 
   factory ItemModel.fromJson(Map<String, dynamic> json) {
+    bool flag = false;
+
+    if(json['is_done'] == 1){
+      flag = true;
+    }
     return ItemModel(
         id: json['id'],
         name: json['name'],
-        isCompleted: false,//json['isCompleted']
+        isCompleted: flag,
         listId: json['list_id'],
         createdAt: json['created_at']
     );
