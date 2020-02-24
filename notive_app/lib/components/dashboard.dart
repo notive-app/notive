@@ -20,11 +20,12 @@ class Dashboard extends StatelessWidget {
             return ReusableListCard(
               color: kLightBlueColor,
               listName: user.lists[index].name,
-              //TODO add Function onPress here
               onPress: () {
                 user.curListIndex = index;
-                print(user.curListIndex);
                 openListView();
+              },
+              deleteCallback: () {
+                user.deleteList(user.lists[index]);
               },
             );
           }),

@@ -229,10 +229,13 @@ def uncheck():
 @bp.route('/delete', methods=['DELETE'])
 @login_required
 def delete():
+
     if not validate_auth_key(request):
         return Response(status=401)
     else:
-        json_data = get_json_from_keys(request, ['list_id', 'item_id'])
+        json_data = get_json_from_keys(request, ['list_id','item_id'])
+        print(json_data)
+        print(1)
         if json_data is False:
             return make_response(jsonify(
                 {"message": "Request body must be JSON."}), 400)

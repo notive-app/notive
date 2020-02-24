@@ -27,7 +27,6 @@ class UserModel extends ChangeNotifier {
       this.name = user["name"];
       this.surname = user["surname"];
       isLoggedIn = true;
-      print('listeleri almaya geldim');
       response = await fillUserLists();
       setLists(response);
 
@@ -73,17 +72,20 @@ class UserModel extends ChangeNotifier {
       'name': listName
     };
 
-    List<int> result= await createList(data);
-    ListModel newList = new ListModel(
-      id: result[0],
-      name: listName,
-      userId: this.id,
-      isDone: false,
-      createdAt: result[1]
-    );
+    List<dynamic> result= await createUserList(data);
+    if(result[0] == 200){
+      ListModel newList = new ListModel(
+          id: result[1]['data']['list_id'],
+          name: listName,
+          userId: this.id,
+          isDone: false,
+          createdAt: result[1]['data']['created_at']
+      );
+      _lists.add(newList);
+      notifyListeners();
+    }
+    //TODO add warning message in case of failure
 
-    _lists.add(newList);
-    notifyListeners();
   }
 
   void changeListName(ListModel list, String newName) {
@@ -94,10 +96,15 @@ class UserModel extends ChangeNotifier {
 //    updateDatabase();
   }
 
-  void deleteList(ListModel list) {
-    //TODO DB(list.id) this will delete the list in DB , then update local lists
-    _lists.remove(list);
-    notifyListeners();
+  void deleteList(ListModel list) async{
+    int listId = list.id;
+    List<dynamic> result = await deleteUserList(listId);
+
+    if(result[0] == 200){
+      this._lists.remove(list);
+      notifyListeners();
+    }
+    //TODO add warning message in case of failure
   }
 
   void addItem(String itemName) async {
@@ -106,27 +113,41 @@ class UserModel extends ChangeNotifier {
       'list_id': this._lists[this.curListIndex].id
     };
 
-    List<int> result= await createItem(data);
-    ItemModel item = new ItemModel(
-        id: result[0],
-        name: itemName,
-        isCompleted: false,
-        listId: this.curListIndex,
-        createdAt: result[1]
-    );
+    List<dynamic> result= await createUserItem(data);
 
-    this._lists[curListIndex].addItem(item);
-    notifyListeners();
+    if(result[0] == 200){
+      ItemModel item = new ItemModel(
+          id: result[1]['data']['item_id'],
+          name: itemName,
+          isCompleted: false,
+          listId: this._lists[this.curListIndex].id,
+          createdAt: result[1]['data']['created_at']
+      );
+      this._lists[curListIndex].addItem(item);
+      notifyListeners();
+    }
+    //TODO add warning message in case of failure
+
   }
 
-  void checkItem(ItemModel item) {
-    this._lists[curListIndex].checkItem(item);
-    notifyListeners();
+  void checkItem(ItemModel item) async {
+    List<dynamic> result= await checkUserItem(item);
+
+    if(result[0] == 200){
+      this._lists[curListIndex].checkItem(item);
+      notifyListeners();
+    }
+    //TODO add warning message in case of failure
   }
 
-  void deleteItem(ItemModel item) {
-    this._lists[curListIndex].deleteItem(item);
-    notifyListeners();
+  void deleteItem(ItemModel item) async{
+    List<dynamic> result = await deleteUserItem(item.id);
+
+    if(result[0] == 200){
+      this._lists[curListIndex].deleteItem(item);
+      notifyListeners();
+    }
+    //TODO add warning message in case of failure
   }
 
   //just being used after login, therefore there is no need for notifying listeners

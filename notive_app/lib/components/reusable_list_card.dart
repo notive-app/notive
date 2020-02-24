@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ReusableListCard extends StatelessWidget {
-  ReusableListCard({@required this.color, this.listName, this.onPress});
   final Color color;
   final String listName;
   final Function onPress;
+  final Function deleteCallback;
+
+  ReusableListCard({@required this.color, this.listName, this.onPress, this.deleteCallback});
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,6 +27,7 @@ class ReusableListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
+      onLongPress: deleteCallback,
     );
   }
 }
