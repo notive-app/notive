@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/components/rounded_button.dart';
-import 'package:notive_app/screens/constants.dart';
-import 'dashboard_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:notive_app/components/rounded_button.dart';
+import 'package:notive_app/models/user_model.dart';
+import 'package:notive_app/screens/constants.dart';
+import 'package:provider/provider.dart';
+
+import 'dashboard_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String id = 'signup_screen';
@@ -15,6 +18,8 @@ class _SignupScreenState extends State<SignupScreen> {
   bool showSpinner = false;
   String email;
   String password;
+  String name;
+  String surname;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +70,31 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: 'Enter your password'),
               ),
               SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  name = value;
+                },
+                decoration: kTextFieldDecorationSign.copyWith(
+                    hintText: 'Enter your name'),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  surname = value;
+                },
+                decoration: kTextFieldDecorationSign.copyWith(
+                    hintText: 'Enter your surname'),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              SizedBox(
                 height: 24.0,
               ),
               RoundedButton(
@@ -74,19 +104,24 @@ class _SignupScreenState extends State<SignupScreen> {
                   setState(() {
                     showSpinner = true;
                   });
-//                  try {
-//                    final newUser = await _auth.createUserWithEmailAndPassword(
-//                        email: email, password: password);
-//                    if (newUser != null) {
-//                      Navigator.pushNamed(context, DashboardScreen.id);
-//                    }
-//
-//                    setState(() {
-//                      showSpinner = false;
-//                    });
-//                  } catch (e) {
-//                    print(e);
-//                  }
+
+                  var data = Map<String,dynamic>();
+                  data["email"] = email;
+                  data["password"] = password;
+                  data["name"] = name;
+                  data["surname"] = surname;
+
+                  var result = await Provider.of<UserModel>(context, listen: false).
+                  signUp(data);
+
+                  if(result){
+                    Navigator.pushNamed(context, DashboardScreen.id);
+                  }
+
+                  setState(() {
+                    showSpinner = false;
+                  });
+
                 },
               ),
             ],

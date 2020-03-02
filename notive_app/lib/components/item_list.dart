@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/item_tile.dart';
-import 'package:provider/provider.dart';
 import 'package:notive_app/models/user_model.dart';
+import 'package:provider/provider.dart';
 
 class ItemsList extends StatelessWidget {
   @override
@@ -11,20 +11,18 @@ class ItemsList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (context, index) {
             return ItemTile(
-              itemString: user.lists[UserModel.curListIndex].items[index].name,
+              itemString: user.lists[user.curListIndex].items[index].name,
               isChecked:
-                  user.lists[UserModel.curListIndex].items[index].isCompleted,
+                  user.lists[user.curListIndex].items[index].isCompleted,
               checkCallback: (bool checkBoxState) {
-                user.checkItem(UserModel.curListIndex,
-                    user.lists[UserModel.curListIndex].items[index]);
+                user.checkItem(user.lists[user.curListIndex].items[index]);
               },
               deleteCallback: () {
-                user.deleteItem(UserModel.curListIndex,
-                    user.lists[UserModel.curListIndex].items[index]);
+                user.deleteItem(user.lists[user.curListIndex].items[index]);
               },
             );
           },
-          itemCount: user.lists[UserModel.curListIndex].itemsCount,
+          itemCount: user.lists[user.curListIndex].itemsCount,
         );
       },
     );

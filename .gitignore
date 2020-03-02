@@ -1,4 +1,5 @@
 venv/
+.DS_Store
 
 *.pyc
 __pycache__/
@@ -9,23 +10,14 @@ instance/
 .coverage
 htmlcov/
 
+.idea/
 dist/
 build/
 flaskr/*.egg-info/
 notive-flask/flaskr/env.py
-/.idea/.gitignore
 /notive-flask/flaskr.egg-info/dependency_links.txt
-/.idea/dictionaries
-/.idea/misc.xml
-/.idea/modules.xml
 /notive-flask/flaskr.egg-info/not-zip-safe
-/.idea/notive.iml
 /notive-flask/flaskr.egg-info/PKG-INFO
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/inspectionProfiles/Project_Default.xml
 /notive-flask/flaskr.egg-info/requires.txt
 /notive-flask/flaskr.egg-info/SOURCES.txt
-/.idea/sqldialects.xml
 /notive-flask/flaskr.egg-info/top_level.txt
-/.idea/vcs.xml
-/.idea/workspace.xml

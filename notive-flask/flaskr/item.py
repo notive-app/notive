@@ -81,7 +81,8 @@ def create():
                 con, engine, metadata = db['con'], db['engine'], db['metadata']
                 item_table = Table('Item', metadata, autoload=True)
                 res = con.execute(item_table.insert(), name=name, list_id=list_id, created_at=created_at)
-                data = {'item_id': res.lastrowid}
+                data = {'item_id': res.lastrowid,
+                        'created_at': created_at}
                 msg = {"message": "An item has been successfully added to list named '" + list_name + "'.",
                        "data": data}
                 return make_response(jsonify(msg), 200)
@@ -228,10 +229,13 @@ def uncheck():
 @bp.route('/delete', methods=['DELETE'])
 @login_required
 def delete():
+
     if not validate_auth_key(request):
         return Response(status=401)
     else:
-        json_data = get_json_from_keys(request, ['list_id', 'item_id'])
+        json_data = get_json_from_keys(request, ['list_id','item_id'])
+        print(json_data)
+        print(1)
         if json_data is False:
             return make_response(jsonify(
                 {"message": "Request body must be JSON."}), 400)
