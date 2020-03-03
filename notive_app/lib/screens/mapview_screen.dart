@@ -53,7 +53,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
               ),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MapViewScreen()),
@@ -71,7 +70,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
               ),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DashboardScreen()),
@@ -89,7 +87,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
               ),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -108,7 +105,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
               ),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfileScreen()),
@@ -126,7 +122,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
               ),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()),
