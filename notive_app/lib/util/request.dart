@@ -109,13 +109,10 @@ Future<List<dynamic>> getUserItems() async {
   if (response[0] != 200) {
     return [response[0], result['message']];
   } else {
-
-    List<ItemModel> items = [];
     Map<String,dynamic> returnItems = result['data'];
     return [response[0], result['message'], returnItems];
   }
 }
-
 
 Future<List<ListModel>> fillUserLists() async{
   // Get user lists for dashboard view 
@@ -143,7 +140,6 @@ Future<List<ListModel>> fillUserLists() async{
         listItems.add(ItemModel.fromJson(responseItems[i]));
       }
     }
-    
     // set items of the list 
     lists[i].setItems(listItems);
   }
