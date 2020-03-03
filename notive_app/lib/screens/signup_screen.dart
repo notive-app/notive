@@ -3,6 +3,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:notive_app/components/rounded_button.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'dashboard_screen.dart';
