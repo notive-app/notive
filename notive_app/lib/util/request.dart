@@ -102,7 +102,7 @@ Future<List<dynamic>> getUserLists() async {
   }
 }
 
-Future<List<dynamic>> getUserListItems(int listId) async {
+Future<List<dynamic>> getUserItems() async {
   List<dynamic> response = await sendRequest('item', {}, 'GET');
   Map<String, dynamic> result = response[1];
 
@@ -111,31 +111,41 @@ Future<List<dynamic>> getUserListItems(int listId) async {
   } else {
 
     List<ItemModel> items = [];
-    List<dynamic> returnItems = result['data']['items'];
-
-    for (var i = 0; i < returnItems.length; i++) {
-      items.add(ItemModel.fromJson(returnItems[i]));
-    }
-    return [response[0], result['message'], items];
+    Map<String,dynamic> returnItems = result['data'];
+    return [response[0], result['message'], returnItems];
   }
 }
 
-Future<List<ListModel>> fillUserLists() async{
-  var response = await getUserLists();
 
-  if(response[0] != 200){
+Future<List<ListModel>> fillUserLists() async{
+  // Get user lists for dashboard view 
+  var listResponse = await getUserLists();
+  if(listResponse[0] != 200){
+    return [];
+  }
+  var lists = listResponse[2];
+
+  // Get all items of a user as a hashmap, key: list_id
+  var itemResponse = await getUserItems();
+  if(itemResponse[0] != 200){
     return [];
   }
 
-  var lists = response[2];
+  var items = itemResponse[2];
 
-  for (var i=0; i<lists.length; i++) {
-    response = await getUserListItems(lists[i].id);
+  for(var i=0; i<lists.length; i++){
+    var responseItems = items[(lists[i].id).toString()]; // Get respective list items 
+    List<ItemModel> listItems = [];
 
-    if(response[0] == 200){
-      var items = response[2];
-      lists[i].setItems(items);
+    // convert dynamic list to Notive ItemModel list 
+    if(responseItems != null){
+      for (var i = 0; i < responseItems.length; i++) {
+        listItems.add(ItemModel.fromJson(responseItems[i]));
+      }
     }
+    
+    // set items of the list 
+    lists[i].setItems(listItems);
   }
   return lists;
 }

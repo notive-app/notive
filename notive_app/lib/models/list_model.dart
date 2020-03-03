@@ -18,6 +18,10 @@ class ListModel {
     return UnmodifiableListView(_items);
   }
 
+  List<ItemModel> getItems(){
+    return _items; 
+  }
+  
   int get itemsCount {
     return _items.length;
   }
