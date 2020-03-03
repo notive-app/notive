@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 
-String apiUrl = "http://127.0.0.1/"; //temp
+String apiUrl = "http://139.59.155.177:5000/"; //temp
 
 Map<String, String> headers = {
   'Content-type': 'application/json',
@@ -14,14 +14,14 @@ Map<String, String> headers = {
   'Bearer P342A8HtvavVuSDNKV2fMd9TZctxVLs8Cw2I2nfi6HlMIUFPc51MV66zYdwOPUno'
 };
 
-
 Future<List<dynamic>> sendRequest(
-    String url, Map<String, dynamic> reqBody, String method) async {
+  String url, Map<String, dynamic> reqBody, String method) async {
   if (method == "POST") {
     final response = await http.post(apiUrl + url,
         headers: headers,
         body: json.encode(reqBody));
     updateCookie(response);
+    print(response.body);
     final responseJson = json.decode(response.body);
     return [response.statusCode, responseJson];
   }
@@ -67,12 +67,10 @@ Future<List<dynamic>> loginUser(Map<String, dynamic> data) async {
     int userID = result['data']['user']['id'];
     String email = result['data']['user']['email'];
     String name = result['data']['user']['name'];
-    String surname = result['data']['user']['surname'];
     Map<String, dynamic> userDetails = {
       'user_id': userID,
       'email': email,
-      'name': name,
-      'surname': surname
+      'name': name
     };
     return [response[0], message, userDetails];
   }
@@ -85,7 +83,7 @@ Future<List<dynamic>> signUpUser(Map<String, dynamic> data) async {
 }
 
 void logoutUser() async {
-  await sendRequest('/logout', {}, 'POST');
+  await sendRequest('auth/logout', {}, 'GET');
 }
 
 Future<List<dynamic>> getUserLists() async {
@@ -105,7 +103,7 @@ Future<List<dynamic>> getUserLists() async {
 }
 
 Future<List<dynamic>> getUserListItems(int listId) async {
-  List<dynamic> response = await sendRequest('item/$listId', {}, 'GET');
+  List<dynamic> response = await sendRequest('item', {}, 'GET');
   Map<String, dynamic> result = response[1];
 
   if (response[0] != 200) {
@@ -118,7 +116,6 @@ Future<List<dynamic>> getUserListItems(int listId) async {
     for (var i = 0; i < returnItems.length; i++) {
       items.add(ItemModel.fromJson(returnItems[i]));
     }
-
     return [response[0], result['message'], items];
   }
 }
@@ -153,12 +150,12 @@ void updateCookie(http.Response response) {
 }
 
 Future<List<dynamic>> createUserList(Map<String, dynamic> data) async{
-  List<dynamic> response = await sendRequest('list/create', data, 'POST');
+  List<dynamic> response = await sendRequest('list', data, 'POST');
   return [response[0], response[1]];
 }
 
 Future<List<dynamic>> createUserItem(Map<String, dynamic> data) async{
-  List<dynamic> response = await sendRequest('item/create', data, 'POST');
+  List<dynamic> response = await sendRequest('item', data, 'POST');
   return [response[0], response[1]];
 }
 
@@ -167,25 +164,17 @@ Future<List<dynamic>> deleteUserList(int listId) async{
   return [response[0], response[1]];
 }
 
-Future<List<dynamic>> deleteUserItem(int itemId) async{
-  List<dynamic> response = await sendRequest('item/$itemId', {}, 'DELETE');
+Future<List<dynamic>> deleteUserItem(int listId, int itemId) async{
+  List<dynamic> response = await sendRequest('item/$listId/$itemId', {}, 'DELETE');
   return [response[0], response[1]];
 }
 
 Future<List<dynamic>> checkUserItem(ItemModel item) async{
-
-  Map<String,dynamic> data = {
-    'item_id': item.id,
-    'list_id': item.listId
-  };
+  int listId = item.listId;
+  int itemId = item.id;
+  Map<String,dynamic> data = {};
   List<dynamic> response;
-
-  if(item.isCompleted){
-    response = await sendRequest('item/uncheck', data, 'PUT');
-  }else{
-    response = await sendRequest('item/check', data, 'PUT');
-  }
-
+  response = await sendRequest('item/$listId/$itemId/check', data, 'PUT');
   return [response[0], response[1]];
 }
 

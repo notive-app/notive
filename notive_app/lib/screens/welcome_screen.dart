@@ -89,13 +89,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 Navigator.pushNamed(context, SignupScreen.id);
               },
             ),
-            RoundedButton(
-              title: 'TEST',
-              colour: Colors.red,
-              onPressed: () {
-                Navigator.pushNamed(context, DashboardScreen.id);
-              },
-            ),
           ],
         ),
       ),

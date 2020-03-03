@@ -19,7 +19,6 @@ class UserModel extends ChangeNotifier {
   Future<bool> login(Map<String,dynamic> data) async{
     var response = await loginUser(data);
     var status = response[0];
-
     if(status == 200){
       var user = response[2];
       this.id = user["user_id"];
@@ -27,9 +26,8 @@ class UserModel extends ChangeNotifier {
       this.name = user["name"];
       this.surname = user["surname"];
       isLoggedIn = true;
-      response = await fillUserLists();
+      response = await fillUserLists();      
       setLists(response);
-
       notifyListeners();
       return true;
     }
@@ -141,7 +139,7 @@ class UserModel extends ChangeNotifier {
   }
 
   void deleteItem(ItemModel item) async{
-    List<dynamic> result = await deleteUserItem(item.id);
+    List<dynamic> result = await deleteUserItem(item.listId, item.id);
 
     if(result[0] == 200){
       this._lists[curListIndex].deleteItem(item);
