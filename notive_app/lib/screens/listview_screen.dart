@@ -16,13 +16,12 @@ class _ListViewScreenState extends State<ListViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO add drawer here
       appBar: AppBar(
         title: Text('List Items'),
       ),
       //backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: kOrangeColor,
+        backgroundColor: kPurpleColor,
         child: Icon(
           Icons.add,
           color: Colors.black,

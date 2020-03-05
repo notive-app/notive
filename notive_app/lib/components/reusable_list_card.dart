@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notive_app/screens/constants.dart';
 
 class ReusableListCard extends StatelessWidget {
   final Color color;
@@ -6,8 +7,8 @@ class ReusableListCard extends StatelessWidget {
   final Function onPress;
   final Function deleteCallback;
 
-  ReusableListCard({@required this.color, this.listName, this.onPress, this.deleteCallback});
-
+  ReusableListCard(
+      {@required this.color, this.listName, this.onPress, this.deleteCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,12 @@ class ReusableListCard extends StatelessWidget {
       onTap: onPress,
       child: Container(
         child: Center(
-            child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text('$listName'),
-        )),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            //TODO change this part so that it will be relative in size 
+            child: Text('$listName', style: TextStyle(color: kOffWhiteColor, fontWeight: FontWeight.bold, fontSize: 15),),
+          ),
+        ),
         width: 150.0,
         height: 150.0,
         margin: EdgeInsets.all(15.0),

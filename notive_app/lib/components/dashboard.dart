@@ -15,10 +15,10 @@ class Dashboard extends StatelessWidget {
     return Consumer<UserModel>(
       builder: (context, user, child) {
         return GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           children: List.generate(user.listsCount, (index) {
             return ReusableListCard(
-              color: kLightBlueColor,
+              color: kPurpleColor,
               listName: user.lists[index].name,
               onPress: () {
                 user.curListIndex = index;

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 //from input_page.dart
 const double kBottomContainerHeight = 80;
-const Color kOrangeColor = Color(0xFFFB8C00);
-const Color kLightBlueColor = Color(0xFF009688);
-const Color kPurpleColor = Color(0xFF7C4DFF);
-const Color kRedColor = Color(0xFFEB1555);
+const Color kDarkPurpleColor = Color(0xFF57426B);
+const Color kPurpleColor = Color(0xFF765A91);
+const Color kDarkBlueColor = Color(0xFF4873A6);
+const Color kLightBlueColor = Color(0xFF4D9CD0);
+const Color kOffWhiteColor = Color(0xFFFAFAFA);
+const Color kGrayColor = Color(0xFFD0D3D4);
 
 //from icon_content.dart
 const double iconSize = 70.0;
@@ -94,11 +96,11 @@ const kTextFieldDecorationSign = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kOrangeColor, width: 1.0),
+    borderSide: BorderSide(color: kPurpleColor, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kOrangeColor, width: 2.0),
+    borderSide: BorderSide(color: kPurpleColor, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );

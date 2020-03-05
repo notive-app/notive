@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
@@ -8,6 +9,7 @@ import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const String id = 'dashboard_screen';
@@ -29,7 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             actions: <Widget>[
               MaterialButton(
-                color: Colors.blue,
+                color: kLightBlueColor,
                 onPressed: () {
                   // close the dialog box when submit is clicked.
                   Navigator.of(context).pop(customController.text
@@ -46,142 +48,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //backgroundColor: Colors.white,
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                    //color: Colors.black,
-                    ),
-                child: Text(
-                  'MENU',
-                  style: TextStyle(
-                    //color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.map,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Map View',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MapViewScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.view_list,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Dashboard',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.playlist_add_check,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Archived Lists',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ArchivedListsScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.account_circle,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Account',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Settings',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.exit_to_app,
-                  color: kOrangeColor,
-                ),
-                title: Text(
-                  'Log Out',
-                  style: TextStyle(color: kOrangeColor),
-                ),
-                selected: true,
-                onTap: () {
-                  Provider.of<UserModel>(context, listen: false).logout();
-                  Navigator.pushNamed(context, WelcomeScreen.id);
-                },
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: CustomBottomNav(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(
-            'Dashboard',
+            'Home',
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: kOrangeColor,
+          backgroundColor: kLightBlueColor,
           child: Icon(
             Icons.add,
-            color: Colors.black,
+            color: kOffWhiteColor,
           ),
-          // color: Colors.orangeAccent,
           elevation: 5.0,
           onPressed: () async {
-            //print(createDialogBox(context));
             createDialogBox(context).then((String listName) {
               if (listName != null) {
                 //Create reusable list card
@@ -191,36 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
             });
           },
-          tooltip: 'Add List',
         ),
         body: Dashboard());
   }
 }
-
-//class AddListScreen {}
-
-// Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-
-//             new Container(
-//               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
-//               //height: 500.0,
-//               child: GridView.count(
-//                 crossAxisCount: 2,
-//                 padding: EdgeInsets.all(3.0),
-//                 children: <Widget>[
-//                   ReusableListCard(color: Colors.blue,),
-//                   ReusableListCard(color: Colors.red,),
-//                   ReusableListCard(color: Colors.yellow,),
-//                   ReusableListCard(color: Colors.pink,),
-//                   ReusableListCard(color: Colors.purple,),
-//                   ReusableListCard(color: Colors.cyanAccent,),
-//                   ReusableListCard(color: Colors.indigo,)
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),

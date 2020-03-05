@@ -84,7 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
               title: 'Sign Up',
-              colour: kOrangeColor,
+              colour: kPurpleColor,
               onPressed: () {
                 Navigator.pushNamed(context, SignupScreen.id);
               },
