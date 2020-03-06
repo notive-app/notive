@@ -59,50 +59,30 @@ class _CustomBottomNavState extends State<CustomBottomNav> {
                     case 0:
                       {
                         // Navigate to Dashboard
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardScreen()),
-                        );
+                        Navigator.pushNamed(context, DashboardScreen.id);
                       }
                       break;
                     case 1:
                       {
                         // Navigate to Archived List
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ArchivedListsScreen()),
-                        );
+                        Navigator.pushNamed(context, ArchivedListsScreen.id);
                       }
                       break;
                     case 2:
                       {
                         // Map
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MapViewScreen()),
-                        );
+                        Navigator.pushNamed(context, MapViewScreen.id);
                       }
                       break;
                     case 3:
                       {
                         // Profile
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfileScreen()),
-                        );
+                        Navigator.pushNamed(context, ProfileScreen.id);
                       }
                       break;
                     default:
                       {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DashboardScreen()),
-                        );
+                        Navigator.pushNamed(context, DashboardScreen.id);
                       }
                       break;
                   }

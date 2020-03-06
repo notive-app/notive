@@ -34,11 +34,3 @@ class ReusableListCard extends StatelessWidget {
     );
   }
 }
-
-//ListTile(
-//title: Text(
-//listName,
-//style: null,
-//),
-////onLongPress: deleteCallback,
-//);

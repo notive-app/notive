@@ -17,7 +17,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Items'),
+        title: Text(''),
       ),
       //backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
