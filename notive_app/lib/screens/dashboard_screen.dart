@@ -48,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: CustomBottomNav(),
+        bottomNavigationBar: CustomBottomNav(selectedIndex: 0,),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(

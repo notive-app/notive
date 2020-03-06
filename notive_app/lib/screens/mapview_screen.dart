@@ -66,7 +66,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNav(),
+      bottomNavigationBar: CustomBottomNav(selectedIndex: 2,),
       appBar: AppBar(
         title: Text('Map View'),
         //backgroundColor: Colors.black,

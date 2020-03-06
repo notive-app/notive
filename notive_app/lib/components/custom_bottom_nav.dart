@@ -7,14 +7,18 @@ import 'package:notive_app/screens/mapview_screen.dart';
 import 'package:notive_app/screens/profile_screen.dart';
 
 class CustomBottomNav extends StatefulWidget {
+  final int selectedIndex;
+
+  CustomBottomNav({@required this.selectedIndex,});
   @override
-  State<StatefulWidget> createState() => _CustomBottomNavState();
+  State<StatefulWidget> createState() => _CustomBottomNavState(); 
 }
 
 class _CustomBottomNavState extends State<CustomBottomNav> {
+
   @override
   Widget build(BuildContext context) {
-    var _selectedIndex = 0;
+    
     return Container(
       decoration: BoxDecoration(color: Colors.black, boxShadow: [
         BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
@@ -40,19 +44,18 @@ class _CustomBottomNavState extends State<CustomBottomNav> {
                   text: 'Archive',
                 ),
                 GButton(
-                  icon: Icons.search,
-                  text: 'Search',
+                  icon: Icons.map,
+                  text: 'Map',
                 ),
                 GButton(
                   icon: Icons.account_circle,
                   text: 'Profile',
                 ),
               ],
-              selectedIndex: _selectedIndex = 0,
+              selectedIndex: widget.selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  _selectedIndex = index;
-                  switch (_selectedIndex) {
+                  switch (index) {
                     case 0:
                       {
                         // Navigate to Dashboard
@@ -63,7 +66,6 @@ class _CustomBottomNavState extends State<CustomBottomNav> {
                         );
                       }
                       break;
-
                     case 1:
                       {
                         // Navigate to Archived List

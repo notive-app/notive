@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNav(),
+      bottomNavigationBar: CustomBottomNav(selectedIndex: 3,),
       appBar: AppBar(
         title: Text('User Profile'),
         //backgroundColor: Colors.black,
