@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
-import 'constants.dart';
-import 'package:notive_app/screens/archived_lists_screen.dart';
-import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/dashboard_screen.dart';
-import 'mapview_screen.dart';
-import 'package:notive_app/components/rounded_button.dart';
+import 'package:notive_app/screens/welcome_screen.dart';
+import 'constants.dart';
+import 'package:notive_app/screens/constants.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String id = 'profile_screen';
@@ -19,20 +18,21 @@ class ProfileScreen extends StatelessWidget {
         //backgroundColor: Colors.black,
       ),
       //backgroundColor: Colors.blueGrey[500],
-      body: SafeArea(
+      body: SingleChildScrollView(
+        child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircleAvatar(
-              radius: 70.0,
+              radius: 50.0,
               backgroundImage: AssetImage('images/ben.jpg'),
             ),
             Text(
               'Hygerta Imeri',
               style: TextStyle(
                 fontFamily: 'Lobster',
-                fontSize: 35.0,
+                fontSize: 20.0,
                 //color: Colors.white,
                 //fontWeight: FontWeight.bold,
                 letterSpacing: 2.0,
@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),
               child: ListTile(
                 leading: Icon(
                   Icons.email,
@@ -86,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),
               child: ListTile(
                 leading: Icon(
                   Icons.lock,
@@ -108,7 +108,7 @@ class ProfileScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),
               child: ListTile(
                 leading: Icon(
                   Icons.calendar_today,
@@ -124,16 +124,63 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-            RoundedButton(
+            SizedBox(
+              width: 250.0,
+              child: RaisedButton(
+                color: kPurpleColor,
+                textColor: Colors.white,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(10.0),
+                splashColor: Colors.purpleAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0),
+                    side: BorderSide()),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                },
+                child: Text(
+                  "Settings",
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 250.0,
+              child: RaisedButton(
+                color: kPurpleColor,
+                textColor: Colors.white,
+                disabledColor: Colors.grey,
+                disabledTextColor: Colors.black,
+                padding: EdgeInsets.all(10.0),
+                splashColor: Colors.purpleAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0),
+                    side: BorderSide()),
+                onPressed: () {
+                  Provider.of<UserModel>(context, listen: false).logout();
+                  Navigator.pushNamed(context, WelcomeScreen.id);
+                },
+                child: Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+
+            /* RoundedButton(
               title: 'Update data',
               colour: kLightBlueColor,
               onPressed: () {
                 Navigator.pushNamed(context, ProfileScreen.id);
               },
-            ),
+            ), */
           ],
         ),
-      ),
+      ),),
     );
   }
 }
