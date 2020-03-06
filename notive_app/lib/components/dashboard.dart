@@ -8,8 +8,11 @@ import 'package:provider/provider.dart';
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    void openListView() {
-      Navigator.pushNamed(context, ListViewScreen.id);
+    void openListView(String name) {
+      Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListViewScreen(listName: name,)),
+                );
     }
 
     return Consumer<UserModel>(
@@ -22,7 +25,7 @@ class Dashboard extends StatelessWidget {
               listName: user.lists[index].name,
               onPress: () {
                 user.curListIndex = index;
-                openListView();
+                openListView(user.lists[index].name);
               },
               deleteCallback: () {
                 user.deleteList(user.lists[index]);
@@ -30,36 +33,6 @@ class Dashboard extends StatelessWidget {
             );
           }),
         );
-
-//         return ListView.builder(
-//           shrinkWrap: true,
-//           itemBuilder: (context, index) {
-//             return Container(
-//               child: SingleChildScrollView(
-//                 child: Center(
-//                   child: ReusableListCard(
-//                     color: RandomColor().randomColor(),
-//                     listName: listData.lists[index].listName,
-//                     //TODO add Function onPress here
-//                     onPress: openListView,
-//                   ),
-//                 ),
-//               ),
-//             );
-
-// //              ReusableListCard(
-// //              color: RandomColor().randomColor(),
-// //              listName: listData.lists[index].listName,
-// ////              checkCallback: (bool isMuted) {
-// ////                listData.changeListName(listData.lists[index]);
-// ////              },
-// ////              deleteCallback: () {
-// ////                listData.deleteList(listData.lists[index]);
-// ////              },
-// //            );
-//           },
-//           itemCount: listData.itemsCount,
-//         );
       },
     );
   }

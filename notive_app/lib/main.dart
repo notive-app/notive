@@ -50,7 +50,6 @@ class NotiveApp extends StatelessWidget {
         DashboardScreen.id: (context) => DashboardScreen(),
         ListViewScreen.id: (context) => ListViewScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
-        ListViewScreen.id: (context) => ListViewScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
         MapViewScreen.id: (context) => MapViewScreen(),

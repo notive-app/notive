@@ -3,6 +3,8 @@ import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
 
+// not being used in this version
+
 class CustomDrawer extends StatelessWidget {
   CustomDrawer();
 
@@ -33,7 +35,6 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Map'),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()),
@@ -45,7 +46,6 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Lists'),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ListViewScreen()),
@@ -57,7 +57,6 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Archived Lists'),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => DashboardScreen()),
@@ -69,7 +68,6 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Account'),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()),
@@ -81,7 +79,6 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Settings'),
               selected: true,
               onTap: () {
-                //why is this giving an error?
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingsScreen()),
