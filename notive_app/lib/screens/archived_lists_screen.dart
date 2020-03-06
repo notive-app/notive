@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/mapview_screen.dart';
@@ -15,128 +16,7 @@ class ArchivedListsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.white,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                  //color: Colors.black,
-                  ),
-              child: Text(
-                'MENU',
-                style: TextStyle(
-                  //color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.map,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Map View',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-              onTap: () {
-                //why is this giving an error?
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MapViewScreen()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.view_list,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Dashboard',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-              onTap: () {
-                //why is this giving an error?
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.playlist_add_check,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Archived Lists',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-              onTap: () {
-                //why is this giving an error?
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ArchivedListsScreen()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.account_circle,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Account',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-              onTap: () {
-                //why is this giving an error?
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Settings',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-              onTap: () {
-                //why is this giving an error?
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsScreen()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: kOrangeColor,
-              ),
-              title: Text(
-                'Log Out',
-                style: TextStyle(color: kOrangeColor),
-              ),
-              selected: true,
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomNav(selectedIndex: 1,),
       appBar: AppBar(
         title: Text(
           'Archived Lists',

@@ -17,13 +17,13 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
         child: MaterialButton(
           onPressed: onPressed,
-          minWidth: 150.0,
+          minWidth: 100.0,
           height: 42.0,
           child: Text(
             title,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 25.0,
+              fontSize: 15.0,
               fontWeight: FontWeight.w500,
             ),
           ),

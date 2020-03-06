@@ -25,7 +25,7 @@ class AddItemScreen extends StatelessWidget {
             Text(
               'Add a New Item',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 25.0, color: kOrangeColor),
+              style: TextStyle(fontSize: 25.0, color: kPurpleColor),
             ),
             TextField(
               //TODO check the maximum length that the string can take here
@@ -45,7 +45,7 @@ class AddItemScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              color: kOrangeColor,
+              color: kPurpleColor,
               onPressed: () {
                 Provider.of<UserModel>(context, listen: false)
                     .addItem(newItemString);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
+import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/login_screen.dart';
@@ -35,7 +36,7 @@ class NotiveApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: Colors.orange,
+        primaryColor: kOffWhiteColor,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -49,7 +50,6 @@ class NotiveApp extends StatelessWidget {
         DashboardScreen.id: (context) => DashboardScreen(),
         ListViewScreen.id: (context) => ListViewScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
-        ListViewScreen.id: (context) => ListViewScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
         MapViewScreen.id: (context) => MapViewScreen(),

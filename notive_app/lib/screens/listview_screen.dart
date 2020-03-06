@@ -7,22 +7,24 @@ import 'constants.dart';
 
 class ListViewScreen extends StatefulWidget {
   static const String id = 'listview_screen';
+  final String listName;
 
+  ListViewScreen({this.listName: '',});
   @override
   _ListViewScreenState createState() => _ListViewScreenState();
 }
 
 class _ListViewScreenState extends State<ListViewScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO add drawer here
       appBar: AppBar(
-        title: Text('List Items'),
+        title: Text(''),
       ),
       //backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: kOrangeColor,
+        backgroundColor: kPurpleColor,
         child: Icon(
           Icons.add,
           color: Colors.black,
@@ -51,20 +53,11 @@ class _ListViewScreenState extends State<ListViewScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-//                CircleAvatar(
-//                  child: Icon(
-//                    Icons.list,
-//                    size: 30.0,
-//                    color: kOrangeColor,
-//                  ),
-//                  //backgroundColor: Colors.white,
-//                  radius: 30.0,
-//                ),
                 SizedBox(
                   height: 15.0,
                 ),
                 Text(
-                  'List Name',
+                  widget.listName,
                   style: TextStyle(
                       //color: Colors.white,
                       fontSize: 40.0,
