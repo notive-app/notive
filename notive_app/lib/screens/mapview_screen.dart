@@ -55,15 +55,16 @@ class _MapViewScreenState extends State<MapViewScreen> {
       print('${placemark[0].name}');
     });
   }
-  Marker markerOne = Marker(
+  /* Marker markerOne = Marker(
   markerId: MarkerId('gramercy'),
   position: _initialPosition,
   infoWindow: InfoWindow(title: 'Gramercy Tavern'),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueRed,
-  ),
-);
+  ), */
+//);
   // 1
+//SEARCH IN MAP CODE
 //  void searchNearby(double latitude, double longitude) async {
 //    setState(() {
 //      markers.clear(); // 2
@@ -110,9 +111,9 @@ class _MapViewScreenState extends State<MapViewScreen> {
                   tilt: 75.0, // 2
                 ),
                 //TODO check how to get a list of variables ??
-                markers: {
+                /* markers:{
                   markerOne
-                },
+                }, */
               ),
             ),
             RoundedButton(
