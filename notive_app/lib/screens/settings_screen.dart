@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:notive_app/components/custom_drawer.dart';
 import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/range_settings_screen.dart';
 
