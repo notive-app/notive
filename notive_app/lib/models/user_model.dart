@@ -13,6 +13,8 @@ class UserModel extends ChangeNotifier {
   int curListIndex;
   List<ListModel> _lists = [];
   bool isLoggedIn = false;
+  String lat = "39.871100";
+  String long = "32.749939";
 
   UserModel({this.id, this.email, this.name, this.surname});
 
@@ -25,9 +27,15 @@ class UserModel extends ChangeNotifier {
       this.email = user["email"];
       this.name = user["name"];
       this.surname = user["surname"];
+//      Position position = await Geolocator()
+//          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//
+//      this.lat = position.latitude.toString();
+//      this.long = position.longitude.toString();
       isLoggedIn = true;
       response = await fillUserLists();
       setLists(response);
+      setAllItemVenues();
       notifyListeners();
       return true;
     }
@@ -151,6 +159,20 @@ class UserModel extends ChangeNotifier {
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
     this._lists = lists;
+  }
+
+  void setItemVenues(ItemModel item) async{
+    await item.setVenuesFromFSQ(this.lat, this.long);
+    print('venues');
+    print(item.venues);
+  }
+
+  void setAllItemVenues() async{
+    for(var i=0; i<lists.length; i++){
+      for(var j=0; j<lists[i].items.length; j++){
+        await setItemVenues(lists[i].items[j]);
+      }
+    }
   }
 
 }
