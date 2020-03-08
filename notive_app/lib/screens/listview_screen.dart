@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/item_list.dart';
 import 'package:notive_app/screens/add_item_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:notive_app/models/list_model.dart';
 import 'constants.dart';
 
-class ListViewScreen extends StatefulWidget {
+class ListViewScreen extends StatelessWidget {
   static const String id = 'listview_screen';
   final String listName;
 
   ListViewScreen({this.listName: '',});
-  @override
-  _ListViewScreenState createState() => _ListViewScreenState();
-}
-
-class _ListViewScreenState extends State<ListViewScreen> {
-  
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +49,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                   height: 15.0,
                 ),
                 Text(
-                  widget.listName,
+                  listName,
                   style: TextStyle(
                       //color: Colors.white,
                       fontSize: 40.0,

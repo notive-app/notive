@@ -53,7 +53,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
          "ll":  ll
           };
           sendFRequest(params).then((List<dynamic> response){
-            print("babamm");
             if(response != null){
               Map<String, dynamic> mapped;
               List<dynamic> venues = response[1]["response"]["venues"];

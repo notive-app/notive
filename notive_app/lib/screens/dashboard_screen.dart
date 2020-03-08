@@ -2,22 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/models/user_model.dart';
-import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
-import 'package:notive_app/screens/mapview_screen.dart';
-import 'package:notive_app/screens/profile_screen.dart';
-import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   static const String id = 'dashboard_screen';
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
 
-class _DashboardScreenState extends State<DashboardScreen> {
   Future<String> createDialogBox(BuildContext context) async {
     TextEditingController customController = TextEditingController();
     // create a pop up screen upon clicking add button
@@ -76,3 +67,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
         body: Dashboard());
   }
 }
+
