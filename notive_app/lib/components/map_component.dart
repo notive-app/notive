@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/user_model.dart';
+import 'package:notive_app/models/venue_model.dart';
 import 'package:provider/provider.dart';
 
 
@@ -59,30 +61,28 @@ class Map extends StatelessWidget {
 //    _lastMapPosition = position.target;
   }
 
-//  void setPinsOnMap(Map<String, dynamic> itemModel){
-//    if(itemModel!=null){
-//      String itemName = itemModel["name"];
-//      List<dynamic> itemData = itemModel["itemData"];
-//      setState(() {
-//        for(int i=0; i<itemData.length; i++){
-//          //get latlang
-//          String dataName = itemData[i]["name"].toString();
-//          Map<String, dynamic> dataLoc = itemData[i]["location"];
-//          LatLng venuePosition = new LatLng(dataLoc["lat"], dataLoc["lng"]); //check item class
-//          _markers.add(
-//              Marker(
-//                  markerId: MarkerId(venuePosition.toString()),
-//                  position: venuePosition,
-//                  infoWindow: InfoWindow(
-//                      title: dataName,
-//                      snippet: itemName,
-//                      onTap: () {}),
-//                  onTap: () {},
-//                  icon: BitmapDescriptor.defaultMarker));
-//        }
-//      });
-//    }
-//  }
+  Set<Marker> getMarkers(List<ItemModel> items){
+   Set<Marker> markers = new Set(); 
+   if(items!=null){
+       for(int i=0; i<items.length; i++){
+         for(int j = 0; j<items[i].venues.length; j++){
+           Venue currVenue = items[i].venues[j];
+            LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
+            markers.add(
+             Marker(
+                 markerId: MarkerId(venuePosition.toString()),
+                 position: venuePosition,
+                 infoWindow: InfoWindow(
+                     title: currVenue.name,
+                     snippet: items[i].name,
+                     onTap: () {}),
+                 onTap: () {},
+                 icon: BitmapDescriptor.defaultMarker));
+         }
+       }
+   }
+   return markers;
+ }
 
 //  _onAddMarkerButtonPressed() {
 //    setState(() {
@@ -115,7 +115,7 @@ class Map extends StatelessWidget {
         builder: (context, user, child) {
           return Container(
               child: GoogleMap(
-                markers: null,
+                markers: getMarkers(user.lists[0].items),
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
