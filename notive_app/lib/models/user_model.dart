@@ -26,7 +26,7 @@ class UserModel extends ChangeNotifier {
       this.name = user["name"];
       this.surname = user["surname"];
       isLoggedIn = true;
-      response = await fillUserLists();      
+      response = await fillUserLists();
       setLists(response);
       notifyListeners();
       return true;

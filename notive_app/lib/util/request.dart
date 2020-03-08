@@ -158,15 +158,15 @@ Future<List<ListModel>> fillUserLists() async{
     List<ItemModel> listItems = [];
 
     // convert dynamic list to Notive ItemModel list 
-    // if(responseItems != null){
-    //   for (var i = 0; i < responseItems.length; i++) {
-    //     ItemModel itemToAdd = ItemModel.fromJson(responseItems[i]);
-    //     String query = itemToAdd.name;
-    //     itemToAdd.setItemData(query);
-    //     print(itemToAdd.itemData);
-    //     listItems.add(itemToAdd);
-    //   }
-    // }
+    if(responseItems != null){
+      for (var i = 0; i < responseItems.length; i++) {
+        ItemModel itemToAdd = ItemModel.fromJson(responseItems[i]);
+        String query = itemToAdd.name;
+        itemToAdd.setItemData(query);
+        print(itemToAdd.itemData);
+        listItems.add(itemToAdd);
+      }
+    }
     // set items of the list 
     lists[i].setItems(listItems);
   }
@@ -210,3 +210,7 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   response = await sendRequest('item/$listId/$itemId/check', data, 'PUT');
   return [response[0], response[1]];
 }
+
+
+
+
