@@ -17,7 +17,7 @@ class MapViewScreen extends StatelessWidget {
         title: Text('Map View'),
         //backgroundColor: Colors.black,
       ),
-      body: MapComponent(),
+      body: Map(),
     );
   }
 }

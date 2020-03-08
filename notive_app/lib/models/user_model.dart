@@ -163,8 +163,6 @@ class UserModel extends ChangeNotifier {
 
   void setItemVenues(ItemModel item) async{
     await item.setVenuesFromFSQ(this.lat, this.long);
-    print('venues');
-    print(item.venues);
   }
 
   void setAllItemVenues() async{
