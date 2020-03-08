@@ -1,2 +1,0 @@
-include flaskr/schema.sql
-global-exclude *.pyc

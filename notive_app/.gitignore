@@ -83,8 +83,6 @@ doc/api/
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/Runner/AppDelegate.swift
 **/ios/Flutter/Flutter.podspec
 **/ios/Flutter/flutter_export_environment.sh
 
