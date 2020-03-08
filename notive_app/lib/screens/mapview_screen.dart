@@ -1,18 +1,10 @@
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
-import 'constants.dart';
-import 'package:notive_app/screens/archived_lists_screen.dart';
-import 'package:notive_app/screens/constants.dart';
-import 'package:notive_app/screens/profile_screen.dart';
-import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/dashboard_screen.dart';
-import 'package:notive_app/components/rounded_button.dart';
-//import 'dart:convert';
-//import 'package:http/http.dart' as http;
-//import 'package:flutter/services.dart' show rootBundle;
-//TODO add --> import 'package:map_controller/map_controller.dart';
-//TODO check add map controls and map assets
+import 'package:notive_app/util/request.dart';
 
 class MapViewScreen extends StatefulWidget {
   static const String id = 'mapview_screen';
@@ -21,151 +13,153 @@ class MapViewScreen extends StatefulWidget {
 }
 
 class _MapViewScreenState extends State<MapViewScreen> {
-  static const String _API_KEY = '{{AIzaSyAKAT8GgEpqEYfCp_qBHLE5M5BhPz6sCEk}}';
+  Completer<GoogleMapController> controller1 = Completer();
 
-  GoogleMapController mapController;
-  final LatLng _center = const LatLng(40.712776, -74.005974);
-  List<Marker> markers = <Marker>[];
-  //40.712776, -74.005974 - NY
-  //39.8674631968, 32.7425503631 - Ankara
+  //static LatLng _center = LatLng(-15.4630239974464, 28.363397732282127);
+  static LatLng _initialPosition;
+  final Set<Marker> _markers = {};
+  static LatLng _lastMapPosition = _initialPosition;
 
-  void _onMapCreated(GoogleMapController controller) {
-    _setStyle(controller);
-    mapController = controller;
+  @override
+  void initState() {
+    super.initState();
+    _getUserLocation();
   }
 
-  void _setStyle(GoogleMapController controller) async {
-    String value = await DefaultAssetBundle.of(context)
-        .loadString('assets/maps_style.json');
-    controller.setMapStyle(value);
+  void _getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+      print('${placemark[0].name}');
+    });
+  }
+  
+  Future<String> getCurrentLocation() async {
+    String res = "";
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return res + position.latitude.toString() + ", " + position.longitude.toString();
   }
 
-  // 1
-//  void searchNearby(double latitude, double longitude) async {
-//    setState(() {
-//      markers.clear(); // 2
-//    });
-//    // 3
-//    String url =
-//        '$baseUrl?key=$_API_KEY&location=$latitude,$longitude&radius=10000&keyword=${widget.keyword}';
-//    print(url);
-//    // 4
-//    final response = await http.get(url);
-//    // 5
-//    if (response.statusCode == 200) {
-//      final data = json.decode(response.body);
-//      _handleResponse(data);
-//    } else {
-//      throw Exception('An error occurred getting places nearby');
-//    }
-//    setState(() {
-//      searching = false; // 6
-//    });
-//  }
+  _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      controller1.complete(controller);
+      getCurrentLocation().then((String ll){
+          Map<String,String> params = {
+         "query": "Pizza",
+         "ll":  ll
+          };
+          sendFRequest(params).then((List<dynamic> response){
+            print("babamm");
+            if(response != null){
+              Map<String, dynamic> mapped;
+              List<dynamic> venues = response[1]["response"]["venues"];
+              mapped = {"name": "Pizza", "itemData": venues};
+              print(venues);
+              setPinsOnMap(mapped);
+            } 
+          });
+      });
+    });
+  }
+
+  MapType _currentMapType = MapType.normal;
+
+  _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
+  }
+
+  void setPinsOnMap(Map<String, dynamic> itemModel){
+    if(itemModel!=null){
+      String itemName = itemModel["name"];
+      List<dynamic> itemData = itemModel["itemData"];
+      setState(() {
+          for(int i=0; i<itemData.length; i++){
+            //get latlang 
+            String dataName = itemData[i]["name"].toString();
+            Map<String, dynamic> dataLoc = itemData[i]["location"];
+            LatLng venuePosition = new LatLng(dataLoc["lat"], dataLoc["lng"]); //check item class
+            _markers.add(  
+            Marker(
+            markerId: MarkerId(venuePosition.toString()),
+            position: venuePosition,
+            infoWindow: InfoWindow(
+                title: dataName,
+                snippet: itemName,
+                onTap: () {}),
+            onTap: () {},
+            icon: BitmapDescriptor.defaultMarker));
+          }
+      });
+    }
+  }
+
+  _onAddMarkerButtonPressed() {
+    setState(() {
+      _markers.add(Marker(
+          markerId: MarkerId(_lastMapPosition.toString()),
+          position: _lastMapPosition,
+          infoWindow: InfoWindow(
+              title: "Pizza Parlour",
+              snippet: "This is a snippet",
+              onTap: () {}),
+          onTap: () {},
+          icon: BitmapDescriptor.defaultMarker));
+    });
+  }
+
+  Widget mapButton(Function function, Icon icon, Color color) {
+    return RawMaterialButton(
+      onPressed: function,
+      child: icon,
+      shape: new CircleBorder(),
+      elevation: 2.0,
+      fillColor: color,
+      padding: const EdgeInsets.all(7.0),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNav(selectedIndex: 2,),
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: 2,
+      ),
       appBar: AppBar(
         title: Text('Map View'),
         //backgroundColor: Colors.black,
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Flexible(
-              child: GoogleMap(
-                //mapType: MapType.hybrid,
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: _center,
-                  zoom: 11.0,
-                  bearing: 15.0, // 1
-                  tilt: 75.0, // 2
+      body: _initialPosition == null
+          ? Container(
+              child: Center(
+                child: Text(
+                  'loading map..',
+                  style: TextStyle(
+                      fontFamily: 'Avenir-Medium', color: Colors.grey[400]),
                 ),
-                //TODO check how to get a list of variables ??
-                markers: {
-                  markerOne,
-                  markerTwo,
-                  markerThree,
-                  markerFour,
-                  markerFive,
-                  markerSix,
-                },
               ),
+            )
+          : Container(
+              child: Stack(children: <Widget>[
+                GoogleMap(
+                  markers: _markers,
+                  mapType: _currentMapType,
+                  initialCameraPosition: CameraPosition(
+                    target: _initialPosition,
+                    zoom: 14.4746,
+                  ),
+                  onMapCreated: _onMapCreated,
+                  zoomGesturesEnabled: true,
+                  onCameraMove: _onCameraMove,
+                  myLocationEnabled: true,
+                  compassEnabled: true,
+                  myLocationButtonEnabled: false,
+                ),
+              ]),
             ),
-            RoundedButton(
-              title: 'Check Locations in List View',
-              colour: kLightBlueColor,
-              onPressed: () {
-                Navigator.pushNamed(context, MapViewScreen.id);
-              },
-            ),
-          ],
-        ),
-      ),
-//      floatingActionButton: FloatingActionButton.extended(
-//        onPressed: () {
-//          searchNearby(39.8674631968, 32.7425503631); // 2
-//        },
-//        label: Text('Places Nearby'), // 3
-//        icon: Icon(Icons.place), // 4
-//      ),
     );
   }
 }
-
-Marker markerOne = Marker(
-  markerId: MarkerId('gramercy'),
-  position: LatLng(40.738380, -73.988426),
-  infoWindow: InfoWindow(title: 'Gramercy Tavern'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerTwo = Marker(
-  markerId: MarkerId('bernardin'),
-  position: LatLng(40.761421, -73.981667),
-  infoWindow: InfoWindow(title: 'Le Bernardin'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerThree = Marker(
-  markerId: MarkerId('bluehill'),
-  position: LatLng(40.732128, -73.999619),
-  infoWindow: InfoWindow(title: 'Blue Hill'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerFour = Marker(
-  markerId: MarkerId('newyork1'),
-  position: LatLng(40.742451, -74.005959),
-  infoWindow: InfoWindow(title: 'Los Tacos'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerFive = Marker(
-  markerId: MarkerId('newyork2'),
-  position: LatLng(40.729640, -73.983510),
-  infoWindow: InfoWindow(title: 'Tree Bistro'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerSix = Marker(
-  markerId: MarkerId('newyork3'),
-  position: LatLng(40.719109, -74.000183),
-  infoWindow: InfoWindow(title: 'Le Coucou'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
