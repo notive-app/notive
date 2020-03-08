@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+
 import 'package:http/http.dart' as http;
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
-import 'package:geolocator/geolocator.dart';
 
 String apiUrl = "http://139.59.155.177:5000/"; //temp
 
@@ -64,10 +64,10 @@ Future<List<dynamic>> sendFRequest(Map<String, String> params) async {
   params["client_secret"] = "GCNWT1DEHDKT524H5YGNBAO25BA03S3LVFAYEXLEAO03UP0M";
   params["v"] = "20200101";
 
-  Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  String ll = position.latitude.toString() + ", " + position.longitude.toString();
-  params["ll"] = ll;
+//  Position position = await Geolocator()
+//        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//  String ll = position.latitude.toString() + ", " + position.longitude.toString();
+//  params["ll"] = ll;
 
   var uriWithParams = Uri.https(baseURL, secondary, params);
   final response = await http.get(
@@ -76,6 +76,9 @@ Future<List<dynamic>> sendFRequest(Map<String, String> params) async {
   );
   updateCookie(response);
   final responseJson = json.decode(response.body);
+//  print("response");
+//  print( response.statusCode);
+//  print( responseJson);
   return [response.statusCode, responseJson];
 }
 
@@ -161,9 +164,8 @@ Future<List<ListModel>> fillUserLists() async{
     if(responseItems != null){
       for (var i = 0; i < responseItems.length; i++) {
         ItemModel itemToAdd = ItemModel.fromJson(responseItems[i]);
-        String query = itemToAdd.name;
-        itemToAdd.setItemData(query);
-        print(itemToAdd.itemData);
+//        String query = itemToAdd.name;
+//        itemToAdd.setItemData(query);
         listItems.add(itemToAdd);
       }
     }
@@ -171,15 +173,6 @@ Future<List<ListModel>> fillUserLists() async{
     lists[i].setItems(listItems);
   }
   return lists;
-}
-
-void updateCookie(http.Response response) {
-  String rawCookie = response.headers['set-cookie'];
-  if (rawCookie != null) {
-    int index = rawCookie.indexOf(';');
-    headers['cookie'] =
-    (index == -1) ? rawCookie : rawCookie.substring(0, index);
-  }
 }
 
 Future<List<dynamic>> createUserList(Map<String, dynamic> data) async{
@@ -209,6 +202,15 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   List<dynamic> response;
   response = await sendRequest('item/$listId/$itemId/check', data, 'PUT');
   return [response[0], response[1]];
+}
+
+void updateCookie(http.Response response) {
+  String rawCookie = response.headers['set-cookie'];
+  if (rawCookie != null) {
+    int index = rawCookie.indexOf(';');
+    headers['cookie'] =
+    (index == -1) ? rawCookie : rawCookie.substring(0, index);
+  }
 }
 
 
