@@ -14,7 +14,7 @@ description: Motivational Notifications - by the Notive team.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -29,6 +29,7 @@ dependencies:
   intl: ^0.16.1
   google_nav_bar: ^2.0.0
   line_icons: ^0.2.0
+  geolocator: ^5.3.0
 
 dev_dependencies:
   flutter_test:

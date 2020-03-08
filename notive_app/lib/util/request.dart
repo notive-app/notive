@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 String apiUrl = "http://139.59.155.177:5000/"; //temp
 
@@ -54,6 +55,28 @@ Future<List<dynamic>> sendRequest(
   else{
     return null;
   }
+}
+
+Future<List<dynamic>> sendFRequest(Map<String, String> params) async {
+  var baseURL = "api.foursquare.com";
+  var secondary = "/v2/venues/search";
+  params["client_id"] = "CFOUGMPKOX5SNJK2LF4CWDBOBZKWS3G4BBF1BWJC3C5CBCXR";
+  params["client_secret"] = "GCNWT1DEHDKT524H5YGNBAO25BA03S3LVFAYEXLEAO03UP0M";
+  params["v"] = "20200101";
+
+  Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  String ll = position.latitude.toString() + ", " + position.longitude.toString();
+  params["ll"] = ll;
+
+  var uriWithParams = Uri.https(baseURL, secondary, params);
+  final response = await http.get(
+    uriWithParams,
+    headers: headers,
+  );
+  updateCookie(response);
+  final responseJson = json.decode(response.body);
+  return [response.statusCode, responseJson];
 }
 
 Future<List<dynamic>> loginUser(Map<String, dynamic> data) async {
@@ -137,7 +160,11 @@ Future<List<ListModel>> fillUserLists() async{
     // convert dynamic list to Notive ItemModel list 
     if(responseItems != null){
       for (var i = 0; i < responseItems.length; i++) {
-        listItems.add(ItemModel.fromJson(responseItems[i]));
+        ItemModel itemToAdd = ItemModel.fromJson(responseItems[i]);
+        String query = itemToAdd.name;
+        itemToAdd.setItemData(query);
+        print(itemToAdd.itemData);
+        listItems.add(itemToAdd);
       }
     }
     // set items of the list 
@@ -183,6 +210,7 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   response = await sendRequest('item/$listId/$itemId/check', data, 'PUT');
   return [response[0], response[1]];
 }
+
 
 
 

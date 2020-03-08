@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'constants.dart';
-import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
-import 'package:notive_app/screens/profile_screen.dart';
-import 'package:notive_app/screens/settings_screen.dart';
-import 'package:notive_app/screens/dashboard_screen.dart';
 import 'package:notive_app/components/rounded_button.dart';
+import 'package:geolocator/geolocator.dart';
 //import 'dart:convert';
 //import 'package:http/http.dart' as http;
 //import 'package:flutter/services.dart' show rootBundle;
@@ -24,7 +21,8 @@ class _MapViewScreenState extends State<MapViewScreen> {
   static const String _API_KEY = '{{AIzaSyAKAT8GgEpqEYfCp_qBHLE5M5BhPz6sCEk}}';
 
   GoogleMapController mapController;
-  final LatLng _center = const LatLng(40.712776, -74.005974);
+  //_final LatLng _center = const LatLng(40.712776, -74.005974);
+
   List<Marker> markers = <Marker>[];
   //40.712776, -74.005974 - NY
   //39.8674631968, 32.7425503631 - Ankara
@@ -40,7 +38,33 @@ class _MapViewScreenState extends State<MapViewScreen> {
     controller.setMapStyle(value);
   }
 
+  static LatLng _initialPosition;
+  @override
+  void initState() {
+    super.initState();
+    _getUserLocation();
+  }
+
+  void _getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      _initialPosition = LatLng(position.latitude, position.longitude);
+      print('${placemark[0].name}');
+    });
+  }
+  /* Marker markerOne = Marker(
+  markerId: MarkerId('gramercy'),
+  position: _initialPosition,
+  infoWindow: InfoWindow(title: 'Gramercy Tavern'),
+  icon: BitmapDescriptor.defaultMarkerWithHue(
+    BitmapDescriptor.hueRed,
+  ), */
+//);
   // 1
+//SEARCH IN MAP CODE
 //  void searchNearby(double latitude, double longitude) async {
 //    setState(() {
 //      markers.clear(); // 2
@@ -66,7 +90,9 @@ class _MapViewScreenState extends State<MapViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNav(selectedIndex: 2,),
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: 2,
+      ),
       appBar: AppBar(
         title: Text('Map View'),
         //backgroundColor: Colors.black,
@@ -79,20 +105,15 @@ class _MapViewScreenState extends State<MapViewScreen> {
                 //mapType: MapType.hybrid,
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition(
-                  target: _center,
+                  target: _initialPosition,
                   zoom: 11.0,
                   bearing: 15.0, // 1
                   tilt: 75.0, // 2
                 ),
                 //TODO check how to get a list of variables ??
-                markers: {
-                  markerOne,
-                  markerTwo,
-                  markerThree,
-                  markerFour,
-                  markerFive,
-                  markerSix,
-                },
+                /* markers:{
+                  markerOne
+                }, */
               ),
             ),
             RoundedButton(
@@ -116,56 +137,5 @@ class _MapViewScreenState extends State<MapViewScreen> {
   }
 }
 
-Marker markerOne = Marker(
-  markerId: MarkerId('gramercy'),
-  position: LatLng(40.738380, -73.988426),
-  infoWindow: InfoWindow(title: 'Gramercy Tavern'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
 
-Marker markerTwo = Marker(
-  markerId: MarkerId('bernardin'),
-  position: LatLng(40.761421, -73.981667),
-  infoWindow: InfoWindow(title: 'Le Bernardin'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
 
-Marker markerThree = Marker(
-  markerId: MarkerId('bluehill'),
-  position: LatLng(40.732128, -73.999619),
-  infoWindow: InfoWindow(title: 'Blue Hill'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerFour = Marker(
-  markerId: MarkerId('newyork1'),
-  position: LatLng(40.742451, -74.005959),
-  infoWindow: InfoWindow(title: 'Los Tacos'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerFive = Marker(
-  markerId: MarkerId('newyork2'),
-  position: LatLng(40.729640, -73.983510),
-  infoWindow: InfoWindow(title: 'Tree Bistro'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
-
-Marker markerSix = Marker(
-  markerId: MarkerId('newyork3'),
-  position: LatLng(40.719109, -74.000183),
-  infoWindow: InfoWindow(title: 'Le Coucou'),
-  icon: BitmapDescriptor.defaultMarkerWithHue(
-    BitmapDescriptor.hueRed,
-  ),
-);
