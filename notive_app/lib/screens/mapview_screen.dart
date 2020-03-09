@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
-import 'package:notive_app/components/map_component.dart';
-
+import 'package:notive_app/components/map.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
@@ -17,7 +16,7 @@ class MapViewScreen extends StatelessWidget {
         title: Text('Map View'),
         //backgroundColor: Colors.black,
       ),
-      body: MapComponent(),
+      body: Map(),
     );
   }
 }
