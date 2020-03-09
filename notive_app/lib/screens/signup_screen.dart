@@ -41,63 +41,63 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Hero(
                   tag: 'logo',
                   child: Container(
+                    padding: EdgeInsets.all(5),
                     height: 200.0,
                     child: Image.asset('images/logo.png'),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 48.0,
+              
+              Container(
+                padding: EdgeInsets.all(5),
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: kTextFieldDecorationSign.copyWith(
+                      hintText: 'Enter your email'),
+                ),
               ),
-              TextField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration: kTextFieldDecorationSign.copyWith(
-                    hintText: 'Enter your email'),
+             
+              Container(
+                padding: EdgeInsets.all(5),
+                child: TextField(
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: kTextFieldDecorationSign.copyWith(
+                      hintText: 'Enter your password'),
+                ),
               ),
-              SizedBox(
-                height: 8.0,
+              
+              Container(
+                padding: EdgeInsets.all(5),
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    name = value;
+                  },
+                  decoration: kTextFieldDecorationSign.copyWith(
+                      hintText: 'Enter your name'),
+                ),
               ),
-              TextField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: kTextFieldDecorationSign.copyWith(
-                    hintText: 'Enter your password'),
+              
+              Container(
+                padding: EdgeInsets.all(5),
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    surname = value;
+                  },
+                  decoration: kTextFieldDecorationSign.copyWith(
+                      hintText: 'Enter your surname'),
+                ),
               ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  name = value;
-                },
-                decoration: kTextFieldDecorationSign.copyWith(
-                    hintText: 'Enter your name'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  surname = value;
-                },
-                decoration: kTextFieldDecorationSign.copyWith(
-                    hintText: 'Enter your surname'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              SizedBox(
-                height: 24.0,
-              ),
+              
               RoundedButton(
                 title: 'Register',
                 colour: kPurpleColor,
