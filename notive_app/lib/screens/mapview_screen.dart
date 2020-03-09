@@ -13,6 +13,7 @@ class MapViewScreen extends StatelessWidget {
         selectedIndex: 2,
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Map View'),
         //backgroundColor: Colors.black,
       ),

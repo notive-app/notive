@@ -14,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: CustomBottomNav(selectedIndex: 3,),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('User Profile'),
         //backgroundColor: Colors.black,
       ),
