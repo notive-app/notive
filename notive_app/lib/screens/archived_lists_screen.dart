@@ -9,6 +9,7 @@ class ArchivedListsScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: CustomBottomNav(selectedIndex: 1,),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           'Archived Lists',
         ),
