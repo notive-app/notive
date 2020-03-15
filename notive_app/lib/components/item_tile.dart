@@ -38,18 +38,3 @@ class ItemTile extends StatelessWidget {
   }
 }
 
-//
-//class WishCheckBox extends StatelessWidget {
-//  final bool checkBState;
-//  final Function toggleCheckState;
-//
-//  WishCheckBox({this.checkBState, this.toggleCheckState});
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Checkbox(
-//        activeColor: Colors.lightBlueAccent,
-//        value: checkBState,
-//        onChanged: toggleCheckState);
-//  }
-//}

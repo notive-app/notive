@@ -41,7 +41,7 @@ class ReusableListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      onDoubleTap: deleteAlert,
+      onLongPress: deleteAlert,
     );
   }
 }

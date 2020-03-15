@@ -12,24 +12,41 @@ class MapViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List> chooseList(BuildContext context, UserModel userModel) async {
-      return await showDialog<List>(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: const Text('Select List'),
-            children: List.generate(userModel.listsCount, (index){
-                return SimpleDialogOption(
-                onPressed: () {
-                  userModel.changeCurrMap(index);
-                  print(userModel.userMapIndex);
-                  Navigator.pop(context);
-                },
-                child: Text(userModel.lists[index].name),
-              );
-            }),
-          );
-        });
+      return await showGeneralDialog<List>(
+          barrierColor: Colors.black.withOpacity(0.7),
+          transitionBuilder: (context, a1, a2, widget) {
+            final curvedValue = Curves.fastOutSlowIn.transform(a1.value) - 1.0;
+            return Transform(
+              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+              child: Opacity(
+                opacity: a1.value,
+                child: AlertDialog(
+                  shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0)),
+                  title: Text('Choose'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(userModel.listsCount, (index) {
+                      return SimpleDialogOption(
+                        onPressed: () {
+                          userModel.changeCurrMap(index);
+                          print(userModel.userMapIndex);
+                          Navigator.pop(context);
+                        },
+                        child: Text(userModel.lists[index].name),
+                      );
+                    }),
+                  ),
+                  //actions: <Widget>[firstButton, secondButton],
+                ),
+              ),
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: true,
+          barrierLabel: '',
+          context: context,
+          pageBuilder: (context, animation1, animation2) {});
     }
 
     return Consumer<UserModel>(

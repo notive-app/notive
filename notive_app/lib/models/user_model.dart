@@ -14,7 +14,7 @@ class UserModel extends ChangeNotifier {
   String name;
   String surname;
   int curListIndex;
-  int userMapIndex = 0;
+  int userMapIndex = 0; // open first list in map by default 
   List<ListModel> _lists = [];
   bool isLoggedIn = false;
   String lat;
