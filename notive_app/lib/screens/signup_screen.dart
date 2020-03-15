@@ -19,14 +19,14 @@ class _SignupScreenState extends State<SignupScreen> {
   bool showSpinner = false;
   String email;
   String password;
-  String name;
+  String username;
   String surname;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SignUp'),
+        title: Text('Sign Up'),
       ),
       //backgroundColor: Colors.white,
       body: ModalProgressHUD(
@@ -47,82 +47,75 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
               ),
-              
-              Container(
-                padding: EdgeInsets.all(5),
-                child: TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  decoration: kTextFieldDecorationSign.copyWith(
-                      hintText: 'Enter your email'),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    decoration: kTextFieldDecorationSign.copyWith(
+                        hintText: 'Enter your email'),
+                  ),
                 ),
               ),
-             
-              Container(
-                padding: EdgeInsets.all(5),
-                child: TextField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  decoration: kTextFieldDecorationSign.copyWith(
-                      hintText: 'Enter your password'),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: TextField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    decoration: kTextFieldDecorationSign.copyWith(
+                        hintText: 'Enter your password'),
+                  ),
                 ),
               ),
-              
-              Container(
-                padding: EdgeInsets.all(5),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    name = value;
-                  },
-                  decoration: kTextFieldDecorationSign.copyWith(
-                      hintText: 'Enter your name'),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      username = value;
+                    },
+                    decoration: kTextFieldDecorationSign.copyWith(
+                        hintText: 'Enter your username'),
+                  ),
                 ),
               ),
-              
-              Container(
-                padding: EdgeInsets.all(5),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    surname = value;
+              Flexible(
+                child: RoundedButton(
+                  title: 'Register',
+                  colour: kPurpleColor,
+                  onPressed: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+
+                    var data = Map<String, dynamic>();
+                    data["email"] = email;
+                    data["password"] = password;
+                    data["name"] = username;
+                    data["surname"] = surname;
+
+                    var result =
+                        await Provider.of<UserModel>(context, listen: false)
+                            .signUp(data);
+
+                    if (result) {
+                      Navigator.pushNamed(context, DashboardScreen.id);
+                    }
+
+                    setState(() {
+                      showSpinner = false;
+                    });
                   },
-                  decoration: kTextFieldDecorationSign.copyWith(
-                      hintText: 'Enter your surname'),
                 ),
-              ),
-              
-              RoundedButton(
-                title: 'Register',
-                colour: kPurpleColor,
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
-
-                  var data = Map<String,dynamic>();
-                  data["email"] = email;
-                  data["password"] = password;
-                  data["name"] = name;
-                  data["surname"] = surname;
-
-                  var result = await Provider.of<UserModel>(context, listen: false).
-                  signUp(data);
-
-                  if(result){
-                    Navigator.pushNamed(context, DashboardScreen.id);
-                  }
-
-                  setState(() {
-                    showSpinner = false;
-                  });
-                },
               ),
             ],
           ),
