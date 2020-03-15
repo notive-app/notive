@@ -163,7 +163,7 @@ class ProfileScreen extends StatelessWidget {
                     side: BorderSide()),
                 onPressed: () {
                   Provider.of<UserModel>(context, listen: false).logout();
-                  Navigator.pushNamed(context, WelcomeScreen.id);
+                  Navigator.of(context).pushNamedAndRemoveUntil('welcome_screen', (Route<dynamic> route) => false);
                 },
                 child: Text(
                   "Logout",
