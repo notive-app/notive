@@ -1,8 +1,10 @@
 import 'dart:collection';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
+import 'package:notive_app/models/venue_model.dart';
 import 'package:notive_app/util/request.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -12,12 +14,47 @@ class UserModel extends ChangeNotifier {
   String name;
   String surname;
   int curListIndex;
+  int userMapIndex = 0;
   List<ListModel> _lists = [];
   bool isLoggedIn = false;
   String lat;
   String long;
 
   UserModel({this.id, this.email, this.name, this.surname});
+
+
+  // fix this method 
+  Set<Marker> getMarkers(){
+    if(this.lists.length == 0){
+      return null;
+    }
+    print(this.lists);
+    List<ItemModel> items = this.lists[this.userMapIndex].items;
+    Set<Marker> markers = new Set(); 
+    if(items!=null){
+        for(int i=0; i<items.length; i++){
+          for(int j = 0; j<items[i].venues.length; j++){
+            Venue currVenue = items[i].venues[j];
+              LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
+              markers.add(
+              Marker(
+                  markerId: MarkerId(venuePosition.toString()),
+                  position: venuePosition,
+                  infoWindow: InfoWindow(
+                      title: currVenue.name,
+                      snippet: items[i].name,
+                      onTap: () {}),
+                  onTap: () {},
+                  icon: BitmapDescriptor.defaultMarker));
+          }
+        }
+    }
+    return markers;
+ }
+  void changeCurrMap(int newMapIndex){
+    this.userMapIndex = newMapIndex;
+    notifyListeners();
+  }
 
   Future<bool> login(Map<String, dynamic> data) async {
     var response = await loginUser(data);
@@ -169,3 +206,4 @@ class UserModel extends ChangeNotifier {
     //notifyListeners();
   }
 }
+
