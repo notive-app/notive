@@ -23,7 +23,7 @@ class MapViewScreen extends StatelessWidget {
                 child: AlertDialog(
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0)),
-                  title: Text('Choose'),
+                  title: Text('Choose', textAlign: TextAlign.center,),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: List.generate(userModel.listsCount, (index) {
