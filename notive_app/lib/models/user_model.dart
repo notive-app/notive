@@ -138,7 +138,7 @@ class UserModel extends ChangeNotifier {
 
   void deleteList(ListModel list) async {
     int listId = list.id;
-    userMapIndex -= 1;
+    this.userMapIndex = this.curListIndex;
     List<dynamic> result = await deleteUserList(listId);
 
     if (result[0] == 200) {

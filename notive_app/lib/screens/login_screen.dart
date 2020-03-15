@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LogIn'),
+        title: Text('Login'),
       ),
       //backgroundColor: Colors.black,
       body: ModalProgressHUD(

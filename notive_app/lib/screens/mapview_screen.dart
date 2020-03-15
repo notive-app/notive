@@ -11,7 +11,7 @@ class MapViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List> chooseList(BuildContext context, UserModel userModel) async {
+    Future<List> chooseList(BuildContext context, UserModel user) async {
       return await showGeneralDialog<List>(
           barrierColor: Colors.black.withOpacity(0.7),
           transitionBuilder: (context, a1, a2, widget) {
@@ -26,14 +26,14 @@ class MapViewScreen extends StatelessWidget {
                   title: Text('Choose', textAlign: TextAlign.center,),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: List.generate(userModel.listsCount, (index) {
+                    children: List.generate(user.listsCount, (index) {
                       return SimpleDialogOption(
                         onPressed: () {
-                          userModel.changeCurrMap(index);
-                          print(userModel.userMapIndex);
+                          user.changeCurrMap(index);
+                          print(user.userMapIndex);
                           Navigator.pop(context);
                         },
-                        child: Text(userModel.lists[index].name),
+                        child: Text(user.lists[index].name),
                       );
                     }),
                   ),
@@ -63,6 +63,7 @@ class MapViewScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             backgroundColor: kLightBlueColor,
             onPressed: () async {
+              print(user.userMapIndex);
               chooseList(context, user);
             },
             child: Icon(Icons.list),
