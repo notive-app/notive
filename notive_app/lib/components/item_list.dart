@@ -48,8 +48,12 @@ class ItemsList extends StatelessWidget {
               },
               deleteCallback: () {
                 //show dialog box 
-                
+              
                 user.deleteItem(user.lists[user.curListIndex].items[index]);
+                user.setAllItemVenues();
+              },
+              insertCallback: () {
+                user.setAllItemVenues();
               },
             
             );

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:notive_app/models/item_model.dart';
+import 'package:notive_app/models/user_model.dart';
 
 //TODO update DB first then local
 class ListModel {
@@ -41,6 +42,7 @@ class ListModel {
 
   void deleteItem(ItemModel item) {
     _items.remove(item);
+    
   }
 
   void setName(String newName) {
