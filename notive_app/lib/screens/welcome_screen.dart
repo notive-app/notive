@@ -18,7 +18,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Animation animation;
   @override
   void dispose() {
-    controller.dispose();
+    if (controller != null) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
