@@ -7,12 +7,14 @@ class ItemTile extends StatelessWidget {
   final String itemString;
   final Function checkCallback;
   final Function deleteCallback;
+  final Function insertCallback;
 
   ItemTile(
       {this.isChecked,
       this.itemString,
       this.checkCallback,
-      this.deleteCallback});
+      this.deleteCallback,
+      this.insertCallback});
 
   @override
   Widget build(BuildContext context) {

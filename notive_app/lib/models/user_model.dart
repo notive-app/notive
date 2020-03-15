@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/util/request.dart';
+import 'package:geolocator/geolocator.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
@@ -13,8 +14,8 @@ class UserModel extends ChangeNotifier {
   int curListIndex;
   List<ListModel> _lists = [];
   bool isLoggedIn = false;
-  String lat = "39.871100";
-  String long = "32.749939";
+  String lat;
+  String long;
 
   UserModel({this.id, this.email, this.name, this.surname});
 
@@ -27,11 +28,11 @@ class UserModel extends ChangeNotifier {
       this.email = user["email"];
       this.name = user["name"];
       this.surname = user["surname"];
-//      Position position = await Geolocator()
-//          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-//
-//      this.lat = position.latitude.toString();
-//      this.long = position.longitude.toString();
+      Position position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      this.lat = position.latitude.toString();
+      this.long = position.longitude.toString();
       isLoggedIn = true;
       response = await fillUserLists();
       setLists(response);
