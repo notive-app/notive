@@ -7,6 +7,7 @@ class ItemTile extends StatelessWidget {
   final String itemString;
   final Function checkCallback;
   final Function deleteCallback;
+  final Function deleteAlert;
   final Function insertCallback;
 
   ItemTile(
@@ -14,7 +15,8 @@ class ItemTile extends StatelessWidget {
       this.itemString,
       this.checkCallback,
       this.deleteCallback,
-      this.insertCallback});
+      this.insertCallback,
+      this.deleteAlert});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class ItemTile extends StatelessWidget {
         onChanged: checkCallback,
       ),
       onLongPress: deleteCallback,
+      onTap: deleteAlert,
     );
   }
 }
