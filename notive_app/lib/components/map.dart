@@ -6,10 +6,6 @@ import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:provider/provider.dart';
 
-
-//TODO make me stateless !!!
-
-
 class Map extends StatelessWidget {
 
   //static LatLng _center = LatLng(-15.4630239974464, 28.363397732282127);
