@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatelessWidget {
   static const String id = 'dashboard_screen';
-  @override
 
   Future<String> createDialogBox(BuildContext context) async {
     TextEditingController customController = TextEditingController();

@@ -6,10 +6,6 @@ import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:provider/provider.dart';
 
-
-//TODO make me stateless !!!
-
-
 class Map extends StatelessWidget {
 
   //static LatLng _center = LatLng(-15.4630239974464, 28.363397732282127);
@@ -44,35 +40,6 @@ class Map extends StatelessWidget {
 //    _lastMapPosition = position.target;
   }
 
-  Set<Marker> getMarkers(UserModel user){
-  if(user.lists.length == 0){
-    print("bos");
-    return null;
-  }
-  print(user.lists);
-  List<ItemModel> items = user.lists[0].items;
-   Set<Marker> markers = new Set(); 
-   if(items!=null){
-       for(int i=0; i<items.length; i++){
-         for(int j = 0; j<items[i].venues.length; j++){
-           Venue currVenue = items[i].venues[j];
-            LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
-            markers.add(
-             Marker(
-                 markerId: MarkerId(venuePosition.toString()),
-                 position: venuePosition,
-                 infoWindow: InfoWindow(
-                     title: currVenue.name,
-                     snippet: items[i].name,
-                     onTap: () {}),
-                 onTap: () {},
-                 icon: BitmapDescriptor.defaultMarker));
-         }
-       }
-   }
-   return markers;
- }
-
 //  _onAddMarkerButtonPressed() {
 //    setState(() {
 //      _markers.add(Marker(
@@ -104,7 +71,7 @@ class Map extends StatelessWidget {
         builder: (context, user, child) {
           return Container(
               child: GoogleMap(
-                markers: getMarkers(user),
+                markers: user.getMarkers(),
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(

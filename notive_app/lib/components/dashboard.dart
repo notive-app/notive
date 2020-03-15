@@ -6,7 +6,8 @@ import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
-  Future<void> deleteAlert(BuildContext context, bool confirm) async {
+  Future<void> deleteAlert(
+      BuildContext context, UserModel user, int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -16,23 +17,21 @@ class Dashboard extends StatelessWidget {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Destructive action.'),
                 Text('Do you want to permanently delete this list?'),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Keep list.'),
+              child: Text('Keep list'),
               onPressed: () {
-                confirm = false;
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Delete.'),
+              child: Text('Delete'),
               onPressed: () {
-                confirm = true;
+                user.deleteList(user.lists[index]);
                 Navigator.of(context).pop();
               },
             ),
@@ -66,12 +65,11 @@ class Dashboard extends StatelessWidget {
                 user.curListIndex = index;
                 openListView(user.lists[index].name);
               },
-//              deleteCallback: () {
-//                user.deleteList(user.lists[index]);
-//              },
+              deleteCallback: () {
+                user.deleteList(user.lists[index]);
+              },
               deleteAlert: () {
-                bool confirm = false;
-                deleteAlert(context, confirm);
+                deleteAlert(context, user, index);
               },
             );
           }),

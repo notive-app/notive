@@ -5,34 +5,7 @@ import 'package:notive_app/screens/constants.dart';
 import 'package:provider/provider.dart';
 
 class ItemsList extends StatelessWidget {
-//  Future<String> createDialogBox(BuildContext context) async {
-//    TextEditingController customController = TextEditingController();
-//    // create a pop up screen upon clicking add button
-//    return showDialog(
-//        context: context,
-//        builder: (context) {
-//          return AlertDialog(
-//            title: Text("Are you sure you want to delete item"),
-//            content: TextField(
-//              controller: customController,
-//            ),
-//            actions: <Widget>[
-//              MaterialButton(
-//                color: kLightBlueColor,
-//                onPressed: () {
-//                  // close the dialog box when submit is clicked.
-//                  Navigator.of(context).pop(customController.text
-//                      .toString()); //to return text back to homescreen
-//                },
-//                elevation: 0.5,
-//                child: Text("Yes"),
-//              )
-//            ],
-//          );
-//        });
-//  }
-
-  Future<void> deleteAlert(BuildContext context, bool confirm) async {
+  Future<void> deleteAlert(BuildContext context, UserModel user, int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -42,23 +15,21 @@ class ItemsList extends StatelessWidget {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Destructive action.'),
                 Text('Do you want to permanently delete this item?'),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Keep item.'),
+              child: Text('Keep item'),
               onPressed: () {
-                confirm = false;
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Delete item.'),
+              child: Text('Delete item'),
               onPressed: () {
-                confirm = true;
+                user.deleteItem(user.lists[user.curListIndex].items[index]);
                 Navigator.of(context).pop();
               },
             ),
@@ -82,11 +53,7 @@ class ItemsList extends StatelessWidget {
               },
               deleteCallback: () {
                 //show dialog box
-                bool confirm = false;
-                deleteAlert(context, confirm);
-                if (confirm) {
-                  user.deleteItem(user.lists[user.curListIndex].items[index]);
-                }
+                deleteAlert(context, user, index);
               },
             );
           },

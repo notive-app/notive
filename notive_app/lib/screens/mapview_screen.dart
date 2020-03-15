@@ -5,7 +5,6 @@ import 'package:notive_app/components/map.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/models/user_model.dart';
-import 'package:notive_app/components/rounded_button.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
@@ -13,23 +12,41 @@ class MapViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<List> chooseList(BuildContext context, UserModel userModel) async {
-      return await showDialog<List>(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return SimpleDialog(
-              title: const Text('Select List'),
-              children: <Widget>[
-                SimpleDialogOption(
-                  onPressed: () {
-                    //user.curListIndex = index;
-                    Navigator.pop(context);
-                  },
-                  child: const Text('user.lists[index].name '),
+      return await showGeneralDialog<List>(
+          barrierColor: Colors.black.withOpacity(0.7),
+          transitionBuilder: (context, a1, a2, widget) {
+            final curvedValue = Curves.fastOutSlowIn.transform(a1.value) - 1.0;
+            return Transform(
+              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+              child: Opacity(
+                opacity: a1.value,
+                child: AlertDialog(
+                  shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0)),
+                  title: Text('Choose'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(userModel.listsCount, (index) {
+                      return SimpleDialogOption(
+                        onPressed: () {
+                          userModel.changeCurrMap(index);
+                          print(userModel.userMapIndex);
+                          Navigator.pop(context);
+                        },
+                        child: Text(userModel.lists[index].name),
+                      );
+                    }),
+                  ),
+                  //actions: <Widget>[firstButton, secondButton],
                 ),
-              ],
+              ),
             );
-          });
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: true,
+          barrierLabel: '',
+          context: context,
+          pageBuilder: (context, animation1, animation2) {});
     }
 
     return Consumer<UserModel>(
@@ -41,21 +58,12 @@ class MapViewScreen extends StatelessWidget {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Text('Map View'),
-            //backgroundColor: Colors.black,
           ),
           body: Map(),
           floatingActionButton: FloatingActionButton(
             backgroundColor: kLightBlueColor,
             onPressed: () async {
               chooseList(context, user);
-
-//              .then((String listName) {
-//            if (listName != null) {
-//              //Create reusable list card
-//              //Provider.of<UserModel>(context, listen: false).addList(listName);
-//              //Navigator.pop(context);
-//            }
-//          });
             },
             child: Icon(Icons.list),
             elevation: 5.0,
