@@ -6,9 +6,14 @@ class ReusableListCard extends StatelessWidget {
   final String listName;
   final Function onPress;
   final Function deleteCallback;
+  final Function deleteAlert;
 
   ReusableListCard(
-      {@required this.color, this.listName, this.onPress, this.deleteCallback});
+      {@required this.color,
+      this.listName,
+      this.onPress,
+      this.deleteCallback,
+      this.deleteAlert});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +23,14 @@ class ReusableListCard extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            //TODO change this part so that it will be relative in size 
-            child: Text('$listName', style: TextStyle(color: kOffWhiteColor, fontWeight: FontWeight.bold, fontSize: 15),),
+            //TODO change this part so that it will be relative in size
+            child: Text(
+              '$listName',
+              style: TextStyle(
+                  color: kOffWhiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
+            ),
           ),
         ),
         width: 150.0,
@@ -30,7 +41,7 @@ class ReusableListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      onLongPress: deleteCallback,
+      onDoubleTap: deleteAlert,
     );
   }
 }
