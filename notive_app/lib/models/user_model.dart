@@ -172,6 +172,7 @@ class UserModel extends ChangeNotifier {
         await setItemVenues(lists[i].items[j]);
       }
     }
+    notifyListeners();
   }
 
 }

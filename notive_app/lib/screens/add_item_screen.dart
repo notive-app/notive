@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:provider/provider.dart';
+import 'package:notive_app/components/item_tile.dart';
 
 import 'constants.dart';
 
@@ -47,8 +48,10 @@ class AddItemScreen extends StatelessWidget {
               ),
               color: kPurpleColor,
               onPressed: () {
+                
                 Provider.of<UserModel>(context, listen: false)
                     .addItem(newItemString);
+                
                 Navigator.pop(context);
               },
             ),

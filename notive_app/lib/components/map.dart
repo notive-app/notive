@@ -36,32 +36,21 @@ class Map extends StatelessWidget {
 //    return res + position.latitude.toString() + ", " + position.longitude.toString();
 //  }
 
-  _onMapCreated(GoogleMapController controller) {
-//    setState(() {
-//      controller1.complete(controller);
-//      getCurrentLocation().then((String ll){
-//        Map<String,String> params = {
-//          "query": "Pizza",
-//          "ll":  ll
-//        };
-//        sendFRequest(params).then((List<dynamic> response){
-//          if(response != null){
-//            Map<String, dynamic> mapped;
-//            List<dynamic> venues = response[1]["response"]["venues"];
-//            mapped = {"name": "Pizza", "itemData": venues};
-//            print(venues);
-//            setPinsOnMap(mapped);
-//          }
-//        });
-//      });
-//    });
+  _onMapCreated(UserModel user) {
+    user.setAllItemVenues();
   }
 
   _onCameraMove(CameraPosition position) {
 //    _lastMapPosition = position.target;
   }
 
-  Set<Marker> getMarkers(List<ItemModel> items){
+  Set<Marker> getMarkers(UserModel user){
+  if(user.lists.length == 0){
+    print("bos");
+    return null;
+  }
+  print(user.lists);
+  List<ItemModel> items = user.lists[0].items;
    Set<Marker> markers = new Set(); 
    if(items!=null){
        for(int i=0; i<items.length; i++){
@@ -115,19 +104,20 @@ class Map extends StatelessWidget {
         builder: (context, user, child) {
           return Container(
               child: GoogleMap(
-                markers: getMarkers(user.lists[0].items),
+                markers: getMarkers(user),
                 mapType: MapType.normal,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
                       double.parse(user.lat), double.parse(user.long)),
                   zoom: 14.4746,
                 ),
-                onMapCreated: _onMapCreated,
+                onMapCreated: _onMapCreated(user),
                 zoomGesturesEnabled: true,
                 onCameraMove: _onCameraMove,
                 myLocationEnabled: true,
                 compassEnabled: true,
                 myLocationButtonEnabled: false,
+                
               )
           );
         }
