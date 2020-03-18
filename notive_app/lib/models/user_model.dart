@@ -23,12 +23,12 @@ class UserModel extends ChangeNotifier {
   UserModel({this.id, this.email, this.name, this.surname});
 
 
-  // fix this method 
+  // fix this method--should we hold markers of users ?
   Set<Marker> getMarkers(){
     if(this.lists.length == 0){
       return null;
     }
-    print(this.lists);
+    //print("Keeps calling me");
     List<ItemModel> items = this.lists[this.userMapIndex].items;
     Set<Marker> markers = new Set(); 
     if(items!=null){
@@ -51,6 +51,7 @@ class UserModel extends ChangeNotifier {
     }
     return markers;
  }
+
   void changeCurrMap(int newMapIndex){
     this.userMapIndex = newMapIndex;
     notifyListeners();
@@ -123,6 +124,7 @@ class UserModel extends ChangeNotifier {
           isDone: false,
           createdAt: result[1]['data']['created_at']);
       _lists.add(newList);
+      this.changeCurrMap(0);
       notifyListeners();
     }
     //TODO add warning message in case of failure
@@ -143,6 +145,7 @@ class UserModel extends ChangeNotifier {
 
     if (result[0] == 200) {
       this._lists.remove(list);
+      this.changeCurrMap(0);
       notifyListeners();
     }
     //TODO add warning message in case of failure
