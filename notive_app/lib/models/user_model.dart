@@ -142,9 +142,13 @@ class UserModel extends ChangeNotifier {
     //TODO add warning message in case of failure
   }
   
-  void changeListName(ListModel list, String newName) {
-    list.setName(newName);
-    notifyListeners();
+  void changeListName(ListModel list, String newName)async{
+    Map<String, dynamic> data = {"name": newName};
+    List<dynamic> result = await updateUserList(data, list.id);
+    if (result[0] == 200) {
+      list.setName(newName);
+      notifyListeners();
+    }
   }
 
   void addItem(String itemName) async {
@@ -189,8 +193,12 @@ class UserModel extends ChangeNotifier {
   }
 
   void changeItemName(ItemModel item, String newName) async{
-   item.changeName(newName);
-   notifyListeners();
+    Map<String, dynamic> data = {"name": newName};
+    List<dynamic> result = await updateUserItem(data, item);
+    if (result[0] == 200) {
+      item.setName(newName);
+      notifyListeners();
+    }
   }
 
   //just being used after login, therefore there is no need for notifying listeners
