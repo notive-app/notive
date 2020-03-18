@@ -17,6 +17,33 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
   String email;
   String password;
+  
+  Future<void> errorAlert(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warning'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Incorrect Username or Password'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   if(result){
                     Navigator.pushNamed(context, DashboardScreen.id);
+                  }
+                  else{
+                    //show error message 
+                    errorAlert(context);
                   }
 
                   setState(() {

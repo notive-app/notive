@@ -21,6 +21,32 @@ class _SignupScreenState extends State<SignupScreen> {
   String password;
   String username;
   String surname;
+  Future<void> errorAlert(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Warning'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This e-mail is already in use'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +135,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     if (result) {
                       Navigator.pushNamed(context, DashboardScreen.id);
+                    }
+                    else{
+                      errorAlert(context);
                     }
 
                     setState(() {
