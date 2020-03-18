@@ -27,7 +27,7 @@ class ItemModel {
     return _venues.length;
   }
 
-  void changeName(String newName){
+  void setName(String newName){
     this.name = newName;
   }
 

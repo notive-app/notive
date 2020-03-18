@@ -204,16 +204,17 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   return [response[0], response[1]];
 }
 
-
 //TODO
-Future<List<dynamic>> updateUserList(int listId) async{
-  List<dynamic> response = await sendRequest('list/$listId', {}, 'PUT');
+Future<List<dynamic>> updateUserList(Map<String, dynamic> data, int listId) async{
+  List<dynamic> response = await sendRequest('list/$listId', data, 'PUT');
   return [response[0], response[1]];
 }
 
 //TODO
-Future<List<dynamic>> updateUserItem(int listId) async{
-  List<dynamic> response = await sendRequest('list/$listId', {}, 'PUT');
+Future<List<dynamic>> updateUserItem(Map<String, dynamic> data, ItemModel item) async{
+  var listId = item.listId;
+  var itemId = item.id;
+  List<dynamic> response = await sendRequest('item/$listId/$itemId', data, 'PUT');
   return [response[0], response[1]];
 }
 
