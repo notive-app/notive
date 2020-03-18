@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/models/user_model.dart';
@@ -37,33 +38,37 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: CustomBottomNav(selectedIndex: 0,),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Home',
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: kLightBlueColor,
-          child: Icon(
-            Icons.add,
-            color: kOffWhiteColor,
-          ),
-          elevation: 5.0,
-          onPressed: () async {
-            createDialogBox(context).then((String listName) {
-              if (listName != null) {
-                //Create reusable list card
-                Provider.of<UserModel>(context, listen: false)
-                    .addList(listName);
-                //Navigator.pop(context);
-              }
-            });
-          },
-        ),
-        body: Dashboard());
+    return Consumer<UserModel>(
+      builder: (context, user, child) {
+        return Scaffold(
+            bottomNavigationBar: CustomBottomNav(
+              selectedIndex: 0,
+            ),
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(
+                'Home',
+              ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: kLightBlueColor,
+              child: Icon(
+                Icons.add,
+                color: kOffWhiteColor,
+              ),
+              elevation: 5.0,
+              onPressed: () async {
+                createDialogBox(context).then((String listName) {
+                  if (listName != null) {
+                    //Create reusable list card
+                    user.addList(listName);
+                    //Navigator.pop(context);
+                  }
+                });
+              },
+            ),
+            body: Dashboard());
+      },
+    );
   }
 }
-

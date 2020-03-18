@@ -30,7 +30,6 @@ class MapViewScreen extends StatelessWidget {
                       return SimpleDialogOption(
                         onPressed: () {
                           user.changeCurrMap(index);
-                          print(user.userMapIndex);
                           Navigator.pop(context);
                         },
                         child: Text(user.lists[index].name),
@@ -63,7 +62,6 @@ class MapViewScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             backgroundColor: kLightBlueColor,
             onPressed: () async {
-              print(user.userMapIndex);
               chooseList(context, user);
             },
             child: Icon(Icons.list),
