@@ -27,6 +27,10 @@ class ItemModel {
     return _venues.length;
   }
 
+  void changeName(String newName){
+    this.name = newName;
+  }
+
   void checkCompletion() {
     isCompleted = !isCompleted;
   }

@@ -6,8 +6,8 @@ import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
-  Future<void> deleteAlert(
-      BuildContext context, UserModel user, int index) async {
+  
+  Future<void> deleteAlert(BuildContext context, UserModel user, int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -41,6 +41,34 @@ class Dashboard extends StatelessWidget {
     );
   }
 
+  Future<String> changeListName(BuildContext context, UserModel user, int index) async {
+    TextEditingController customController = TextEditingController();
+    // create a pop up screen upon clicking add button
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Please Enter the List Name:"),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                color: kLightBlueColor,
+                onPressed: () {
+                  // close the dialog box when submit is clicked, change the name
+                  var newName = customController.text.toString();
+                  user.changeListName(user.lists[index], newName);
+                  Navigator.of(context).pop();
+                },
+                elevation: 0.5,
+                child: Text("Done"),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     void openListView(String name) {
@@ -66,10 +94,10 @@ class Dashboard extends StatelessWidget {
                 openListView(user.lists[index].name);
               },
               deleteCallback: () {
-                user.deleteList(user.lists[index]);
-              },
-              deleteAlert: () {
                 deleteAlert(context, user, index);
+              },
+              changeListName: (){
+                changeListName(context, user,index);
               },
             );
           }),
