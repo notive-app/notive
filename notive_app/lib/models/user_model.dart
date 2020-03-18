@@ -22,7 +22,6 @@ class UserModel extends ChangeNotifier {
 
   UserModel({this.id, this.email, this.name, this.surname});
 
-
   // fix this method--should we hold markers of users ?
   Set<Marker> getMarkers(){
     if(this.lists.length == 0){
