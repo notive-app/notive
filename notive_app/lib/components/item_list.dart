@@ -39,6 +39,34 @@ class ItemsList extends StatelessWidget {
     );
   }
 
+  Future<String> changeItemName(BuildContext context, UserModel user, int index) async {
+    TextEditingController customController = TextEditingController();
+    // create a pop up screen upon clicking add button
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Update the item name:"),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                color: kLightBlueColor,
+                onPressed: () {
+                  // close the dialog box when submit is clicked, change the name
+                  var newName = customController.text.toString();
+                  user.changeItemName(user.lists[user.curListIndex].items[index], newName);
+                  Navigator.of(context).pop();
+                },
+                elevation: 0.5,
+                child: Text("Done"),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserModel>(
@@ -54,6 +82,9 @@ class ItemsList extends StatelessWidget {
               deleteCallback: () {
                 //show dialog box
                 deleteAlert(context, user, index);
+              },
+              changeItemName: (){
+                changeItemName(context, user, index);
               },
             );
           },

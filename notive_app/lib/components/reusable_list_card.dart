@@ -6,14 +6,14 @@ class ReusableListCard extends StatelessWidget {
   final String listName;
   final Function onPress;
   final Function deleteCallback;
-  final Function deleteAlert;
+  final Function changeListName;
 
   ReusableListCard(
       {@required this.color,
       this.listName,
       this.onPress,
       this.deleteCallback,
-      this.deleteAlert});
+      this.changeListName});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class ReusableListCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      onLongPress: deleteAlert,
+      onLongPress: deleteCallback,
+      onDoubleTap: changeListName,
     );
   }
 }

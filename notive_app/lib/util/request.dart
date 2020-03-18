@@ -204,6 +204,19 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   return [response[0], response[1]];
 }
 
+
+//TODO
+Future<List<dynamic>> updateUserList(int listId) async{
+  List<dynamic> response = await sendRequest('list/$listId', {}, 'PUT');
+  return [response[0], response[1]];
+}
+
+//TODO
+Future<List<dynamic>> updateUserItem(int listId) async{
+  List<dynamic> response = await sendRequest('list/$listId', {}, 'PUT');
+  return [response[0], response[1]];
+}
+
 void updateCookie(http.Response response) {
   String rawCookie = response.headers['set-cookie'];
   if (rawCookie != null) {

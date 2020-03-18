@@ -130,14 +130,6 @@ class UserModel extends ChangeNotifier {
     //TODO add warning message in case of failure
   }
 
-  void changeListName(ListModel list, String newName) {
-    //TODO DB(list.id, newName) this will change list's name in DB , then update local lists
-//    list.setName(newName);
-//
-//    notifyListeners();
-//    updateDatabase();
-  }
-
   void deleteList(ListModel list) async {
     int listId = list.id;
     this.userMapIndex = this.curListIndex;
@@ -149,6 +141,11 @@ class UserModel extends ChangeNotifier {
       notifyListeners();
     }
     //TODO add warning message in case of failure
+  }
+  
+  void changeListName(ListModel list, String newName) {
+    list.setName(newName);
+    notifyListeners();
   }
 
   void addItem(String itemName) async {
@@ -190,6 +187,11 @@ class UserModel extends ChangeNotifier {
       notifyListeners();
     }
     //TODO add warning message in case of failure
+  }
+
+  void changeItemName(ItemModel item, String newName) async{
+   item.changeName(newName);
+   notifyListeners();
   }
 
   //just being used after login, therefore there is no need for notifying listeners

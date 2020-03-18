@@ -7,8 +7,8 @@ class ItemTile extends StatelessWidget {
   final String itemString;
   final Function checkCallback;
   final Function deleteCallback;
-  final Function deleteAlert;
   final Function insertCallback;
+  final Function changeItemName;
 
   ItemTile(
       {this.isChecked,
@@ -16,24 +16,26 @@ class ItemTile extends StatelessWidget {
       this.checkCallback,
       this.deleteCallback,
       this.insertCallback,
-      this.deleteAlert});
+      this.changeItemName});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        itemString,
-        style: isChecked
-            ? TextStyle(decoration: TextDecoration.lineThrough)
-            : null,
-      ),
-      trailing: Checkbox(
-        activeColor: kLightBlueColor,
-        value: isChecked,
-        onChanged: checkCallback,
+    return GestureDetector(
+          child: ListTile(
+        title: Text(
+          itemString,
+          style: isChecked
+              ? TextStyle(decoration: TextDecoration.lineThrough)
+              : null,
+        ),
+        trailing: Checkbox(
+          activeColor: kLightBlueColor,
+          value: isChecked,
+          onChanged: checkCallback,
+        ),
       ),
       onLongPress: deleteCallback,
-      onTap: deleteAlert,
+      onDoubleTap: changeItemName,
     );
   }
 }
