@@ -31,4 +31,7 @@
             android:value="AIzaSyBH6RFh1oI7VIpcp3FRqS48XeBKqfiC3Rc"/>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 </manifest>
