@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/models/user_model.dart';
+import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
-import 'constants.dart';
-import 'package:notive_app/screens/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'constants.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String id = 'profile_screen';
@@ -161,8 +163,12 @@ class ProfileScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0),
                     side: BorderSide()),
-                onPressed: () {
+                onPressed: () async {
                   Provider.of<UserModel>(context, listen: false).logout();
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.remove('email');
+                  prefs.remove('cookie');
+
                   Navigator.pushNamed(context, WelcomeScreen.id);
                 },
                 child: Text(

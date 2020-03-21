@@ -9,13 +9,22 @@ import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
+import 'package:notive_app/util/request.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/user_model.dart';
 
 //import 'package:http/http.dart' as http;
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String email = prefs.getString('email');
+  if(email != null){
+    headers['cookie'] = prefs.getString('cookie');
+  }
+
   runApp(
     MultiProvider(
       providers: [
@@ -23,37 +32,28 @@ void main() {
 //        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
         //Provider(create: (context) => Dashboard()),
       ],
-      child: NotiveApp(),
+      child: MaterialApp(
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: kOffWhiteColor,
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          // additional settings go here
+        ),
+        initialRoute: email == null ? WelcomeScreen.id : DashboardScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          SignupScreen.id: (context) => SignupScreen(),
+          DashboardScreen.id: (context) => DashboardScreen(),
+          ListViewScreen.id: (context) => ListViewScreen(),
+          ProfileScreen.id: (context) => ProfileScreen(),
+          SettingsScreen.id: (context) => SettingsScreen(),
+          ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
+          MapViewScreen.id: (context) => MapViewScreen(),
+        },
+      ),
     ),
   );
-}
-
-class NotiveApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-//    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
-
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: kOffWhiteColor,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        // additional settings go here
-      ),
-      initialRoute: WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        SignupScreen.id: (context) => SignupScreen(),
-        DashboardScreen.id: (context) => DashboardScreen(),
-        ListViewScreen.id: (context) => ListViewScreen(),
-        ProfileScreen.id: (context) => ProfileScreen(),
-        SettingsScreen.id: (context) => SettingsScreen(),
-        ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
-        MapViewScreen.id: (context) => MapViewScreen(),
-      },
-    );
-  }
 }

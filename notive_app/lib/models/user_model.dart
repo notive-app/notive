@@ -130,6 +130,8 @@ class UserModel extends ChangeNotifier {
           createdAt: result[1]['data']['created_at']
       );
       this._lists[curListIndex].addItem(item);
+      //get venues of the new item
+      setItemVenues(item);
       notifyListeners();
     }
     //TODO add warning message in case of failure
@@ -162,13 +164,13 @@ class UserModel extends ChangeNotifier {
   }
 
   void setItemVenues(ItemModel item) async{
-    await item.setVenuesFromFSQ(this.lat, this.long);
+    item.setVenuesFromFSQ(this.lat, this.long);
   }
 
   void setAllItemVenues() async{
     for(var i=0; i<lists.length; i++){
       for(var j=0; j<lists[i].items.length; j++){
-        await setItemVenues(lists[i].items[j]);
+        setItemVenues(lists[i].items[j]);
       }
     }
   }

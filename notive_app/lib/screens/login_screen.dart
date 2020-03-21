@@ -4,6 +4,7 @@ import 'package:notive_app/components/rounded_button.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dashboard_screen.dart';
 
@@ -82,6 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   data["password"] = password;
                   var result = await Provider.of<UserModel>(context, listen: false).
                       login(data);
+
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString('email', email);
 
                   if(result){
                     Navigator.pushNamed(context, DashboardScreen.id);

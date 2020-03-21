@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String apiUrl = "http://139.59.155.177:5000/"; //temp
 
@@ -22,6 +23,8 @@ Future<List<dynamic>> sendRequest(
         headers: headers,
         body: json.encode(reqBody));
     updateCookie(response);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('cookie', headers['cookie']);
     print(response.body);
     final responseJson = json.decode(response.body);
     return [response.statusCode, responseJson];
