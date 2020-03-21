@@ -1,57 +1,56 @@
 import 'dart:collection';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:notive_app/util/request.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
   String email;
-  String name;
-  String surname;
+  String username;
   int curListIndex;
-  int userMapIndex = 0; // open first list in map by default 
+  int userMapIndex = 0; // open first list in map by default
   List<ListModel> _lists = [];
   bool isLoggedIn = false;
   String lat;
   String long;
 
-  UserModel({this.id, this.email, this.name, this.surname});
+  UserModel({this.id, this.email, this.username});
 
   // fix this method--should we hold markers of users ?
-  Set<Marker> getMarkers(){
-    if(this.lists.length == 0){
+  Set<Marker> getMarkers() {
+    if (this.lists.length == 0) {
       return null;
     }
     //print("Keeps calling me");
     List<ItemModel> items = this.lists[this.userMapIndex].items;
-    Set<Marker> markers = new Set(); 
-    if(items!=null){
-        for(int i=0; i<items.length; i++){
-          for(int j = 0; j<items[i].venues.length; j++){
-            Venue currVenue = items[i].venues[j];
-              LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
-              markers.add(
-              Marker(
-                  markerId: MarkerId(venuePosition.toString()),
-                  position: venuePosition,
-                  infoWindow: InfoWindow(
-                      title: currVenue.name,
-                      snippet: items[i].name,
-                      onTap: () {}),
-                  onTap: () {},
-                  icon: BitmapDescriptor.defaultMarker));
-          }
+    Set<Marker> markers = new Set();
+    if (items != null) {
+      for (int i = 0; i < items.length; i++) {
+        for (int j = 0; j < items[i].venues.length; j++) {
+          Venue currVenue = items[i].venues[j];
+          LatLng venuePosition =
+              new LatLng(currVenue.lat, currVenue.lng); //check item class
+          markers.add(Marker(
+              markerId: MarkerId(venuePosition.toString()),
+              position: venuePosition,
+              infoWindow: InfoWindow(
+                  title: currVenue.name, snippet: items[i].name, onTap: () {}),
+              onTap: () {},
+              icon: BitmapDescriptor.defaultMarker));
         }
+      }
     }
     return markers;
- }
+  }
 
-  void changeCurrMap(int newMapIndex){
+  void changeCurrMap(int newMapIndex) {
     this.userMapIndex = newMapIndex;
     notifyListeners();
   }
@@ -63,8 +62,7 @@ class UserModel extends ChangeNotifier {
       var user = response[2];
       this.id = user["user_id"];
       this.email = user["email"];
-      this.name = user["name"];
-      this.surname = user["surname"];
+      this.username = user["name"];
       Position position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
@@ -74,6 +72,11 @@ class UserModel extends ChangeNotifier {
       response = await fillUserLists();
       setLists(response);
       setAllItemVenues();
+
+      //create local database
+      DatabaseHelper helper = DatabaseHelper.instance;
+      Database db = await helper.database;
+
       notifyListeners();
       return true;
     }
@@ -141,8 +144,8 @@ class UserModel extends ChangeNotifier {
     }
     //TODO add warning message in case of failure
   }
-  
-  void changeListName(ListModel list, String newName)async{
+
+  void changeListName(ListModel list, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserList(data, list.id);
     if (result[0] == 200) {
@@ -192,7 +195,7 @@ class UserModel extends ChangeNotifier {
     //TODO add warning message in case of failure
   }
 
-  void changeItemName(ItemModel item, String newName) async{
+  void changeItemName(ItemModel item, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserItem(data, item);
     if (result[0] == 200) {
@@ -218,5 +221,94 @@ class UserModel extends ChangeNotifier {
     }
     //notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'id': this.id,
+      'email': this.email,
+      'username': this.username
+    };
+
+    return map;
+  }
+
+  UserModel.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
+    email = map['email'];
+    username = map['username'];
+  }
 }
 
+class DatabaseHelper {
+  Database db;
+
+  // This is the actual database filename that is saved in the docs directory.
+  static final _databaseName = "MyDatabase.db";
+  // Increment this version when you need to change the schema.
+  static final _databaseVersion = 1;
+
+  // Make this a singleton class.
+  DatabaseHelper._privateConstructor();
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+
+  // Only allow a single open connection to the database.
+  static Database _database;
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    _database = await _initDatabase();
+    return _database;
+  }
+
+  // open the database
+  _initDatabase() async {
+    // The path_provider plugin gets the right directory for Android or iOS.
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, _databaseName);
+    // Open the database. Can also add an onUpdate callback parameter.
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _onCreate);
+  }
+
+  // SQL string to create the database
+  Future _onCreate(Database db, int version) async {
+    await db.execute('''
+        CREATE TABLE `user` (
+	      `id` INTEGER PRIMARY KEY autoincrement,
+	      `email` varchar(100) NOT NULL UNIQUE,
+	      `username` varchar(100) NOT NULL UNIQUE)
+        ''');
+    print('DATABASE YARATILIYOR');
+    await db.execute('''
+        CREATE TABLE `list` (
+	      `id` INTEGER PRIMARY KEY autoincrement,
+	      `name` varchar(100) NOT NULL,
+	      `userId` INTEGER NOT NULL,
+        `isDone` INTEGER DEFAULT 0,
+        `createdAt` INTEGER,
+        `finishedAt` INTEGER,
+        FOREIGN KEY (userId) REFERENCES user(id) on delete cascade on update cascade)
+        ''');
+    await db.execute('''
+        CREATE TABLE `item` (
+	      `id` INTEGER PRIMARY KEY autoincrement,
+	      `name` varchar(100) NOT NULL,
+	      `listId` INTEGER NOT NULL,
+        `isCompleted` INTEGER DEFAULT 0,
+        `createdAt` INTEGER,
+        FOREIGN KEY (listId) REFERENCES list(id) on delete cascade on update cascade)
+      ''');
+    await db.execute('''
+        CREATE TABLE `venue` (
+	      `id` INTEGER PRIMARY KEY autoincrement,
+        `itemId` INTEGER NOT NULL,
+	      `name` varchar(200) NOT NULL,
+	      `lat` real NOT NULL,
+        `lng` real NOT NULL,
+        `distance` integer NOT NULL,
+        FOREIGN KEY (itemId) REFERENCES item(id) on delete cascade on update cascade)
+       ''');
+  }
+
+//  Indents
+}

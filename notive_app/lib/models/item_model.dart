@@ -49,7 +49,7 @@ class ItemModel {
     List<dynamic> response = await sendFRequest(params);
     List<dynamic> venueList = response[1]["response"]["venues"];
     for(var i=0; i<venueList.length; i++){
-      addVenue(Venue.fromJson(venueList[i]));
+      addVenue(Venue.fromJson(this.id, venueList[i]));
     }
   }
 
