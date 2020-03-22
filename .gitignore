@@ -21,3 +21,4 @@ notive-flask/flaskr/env.py
 /notive-flask/flaskr.egg-info/requires.txt
 /notive-flask/flaskr.egg-info/SOURCES.txt
 /notive-flask/flaskr.egg-info/top_level.txt
+.vscode/*

@@ -76,6 +76,9 @@ class UserModel extends ChangeNotifier {
       //create local database
       DatabaseHelper helper = DatabaseHelper.instance;
       Database db = await helper.database;
+      UserModel userModel = this;
+      await helper.addUser(db, userModel);
+      await helper.getUser(db, userModel);
 
       notifyListeners();
       return true;
@@ -278,7 +281,7 @@ class DatabaseHelper {
 	      `email` varchar(100) NOT NULL UNIQUE,
 	      `username` varchar(100) NOT NULL UNIQUE)
         ''');
-    print('DATABASE YARATILIYOR');
+    print('SQLITE: Initializing...');
     await db.execute('''
         CREATE TABLE `list` (
 	      `id` INTEGER PRIMARY KEY autoincrement,
@@ -310,5 +313,235 @@ class DatabaseHelper {
        ''');
   }
 
-//  Indents
+  // User
+  Future addUser(Database db, UserModel user) async {
+    Map map = user.toMap();
+    int userID = map['id'];
+    String name = map['username'];
+    String email = map['email'];
+
+    await db.transaction((txn) async {
+      if (getUser(db, user) == null) {
+        await txn.execute(
+            'INSERT INTO user(id, username, email) VALUES(?, ?, ?)',
+            [userID, name, email]);
+        print('SQLITE: User with ID $userID is added.');
+      }
+    });
+  }
+
+  Future editUser(Database db, UserModel user) async {
+    Map map = user.toMap();
+    int userID = map['id'];
+    String name = map['username'];
+    String email = map['email'];
+
+    await db.transaction((txn) async {
+      await txn.execute(
+          'UPDATE user SET username = ?, email = ? WHERE id = ?',
+          [name, email, userID]);
+      print('SQLITE: User with ID $userID is edited.');
+    });
+  }
+
+  Future removeUser(Database db, UserModel user) async {
+    Map map = user.toMap();
+    int userID = map['id'];
+
+    await db.transaction((txn) async {
+      await txn.execute('DELETE FROM user WHERE id = ? LIMIT 1', [userID]);
+      print('SQLITE: User with ID $userID is deleted.');
+    });
+  }
+
+  Future getUser(Database db, UserModel user) async {
+    Map map = user.toMap();
+    int userID = map['id'];
+
+    List<Map> users = await db.query('user',
+        columns: ['id', 'username', 'email'],
+        where: 'id = ?',
+        whereArgs: [userID]);
+    if (users.length > 0) {
+      Map userData = users.first;
+      print('SQLITE: User with ID : $userData');
+      return userData;
+    } else {
+      return null;
+    }
+  }
+
+  // List
+  Future addList(Database db, ListModel list) async {
+    int listID = list.id;
+    String name = list.name;
+    int userId = list.userId;
+    bool isDone = list.isDone;
+    int createdAt = list.createdAt;
+    int finishedAt = list.finishedAt;
+
+    await db.transaction((txn) async {
+      if (getList(db, list) == null) {
+        await txn.execute(
+            'INSERT INTO list(id, name, userId, isDone, createdAt, finishedAt) VALUES(?, ?, ?, ?, ?, ?)',
+            [listID, name, userId, isDone, createdAt, finishedAt]);
+        print('SQLITE: List with ID $listID is added.');
+      }
+    });
+  }
+
+  Future editList(Database db, ListModel list) async {
+    int listID = list.id;
+    String name = list.name;
+    int userId = list.userId;
+    bool isDone = list.isDone;
+    int createdAt = list.createdAt;
+    int finishedAt = list.finishedAt;
+
+    await db.transaction((txn) async {
+      await txn.execute(
+          'UPDATE list SET name = ?, userId = ?, isDone = ?, createdAt = ?, finishedAt = ? WHERE id = ?',
+          [name, userId, isDone, createdAt, finishedAt, listID]);
+      print('SQLITE: List with ID $listID is edited.');
+    });
+  }
+
+  Future removeList(Database db, ListModel list) async {
+    int listID = list.id;
+    await db.transaction((txn) async {
+      await txn.execute('DELETE FROM list WHERE id = ? LIMIT 1', [listID]);
+      print('SQLITE: List with ID $listID is deleted.');
+    });
+  }
+
+  Future getList(Database db, ListModel list) async {
+    int listID = list.id;
+    List<Map> lists = await db.query('list',
+        columns: ['id', 'name', 'userId', 'isDone', 'createdAt', 'finishedAt'],
+        where: 'id = ?',
+        whereArgs: [listID]);
+    if (lists.length > 0) {
+      Map listData = lists.first;
+      print('SQLITE: List with ID : $listData');
+      return listData;
+    } else {
+      return null;
+    }
+  }
+
+  // Item
+  Future addItem(Database db, ItemModel item) async {
+    int itemID = item.id;
+    String name = item.name;
+    int listId = item.listId;
+    bool isCompleted = item.isCompleted;
+    int createdAt = item.createdAt;
+
+    await db.transaction((txn) async {
+      if (getItem(db, item) == null) {
+        await txn.execute(
+            'INSERT INTO item(id, name, userId, isCompleted, createdAt) VALUES(?, ?, ?, ?, ?)',
+            [itemID, name, listId, isCompleted, createdAt]);
+        print('SQLITE: Item with ID $itemID is added.');
+      }
+    });
+  }
+
+  Future editItem(Database db, ItemModel item) async {
+    int itemID = item.id;
+    String name = item.name;
+    int listId = item.listId;
+    bool isCompleted = item.isCompleted;
+    int createdAt = item.createdAt;
+
+    await db.transaction((txn) async {
+      await txn.execute(
+          'UPDATE item SET name = ?, listId = ?, isCompleted = ?, createdAt = ?, WHERE id = ?',
+          [name, listId, isCompleted, createdAt, itemID]);
+      print('SQLITE: Item with ID $itemID is edited.');
+    });
+  }
+
+  Future removeItem(Database db, ItemModel item) async {
+    int itemID = item.id;
+    await db.transaction((txn) async {
+      await txn.execute('DELETE FROM item WHERE id = ? LIMIT 1', [itemID]);
+      print('SQLITE: Item with ID $itemID is deleted.');
+    });
+  }
+
+  Future getItem(Database db, ItemModel item) async {
+    int itemID = item.id;
+    List<Map> items = await db.query('item',
+        columns: ['id', 'name', 'listId', 'isCompleted', 'createdAt'],
+        where: 'id = ?',
+        whereArgs: [itemID]);
+    if (items.length > 0) {
+      Map itemData = items.first;
+      print('SQLITE: Item with ID : $itemData');
+      return itemData;
+    } else {
+      return null;
+    }
+  }
+
+  // Venue
+  Future addVenue(Database db, Venue venue) async {
+    int venueID = venue.id;
+    String name = venue.name;
+    int itemId = venue.itemId;
+    double lat = venue.lat;
+    double lng = venue.lng;
+    int distance = venue.distance;
+
+    await db.transaction((txn) async {
+      if (getVenue(db, venue) == null) {
+        await txn.execute(
+            'INSERT INTO venue(id, name, itemId, lat, lng, distance) VALUES(?, ?, ?, ?, ?, ?)',
+            [venueID, name, itemId, lat, lng, distance]);
+        print('SQLITE: Venue with ID $venueID is added.');
+      }
+    });
+  }
+
+  Future editVenue(Database db, Venue venue) async {
+    int venueID = venue.id;
+    String name = venue.name;
+    int itemId = venue.itemId;
+    double lat = venue.lat;
+    double lng = venue.lng;
+    int distance = venue.distance;
+
+    await db.transaction((txn) async {
+      await txn.execute(
+          'UPDATE venue SET name = ?, itemId = ?, lat = ?, lng = ?, distance = ? WHERE id = ?',
+          [name, itemId, lat, lng, distance, venueID]);
+      print('SQLITE: Venue with ID $venueID is edited.');
+    });
+  }
+
+  Future removeVenue(Database db, Venue venue) async {
+    int venueID = venue.id;
+    await db.transaction((txn) async {
+      await txn.execute('DELETE FROM venue WHERE id = ? LIMIT 1', [venueID]);
+      print('SQLITE: Venue with ID $venueID is deleted.');
+    });
+  }
+
+  Future getVenue(Database db, Venue venue) async {
+    int venueID = venue.id;
+    List<Map> venues = await db.query('venue',
+        columns: ['id', 'name', 'itemId', 'lat', 'lng', 'distance'],
+        where: 'id = ?',
+        whereArgs: [venueID]);
+    if (venues.length > 0) {
+      Map venueData = venues.first;
+      print('SQLITE: Venue with ID : $venueData');
+      return venueData;
+    } else {
+      return null;
+    }
+  }
+
+  //  Indents
 }
