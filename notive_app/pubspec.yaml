@@ -32,6 +32,7 @@ dependencies:
   geolocator: ^5.3.0
   flutter_local_notifications: ^1.2.2
   rxdart: ^0.23.1
+  flutter_fluid_slider: ^0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ flutter:
   assets:
     - images/logo.png
     - images/ben.jpg
+    - images/profile.png
     - assets/maps_style.json
   #  - images/a_dot_ham.jpeg
 
