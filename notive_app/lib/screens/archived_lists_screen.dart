@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
+import 'package:notive_app/components/dashboard.dart';
 
 class ArchivedListsScreen extends StatelessWidget {
   static const String id = 'archived_lists_screen';
@@ -14,16 +15,7 @@ class ArchivedListsScreen extends StatelessWidget {
           'Archived Lists',
         ),
       ),
-      body: Center(
-        child: Text(
-          'Coming Soon...',
-          style: TextStyle(
-            //color: Colors.white,
-            fontSize: 25.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      body: Dashboard(),
     );
   }
 }

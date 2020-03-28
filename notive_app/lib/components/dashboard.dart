@@ -6,7 +6,6 @@ import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
-  
   Future<void> deleteAlert(BuildContext context, UserModel user, int index) async {
     return showDialog<void>(
       context: context,
@@ -80,7 +79,6 @@ class Dashboard extends StatelessWidget {
                 )),
       );
     }
-
     return Consumer<UserModel>(
       builder: (context, user, child) {
         return GridView.count(
@@ -88,7 +86,7 @@ class Dashboard extends StatelessWidget {
           children: List.generate(user.listsCount, (index) {
             return ReusableListCard(
               color: kPurpleColor,
-              listName: user.lists[index].name,
+              list: user.lists[index],
               onPress: () {
                 user.curListIndex = index;
                 openListView(user.lists[index].name);
@@ -98,6 +96,12 @@ class Dashboard extends StatelessWidget {
               },
               changeListName: (){
                 changeListName(context, user,index);
+              },
+              archiveList: (){
+                user.archiveList(user.lists[index]);
+              },
+              unarchiveList: (){
+                user.unarchiveList(user.lists[index]);
               },
             );
           }),

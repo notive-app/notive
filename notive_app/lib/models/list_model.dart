@@ -1,9 +1,6 @@
 import 'dart:collection';
-
 import 'package:notive_app/models/item_model.dart';
-import 'package:notive_app/models/user_model.dart';
 
-//TODO update DB first then local
 class ListModel {
   final int id;
   String name;
@@ -12,8 +9,9 @@ class ListModel {
   int createdAt;
   int finishedAt;
   List<ItemModel> _items = [];
+  bool isArchived;
 
-  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt});
+  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt, this.isArchived});
 
   UnmodifiableListView<ItemModel> get items {
     return UnmodifiableListView(_items);
@@ -27,7 +25,6 @@ class ListModel {
     return _items.length;
   }
 
-  //just being used after login, therefore there is no need for notifying listeners
   void setItems(List<ItemModel> items) {
     this._items = items;
   }
@@ -47,6 +44,10 @@ class ListModel {
 
   void setName(String newName) {
     name = newName;
+  }
+
+  void setArchived(bool archiveCondition){
+    isArchived = archiveCondition;
   }
 
   factory ListModel.fromJson(Map<String, dynamic> json) {

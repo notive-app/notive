@@ -6,7 +6,6 @@ import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:notive_app/util/request.dart';
-import 'package:geolocator/geolocator.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
@@ -15,7 +14,8 @@ class UserModel extends ChangeNotifier {
   String surname;
   int curListIndex;
   int userMapIndex = 0; // open first list in map by default 
-  List<ListModel> _lists = [];
+  List<ListModel> _lists = []; //stands for unarchived lists 
+  List<ListModel> _archivedLists = [];
   bool isLoggedIn = false;
   String lat;
   String long;
@@ -107,13 +107,16 @@ class UserModel extends ChangeNotifier {
     return UnmodifiableListView(_lists);
   }
 
+  UnmodifiableListView<ListModel> get archivedLists {
+    return UnmodifiableListView(_archivedLists);
+  }
+
   int get itemsCount {
     return _lists.length;
   }
 
   void addList(String listName) async {
     Map<String, dynamic> data = {'name': listName};
-
     List<dynamic> result = await createUserList(data);
     if (result[0] == 200) {
       ListModel newList = new ListModel(
@@ -121,7 +124,8 @@ class UserModel extends ChangeNotifier {
           name: listName,
           userId: this.id,
           isDone: false,
-          createdAt: result[1]['data']['created_at']);
+          createdAt: result[1]['data']['created_at'],
+          isArchived: false);
       _lists.add(newList);
       this.changeCurrMap(0);
       notifyListeners();
@@ -149,6 +153,20 @@ class UserModel extends ChangeNotifier {
       list.setName(newName);
       notifyListeners();
     }
+  }
+
+  void archiveList(ListModel list){
+    list.setArchived(true);
+    print("List archived");
+    // this._archivedLists.add(list); 
+    // this._lists.remove(list);
+    notifyListeners();
+  }
+
+  void unarchiveList(ListModel list){
+    list.setArchived(false);
+    print("unarchived");
+    notifyListeners();
   }
 
   void addItem(String itemName) async {
