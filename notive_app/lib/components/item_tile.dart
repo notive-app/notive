@@ -21,7 +21,7 @@ class ItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-          child: ListTile(
+      child: ListTile(
         title: Text(
           itemString,
           style: isChecked

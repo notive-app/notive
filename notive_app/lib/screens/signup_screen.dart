@@ -31,7 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This e-mail is already in use'),
+                Text('This e-mail is already in use \nor Invalid e-mail adress'),
               ],
             ),
           ),
