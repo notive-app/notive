@@ -15,7 +15,7 @@ class ArchivedListsScreen extends StatelessWidget {
           'Archived Lists',
         ),
       ),
-      body: Dashboard(),
+      body: Dashboard(type:'archived'),
     );
   }
 }

@@ -125,7 +125,8 @@ class UserModel extends ChangeNotifier {
           userId: this.id,
           isDone: false,
           createdAt: result[1]['data']['created_at'],
-          isArchived: false);
+          isArchived: false,
+          isMuted: false);
       _lists.add(newList);
       this.changeCurrMap(0);
       notifyListeners();
@@ -135,11 +136,16 @@ class UserModel extends ChangeNotifier {
 
   void deleteList(ListModel list) async {
     int listId = list.id;
-    this.userMapIndex = this.curListIndex;
+    //this.userMapIndex = this.curListIndex;
     List<dynamic> result = await deleteUserList(listId);
 
     if (result[0] == 200) {
-      this._lists.remove(list);
+      if(list.isArchived == true){
+        this._archivedLists.remove(list);
+      }
+      else{
+        this._lists.remove(list);
+      }
       this.changeCurrMap(0);
       notifyListeners();
     }
@@ -155,18 +161,32 @@ class UserModel extends ChangeNotifier {
     }
   }
 
-  void archiveList(ListModel list){
-    list.setArchived(true);
-    print("List archived");
-    // this._archivedLists.add(list); 
-    // this._lists.remove(list);
-    notifyListeners();
+  Future<void> archiveList(ListModel list) async {
+    List<dynamic> result = await toggleArchiveList(list.id);
+    if(result[0] == 200){
+      list.setArchived(true);
+      print(result[1]);
+      this._archivedLists.add(list); 
+      this._lists.remove(list);
+      notifyListeners();
+    }
+    else{
+      print(result[1]);
+    }
   }
 
-  void unarchiveList(ListModel list){
-    list.setArchived(false);
-    print("unarchived");
-    notifyListeners();
+  Future<void> unarchiveList(ListModel list) async {
+    List<dynamic> result = await toggleArchiveList(list.id);
+    if(result[0] == 200){
+      list.setArchived(false);
+      print(result[1]);
+      this._lists.add(list);
+      this._archivedLists.remove(list); 
+      notifyListeners();
+    }
+    else{
+      print(result[1]);
+    }
   }
 
   void addItem(String itemName) async {
@@ -221,7 +241,14 @@ class UserModel extends ChangeNotifier {
 
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
-    this._lists = lists;
+    for(int i = 0; i<lists.length; i++){
+      if(lists[i].isArchived == false){
+        _lists.add(lists[i]);
+      }
+      else{
+        _archivedLists.add(lists[i]);
+      }
+    }
   }
 
   void setItemVenues(ItemModel item) async {

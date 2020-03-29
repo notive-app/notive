@@ -17,7 +17,7 @@ class ReusableListCard extends StatelessWidget {
       this.onPress,
       this.deleteCallback,
       this.changeListName,
-      this.archiveList, 
+      this.archiveList,
       this.unarchiveList});
 
   @override
@@ -42,21 +42,20 @@ class ReusableListCard extends StatelessWidget {
                       child: Text("Mute List"),
                       value: 2,
                     ));
-                    menu.add(PopupMenuItem(
-                      child: Text("Delete List"),
-                      value: 3,
-                    ));
-                    menu.add(PopupMenuItem(
-                      child: Text("Rename List"),
-                      value: 4,
-                    ));
-                  }
-                  else{
+                  } else {
                     menu.add(PopupMenuItem(
                       child: Text("Unarchive List"),
                       value: 5,
                     ));
                   }
+                  menu.add(PopupMenuItem(
+                    child: Text("Delete List"),
+                    value: 3,
+                  ));
+                  menu.add(PopupMenuItem(
+                    child: Text("Rename List"),
+                    value: 4,
+                  ));
                   return menu;
                 },
                 initialValue: 0,
@@ -72,7 +71,7 @@ class ReusableListCard extends StatelessWidget {
                   } else if (value == 4) {
                     //Rename List
                     changeListName();
-                  } else if(value == 5){
+                  } else if (value == 5) {
                     unarchiveList();
                   }
                 },

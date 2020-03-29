@@ -10,8 +10,9 @@ class ListModel {
   int finishedAt;
   List<ItemModel> _items = [];
   bool isArchived;
+  bool isMuted;
 
-  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt, this.isArchived});
+  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt, this.isArchived, this.isMuted});
 
   UnmodifiableListView<ItemModel> get items {
     return UnmodifiableListView(_items);
@@ -51,18 +52,27 @@ class ListModel {
   }
 
   factory ListModel.fromJson(Map<String, dynamic> json) {
-    bool flag = false;
+    bool isDoneFlag = false;
+    bool isArchivedFlag = false; 
+    bool isMutedFlag = false;
 
     if(json['is_done'] == 1){
-      flag = true;
+      isDoneFlag = true;
     }
-
+    if(json['is_archived'] == 1){
+      isArchivedFlag = true;
+    }
+    if(json['is_muted'] == 1){
+      isMutedFlag = true;
+    }
     return ListModel(
       id: json['id'],
       name: json['name'],
       userId: json['user_id'],
-      isDone: flag,
-      createdAt: json['created_at']
+      isDone: isDoneFlag,
+      createdAt: json['created_at'],
+      isArchived: isArchivedFlag,
+      isMuted: isMutedFlag
     );
   }
 }

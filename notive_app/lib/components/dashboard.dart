@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/reusable_list_card.dart';
+import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatelessWidget {
-  Future<void> deleteAlert(BuildContext context, UserModel user, int index) async {
+  final String type;
+  Dashboard({this.type = 'regular'});
+
+  Future<void> deleteAlert(BuildContext context, UserModel user, ListModel list) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -30,7 +34,7 @@ class Dashboard extends StatelessWidget {
             FlatButton(
               child: Text('Delete'),
               onPressed: () {
-                user.deleteList(user.lists[index]);
+                user.deleteList(list);
                 Navigator.of(context).pop();
               },
             ),
@@ -40,7 +44,7 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Future<String> changeListName(BuildContext context, UserModel user, int index) async {
+  Future<String> changeListName(BuildContext context, UserModel user, ListModel list) async {
     TextEditingController customController = TextEditingController();
     // create a pop up screen upon clicking add button
     return showDialog(
@@ -57,7 +61,7 @@ class Dashboard extends StatelessWidget {
                 onPressed: () {
                   // close the dialog box when submit is clicked, change the name
                   var newName = customController.text.toString();
-                  user.changeListName(user.lists[index], newName);
+                  user.changeListName(list, newName);
                   Navigator.of(context).pop();
                 },
                 elevation: 0.5,
@@ -81,27 +85,39 @@ class Dashboard extends StatelessWidget {
     }
     return Consumer<UserModel>(
       builder: (context, user, child) {
+        List<ListModel> list=[];
+        if(type=='regular'){
+          list = user.lists;
+        }
+        else if(type=='archived'){
+          list=user.archivedLists;
+        }
         return GridView.count(
           crossAxisCount: 3,
-          children: List.generate(user.listsCount, (index) {
+          children: List.generate(list.length, (index) {
             return ReusableListCard(
               color: kPurpleColor,
-              list: user.lists[index],
+              list: list[index],
               onPress: () {
-                user.curListIndex = index;
-                openListView(user.lists[index].name);
+                if(list[index].isArchived == false){
+                  user.curListIndex = index;
+                  openListView(list[index].name);
+                }
+                else{
+
+                }
               },
               deleteCallback: () {
-                deleteAlert(context, user, index);
+                deleteAlert(context, user, list[index]);
               },
               changeListName: (){
-                changeListName(context, user,index);
+                changeListName(context, user, list[index]);
               },
               archiveList: (){
-                user.archiveList(user.lists[index]);
+                user.archiveList(list[index]);
               },
               unarchiveList: (){
-                user.unarchiveList(user.lists[index]);
+                user.unarchiveList(list[index]);
               },
             );
           }),
