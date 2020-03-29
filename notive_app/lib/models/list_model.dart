@@ -1,9 +1,6 @@
 import 'dart:collection';
-
 import 'package:notive_app/models/item_model.dart';
-import 'package:notive_app/models/user_model.dart';
 
-//TODO update DB first then local
 class ListModel {
   final int id;
   String name;
@@ -12,8 +9,10 @@ class ListModel {
   int createdAt;
   int finishedAt;
   List<ItemModel> _items = [];
+  bool isArchived;
+  bool isMuted;
 
-  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt});
+  ListModel({this.id, this.name, this.userId, this.isDone, this.createdAt, this.isArchived, this.isMuted});
 
   UnmodifiableListView<ItemModel> get items {
     return UnmodifiableListView(_items);
@@ -27,7 +26,6 @@ class ListModel {
     return _items.length;
   }
 
-  //just being used after login, therefore there is no need for notifying listeners
   void setItems(List<ItemModel> items) {
     this._items = items;
   }
@@ -49,19 +47,32 @@ class ListModel {
     name = newName;
   }
 
+  void setArchived(bool archiveCondition){
+    isArchived = archiveCondition;
+  }
+
   factory ListModel.fromJson(Map<String, dynamic> json) {
-    bool flag = false;
+    bool isDoneFlag = false;
+    bool isArchivedFlag = false; 
+    bool isMutedFlag = false;
 
     if(json['is_done'] == 1){
-      flag = true;
+      isDoneFlag = true;
     }
-
+    if(json['is_archived'] == 1){
+      isArchivedFlag = true;
+    }
+    if(json['is_muted'] == 1){
+      isMutedFlag = true;
+    }
     return ListModel(
       id: json['id'],
       name: json['name'],
       userId: json['user_id'],
-      isDone: flag,
-      createdAt: json['created_at']
+      isDone: isDoneFlag,
+      createdAt: json['created_at'],
+      isArchived: isArchivedFlag,
+      isMuted: isMutedFlag
     );
   }
 }
