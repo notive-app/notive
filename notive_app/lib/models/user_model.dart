@@ -6,7 +6,6 @@ import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:notive_app/util/request.dart';
-import 'package:geolocator/geolocator.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
@@ -14,8 +13,10 @@ class UserModel extends ChangeNotifier {
   String name;
   String surname;
   int curListIndex;
+
   int userMapIndex = 0; // open first list in map by default 
-  List<ListModel> _lists = [];
+  List<ListModel> _lists = []; //stands for unarchived lists 
+  List<ListModel> _archivedLists = [];
   bool isLoggedIn = false;
   String lat;
   String long;
@@ -23,35 +24,49 @@ class UserModel extends ChangeNotifier {
   UserModel({this.id, this.email, this.name, this.surname});
 
   // fix this method--should we hold markers of users ?
-  Set<Marker> getMarkers(){
-    if(this.lists.length == 0){
+  Set<Marker> getMarkers() {
+    if (this.lists.length == 0) {
       return null;
     }
-    //print("Keeps calling me");
     List<ItemModel> items = this.lists[this.userMapIndex].items;
-    Set<Marker> markers = new Set(); 
-    if(items!=null){
-        for(int i=0; i<items.length; i++){
-          for(int j = 0; j<items[i].venues.length; j++){
-            Venue currVenue = items[i].venues[j];
-              LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
-              markers.add(
-              Marker(
-                  markerId: MarkerId(venuePosition.toString()),
-                  position: venuePosition,
-                  infoWindow: InfoWindow(
-                      title: currVenue.name,
-                      snippet: items[i].name,
-                      onTap: () {}),
-                  onTap: () {},
-                  icon: BitmapDescriptor.defaultMarker));
-          }
+    Set<Marker> markers = new Set();
+    if (items != null) {
+      for (int i = 0; i < items.length; i++) {
+        for (int j = 0; j < items[i].venues.length; j++) {
+          Venue currVenue = items[i].venues[j];
+          LatLng venuePosition =
+              new LatLng(currVenue.lat, currVenue.lng); //check item class
+          markers.add(Marker(
+              markerId: MarkerId(venuePosition.toString()),
+              position: venuePosition,
+              infoWindow: InfoWindow(
+                  title: currVenue.name, snippet: items[i].name, onTap: () {}),
+              onTap: () {},
+              icon: BitmapDescriptor.defaultMarker));
         }
+      }
     }
     return markers;
- }
+  }
 
-  void changeCurrMap(int newMapIndex){
+  List<Venue> getVenues() {
+    if (this.lists.length == 0) {
+      return null;
+    }
+    List<Venue> venues = new List();
+    List<ItemModel> items = this.lists[this.userMapIndex].items;
+    if (items != null) {
+      for (int i = 0; i < items.length; i++) {
+        for (int j = 0; j < items[i].venues.length; j++) {
+          Venue currVenue = items[i].venues[j];
+          venues.add(currVenue);
+        }
+      }
+    }
+    return venues;
+  }
+
+  void changeCurrMap(int newMapIndex) {
     this.userMapIndex = newMapIndex;
     notifyListeners();
   }
@@ -107,13 +122,16 @@ class UserModel extends ChangeNotifier {
     return UnmodifiableListView(_lists);
   }
 
+  UnmodifiableListView<ListModel> get archivedLists {
+    return UnmodifiableListView(_archivedLists);
+  }
+
   int get itemsCount {
     return _lists.length;
   }
 
   void addList(String listName) async {
     Map<String, dynamic> data = {'name': listName};
-
     List<dynamic> result = await createUserList(data);
     if (result[0] == 200) {
       ListModel newList = new ListModel(
@@ -121,7 +139,9 @@ class UserModel extends ChangeNotifier {
           name: listName,
           userId: this.id,
           isDone: false,
-          createdAt: result[1]['data']['created_at']);
+          createdAt: result[1]['data']['created_at'],
+          isArchived: false,
+          isMuted: false);
       _lists.add(newList);
       this.changeCurrMap(0);
       notifyListeners();
@@ -131,23 +151,56 @@ class UserModel extends ChangeNotifier {
 
   void deleteList(ListModel list) async {
     int listId = list.id;
-    this.userMapIndex = this.curListIndex;
+    //this.userMapIndex = this.curListIndex;
     List<dynamic> result = await deleteUserList(listId);
 
     if (result[0] == 200) {
-      this._lists.remove(list);
+      if(list.isArchived == true){
+        this._archivedLists.remove(list);
+      }
+      else{
+        this._lists.remove(list);
+      }
       this.changeCurrMap(0);
       notifyListeners();
     }
     //TODO add warning message in case of failure
   }
-  
-  void changeListName(ListModel list, String newName)async{
+
+  void changeListName(ListModel list, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserList(data, list.id);
     if (result[0] == 200) {
       list.setName(newName);
       notifyListeners();
+    }
+  }
+
+  Future<void> archiveList(ListModel list) async {
+    List<dynamic> result = await toggleArchiveList(list.id);
+    if(result[0] == 200){
+      list.setArchived(true);
+      print(result[1]);
+      this._archivedLists.add(list); 
+      this._lists.remove(list);
+      notifyListeners();
+    }
+    else{
+      print(result[1]);
+    }
+  }
+
+  Future<void> unarchiveList(ListModel list) async {
+    List<dynamic> result = await toggleArchiveList(list.id);
+    if(result[0] == 200){
+      list.setArchived(false);
+      print(result[1]);
+      this._lists.add(list);
+      this._archivedLists.remove(list); 
+      notifyListeners();
+    }
+    else{
+      print(result[1]);
     }
   }
 
@@ -192,7 +245,7 @@ class UserModel extends ChangeNotifier {
     //TODO add warning message in case of failure
   }
 
-  void changeItemName(ItemModel item, String newName) async{
+  void changeItemName(ItemModel item, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserItem(data, item);
     if (result[0] == 200) {
@@ -203,7 +256,14 @@ class UserModel extends ChangeNotifier {
 
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
-    this._lists = lists;
+    for(int i = 0; i<lists.length; i++){
+      if(lists[i].isArchived == false){
+        _lists.add(lists[i]);
+      }
+      else{
+        _archivedLists.add(lists[i]);
+      }
+    }
   }
 
   void setItemVenues(ItemModel item) async {
@@ -219,4 +279,3 @@ class UserModel extends ChangeNotifier {
     //notifyListeners();
   }
 }
-

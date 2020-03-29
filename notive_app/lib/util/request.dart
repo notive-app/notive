@@ -115,6 +115,8 @@ void logoutUser() async {
 Future<List<dynamic>> getUserLists() async {
   List<dynamic> response = await sendRequest('list/', {}, 'GET');
   Map<String, dynamic> result = response[1];
+  print(result);
+
   if (response[0] != 200) {
     return [response[0], result['message']];
   } else {
@@ -146,6 +148,7 @@ Future<List<ListModel>> fillUserLists() async{
   if(listResponse[0] != 200){
     return [];
   }
+  
   var lists = listResponse[2];
 
   // Get all items of a user as a hashmap, key: list_id
@@ -204,17 +207,29 @@ Future<List<dynamic>> checkUserItem(ItemModel item) async{
   return [response[0], response[1]];
 }
 
-//TODO
 Future<List<dynamic>> updateUserList(Map<String, dynamic> data, int listId) async{
   List<dynamic> response = await sendRequest('list/$listId', data, 'PUT');
   return [response[0], response[1]];
 }
 
-//TODO
 Future<List<dynamic>> updateUserItem(Map<String, dynamic> data, ItemModel item) async{
   var listId = item.listId;
   var itemId = item.id;
   List<dynamic> response = await sendRequest('item/$listId/$itemId', data, 'PUT');
+  return [response[0], response[1]];
+}
+
+Future<List<dynamic>> toggleArchiveList(int listId) async{
+  Map<String,dynamic> data = {};
+  List<dynamic> response;
+  response = await sendRequest('list/$listId/archive', data, 'PUT');
+  return [response[0], response[1]];
+}
+
+Future<List<dynamic>> toggleMuteList(int listId) async{
+  Map<String,dynamic> data = {};
+  List<dynamic> response;
+  response = await sendRequest('list/$listId/mute', data, 'PUT');
   return [response[0], response[1]];
 }
 

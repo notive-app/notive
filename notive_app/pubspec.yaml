@@ -33,6 +33,8 @@ dependencies:
   flutter_local_notifications: ^1.2.2
   rxdart: ^0.23.1
   flutter_fluid_slider: ^0.0.1
+  sliding_up_panel: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:
