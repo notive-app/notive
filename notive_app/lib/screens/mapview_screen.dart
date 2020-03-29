@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/map.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/models/user_model.dart';
+import 'package:notive_app/models/venue_model.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
@@ -23,7 +25,10 @@ class MapViewScreen extends StatelessWidget {
                 child: AlertDialog(
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0)),
-                  title: Text('Choose', textAlign: TextAlign.center,),
+                  title: Text(
+                    'Choose',
+                    textAlign: TextAlign.center,
+                  ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: List.generate(user.listsCount, (index) {
@@ -36,7 +41,6 @@ class MapViewScreen extends StatelessWidget {
                       );
                     }),
                   ),
-                  //actions: <Widget>[firstButton, secondButton],
                 ),
               ),
             );
@@ -50,6 +54,12 @@ class MapViewScreen extends StatelessWidget {
 
     return Consumer<UserModel>(
       builder: (context, user, child) {
+        BorderRadiusGeometry radius = BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
+        );
+        int numOfVenues = user.getVenues().length;
+        List<Venue> venues = user.getVenues();
         return Scaffold(
           bottomNavigationBar: CustomBottomNav(
             selectedIndex: 2,
@@ -58,7 +68,14 @@ class MapViewScreen extends StatelessWidget {
             automaticallyImplyLeading: false,
             title: Text('Map View'),
           ),
-          body: Map(),
+          body: SlidingUpPanel(
+            panelBuilder: (ScrollController sc) =>
+                _scrollingList(sc, numOfVenues, venues),
+            body: Center(
+              child: Map(),
+            ),
+            borderRadius: radius,
+          ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: kLightBlueColor,
             onPressed: () async {
@@ -68,6 +85,38 @@ class MapViewScreen extends StatelessWidget {
             elevation: 5.0,
           ),
         );
+      },
+    );
+  }
+
+  Widget _scrollingList(
+      ScrollController sc, int numOfVenues, List<Venue> venues) {
+    return ListView.builder(
+      controller: sc,
+      itemCount: numOfVenues,
+      itemBuilder: (BuildContext context, int i) {
+        return Column(
+            //padding: const EdgeInsets.all(12.0),
+            children: List.generate(
+          numOfVenues,
+          (index) {
+            var placeName = venues[index].name;
+            var address = venues[index].address;
+            var distance = venues[index].distance;
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+              child: ListTile(
+                leading: Icon(Icons.place, color: kPurpleColor, size: 45.0),
+                title: Text('$placeName' + ' ($distance metres)'),
+                subtitle:
+                    Text('$address'),
+              ),
+            );
+          },
+        ));
       },
     );
   }

@@ -32,6 +32,7 @@ dependencies:
   geolocator: ^5.3.0
   flutter_local_notifications: ^1.2.2
   rxdart: ^0.23.1
+  sliding_up_panel: ^1.0.0
 
 dev_dependencies:
   flutter_test:

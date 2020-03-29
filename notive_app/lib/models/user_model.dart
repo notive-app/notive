@@ -13,6 +13,7 @@ class UserModel extends ChangeNotifier {
   String name;
   String surname;
   int curListIndex;
+
   int userMapIndex = 0; // open first list in map by default 
   List<ListModel> _lists = []; //stands for unarchived lists 
   List<ListModel> _archivedLists = [];
@@ -23,35 +24,49 @@ class UserModel extends ChangeNotifier {
   UserModel({this.id, this.email, this.name, this.surname});
 
   // fix this method--should we hold markers of users ?
-  Set<Marker> getMarkers(){
-    if(this.lists.length == 0){
+  Set<Marker> getMarkers() {
+    if (this.lists.length == 0) {
       return null;
     }
-    //print("Keeps calling me");
     List<ItemModel> items = this.lists[this.userMapIndex].items;
-    Set<Marker> markers = new Set(); 
-    if(items!=null){
-        for(int i=0; i<items.length; i++){
-          for(int j = 0; j<items[i].venues.length; j++){
-            Venue currVenue = items[i].venues[j];
-              LatLng venuePosition = new LatLng(currVenue.lat, currVenue.lng); //check item class
-              markers.add(
-              Marker(
-                  markerId: MarkerId(venuePosition.toString()),
-                  position: venuePosition,
-                  infoWindow: InfoWindow(
-                      title: currVenue.name,
-                      snippet: items[i].name,
-                      onTap: () {}),
-                  onTap: () {},
-                  icon: BitmapDescriptor.defaultMarker));
-          }
+    Set<Marker> markers = new Set();
+    if (items != null) {
+      for (int i = 0; i < items.length; i++) {
+        for (int j = 0; j < items[i].venues.length; j++) {
+          Venue currVenue = items[i].venues[j];
+          LatLng venuePosition =
+              new LatLng(currVenue.lat, currVenue.lng); //check item class
+          markers.add(Marker(
+              markerId: MarkerId(venuePosition.toString()),
+              position: venuePosition,
+              infoWindow: InfoWindow(
+                  title: currVenue.name, snippet: items[i].name, onTap: () {}),
+              onTap: () {},
+              icon: BitmapDescriptor.defaultMarker));
         }
+      }
     }
     return markers;
- }
+  }
 
-  void changeCurrMap(int newMapIndex){
+  List<Venue> getVenues() {
+    if (this.lists.length == 0) {
+      return null;
+    }
+    List<Venue> venues = new List();
+    List<ItemModel> items = this.lists[this.userMapIndex].items;
+    if (items != null) {
+      for (int i = 0; i < items.length; i++) {
+        for (int j = 0; j < items[i].venues.length; j++) {
+          Venue currVenue = items[i].venues[j];
+          venues.add(currVenue);
+        }
+      }
+    }
+    return venues;
+  }
+
+  void changeCurrMap(int newMapIndex) {
     this.userMapIndex = newMapIndex;
     notifyListeners();
   }
@@ -151,8 +166,8 @@ class UserModel extends ChangeNotifier {
     }
     //TODO add warning message in case of failure
   }
-  
-  void changeListName(ListModel list, String newName)async{
+
+  void changeListName(ListModel list, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserList(data, list.id);
     if (result[0] == 200) {
@@ -230,7 +245,7 @@ class UserModel extends ChangeNotifier {
     //TODO add warning message in case of failure
   }
 
-  void changeItemName(ItemModel item, String newName) async{
+  void changeItemName(ItemModel item, String newName) async {
     Map<String, dynamic> data = {"name": newName};
     List<dynamic> result = await updateUserItem(data, item);
     if (result[0] == 200) {
@@ -264,4 +279,3 @@ class UserModel extends ChangeNotifier {
     //notifyListeners();
   }
 }
-
