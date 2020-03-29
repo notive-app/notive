@@ -1,3 +1,10 @@
+
+/////////////////////////////////////
+//THIS SCREEN IS NOT NEEDED ANYMORE//
+/////////////////////////////////////
+
+
+
 import 'package:flutter/material.dart';
 import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/range_settings_screen.dart';
@@ -9,6 +16,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool _switchLight = false;
+  bool _pushNot = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,22 +26,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'Settings',
         ),
         leading: BackButton(
-          //color: Colors.white,
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      //drawer: CustomDrawer(),
       body: Center(
         child: Column(children: <Widget>[
           SwitchListTile(
-            value: false,
+            value: _switchLight,
             title: Text("Dark / Light Theme"),
-            onChanged: (value) {},
-          ),
-          CheckboxListTile(
-            value: true,
-            title: Text("Add New Item to Top"),
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                _switchLight = value; 
+                
+              });
+            },
           ),
           ListTile(
             title: Text("Change Default Range Settings"),
@@ -45,9 +52,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           SwitchListTile(
-            value: true,
+            value: _pushNot,
             title: Text("Push Notifications"),
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                _pushNot = value; 
+              });
+            },
           ),
           ListTile(
             title: Text("Account"),
