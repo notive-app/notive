@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ReusableListCard extends StatelessWidget {
   final Color color;
@@ -77,7 +78,7 @@ class ReusableListCard extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.dehaze,
-                  size: 20,
+                  size: 25,
                   color: Colors.white,
                 ),
                 //color:, //can be changed
@@ -87,27 +88,30 @@ class ReusableListCard extends StatelessWidget {
                 ),
               ),
             ),
-            Center(
+            Align(
+              alignment: Alignment.center,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(15.0),
                 //TODO change this part so that it will be relative in size
-                child: Text(
+                child: AutoSizeText(
                   '$listName',
                   style: TextStyle(
-                      color: kOffWhiteColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                    color: kOffWhiteColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                  maxLines: 3,
                 ),
               ),
             ),
           ],
         ),
-        width: 150.0,
-        height: 150.0,
+//        width: 150.0,
+//        height: 150.0,
         margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(30.0),
         ),
       ),
       onLongPress: deleteCallback,

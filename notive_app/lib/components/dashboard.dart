@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notive_app/components/reusable_list_card.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/user_model.dart';
@@ -10,7 +11,8 @@ class Dashboard extends StatelessWidget {
   final String type;
   Dashboard({this.type = 'regular'});
 
-  Future<void> deleteAlert(BuildContext context, UserModel user, ListModel list) async {
+  Future<void> deleteAlert(
+      BuildContext context, UserModel user, ListModel list) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -44,7 +46,8 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  Future<String> changeListName(BuildContext context, UserModel user, ListModel list) async {
+  Future<String> changeListName(
+      BuildContext context, UserModel user, ListModel list) async {
     TextEditingController customController = TextEditingController();
     // create a pop up screen upon clicking add button
     return showDialog(
@@ -52,7 +55,10 @@ class Dashboard extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             title: Text("Please Enter the List Name:"),
-            content: TextField(
+            content: TextFormField(
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(35),
+              ],
               controller: customController,
             ),
             actions: <Widget>[
@@ -83,40 +89,37 @@ class Dashboard extends StatelessWidget {
                 )),
       );
     }
+
     return Consumer<UserModel>(
       builder: (context, user, child) {
-        List<ListModel> list=[];
-        if(type=='regular'){
+        List<ListModel> list = [];
+        if (type == 'regular') {
           list = user.lists;
-        }
-        else if(type=='archived'){
-          list=user.archivedLists;
+        } else if (type == 'archived') {
+          list = user.archivedLists;
         }
         return GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           children: List.generate(list.length, (index) {
             return ReusableListCard(
               color: kPurpleColor,
               list: list[index],
               onPress: () {
-                if(list[index].isArchived == false){
+                if (list[index].isArchived == false) {
                   user.curListIndex = index;
                   openListView(list[index].name);
-                }
-                else{
-
-                }
+                } else {}
               },
               deleteCallback: () {
                 deleteAlert(context, user, list[index]);
               },
-              changeListName: (){
+              changeListName: () {
                 changeListName(context, user, list[index]);
               },
-              archiveList: (){
+              archiveList: () {
                 user.archiveList(list[index]);
               },
-              unarchiveList: (){
+              unarchiveList: () {
                 user.unarchiveList(list[index]);
               },
             );

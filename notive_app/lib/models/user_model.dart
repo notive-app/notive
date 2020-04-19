@@ -14,8 +14,8 @@ class UserModel extends ChangeNotifier {
   String surname;
   int curListIndex;
 
-  int userMapIndex = 0; // open first list in map by default 
-  List<ListModel> _lists = []; //stands for unarchived lists 
+  int userMapIndex = 0; // open first list in map by default
+  List<ListModel> _lists = []; //stands for unarchived lists
   List<ListModel> _archivedLists = [];
   bool isLoggedIn = false;
   String lat;
@@ -40,7 +40,10 @@ class UserModel extends ChangeNotifier {
               markerId: MarkerId(venuePosition.toString()),
               position: venuePosition,
               infoWindow: InfoWindow(
-                  title: currVenue.name, snippet: items[i].name, onTap: () {}),
+                title: currVenue.name,
+                snippet: items[i].name,
+                //onTap: () {},
+              ),
               onTap: () {},
               icon: BitmapDescriptor.defaultMarker));
         }
@@ -155,10 +158,9 @@ class UserModel extends ChangeNotifier {
     List<dynamic> result = await deleteUserList(listId);
 
     if (result[0] == 200) {
-      if(list.isArchived == true){
+      if (list.isArchived == true) {
         this._archivedLists.remove(list);
-      }
-      else{
+      } else {
         this._lists.remove(list);
       }
       this.changeCurrMap(0);
@@ -178,28 +180,26 @@ class UserModel extends ChangeNotifier {
 
   Future<void> archiveList(ListModel list) async {
     List<dynamic> result = await toggleArchiveList(list.id);
-    if(result[0] == 200){
+    if (result[0] == 200) {
       list.setArchived(true);
       print(result[1]);
-      this._archivedLists.add(list); 
+      this._archivedLists.add(list);
       this._lists.remove(list);
       notifyListeners();
-    }
-    else{
+    } else {
       print(result[1]);
     }
   }
 
   Future<void> unarchiveList(ListModel list) async {
     List<dynamic> result = await toggleArchiveList(list.id);
-    if(result[0] == 200){
+    if (result[0] == 200) {
       list.setArchived(false);
       print(result[1]);
       this._lists.add(list);
-      this._archivedLists.remove(list); 
+      this._archivedLists.remove(list);
       notifyListeners();
-    }
-    else{
+    } else {
       print(result[1]);
     }
   }
@@ -256,11 +256,10 @@ class UserModel extends ChangeNotifier {
 
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
-    for(int i = 0; i<lists.length; i++){
-      if(lists[i].isArchived == false){
+    for (int i = 0; i < lists.length; i++) {
+      if (lists[i].isArchived == false) {
         _lists.add(lists[i]);
-      }
-      else{
+      } else {
         _archivedLists.add(lists[i]);
       }
     }
