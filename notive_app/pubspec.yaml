@@ -34,6 +34,7 @@ dependencies:
   rxdart: ^0.23.1
   flutter_fluid_slider: ^1.0.2
   sliding_up_panel: ^1.0.0
+  auto_size_text: ^2.1.0
 
 
 dev_dependencies:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/components/item_tile.dart';
@@ -28,8 +29,11 @@ class AddItemScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25.0, color: kPurpleColor),
             ),
-            TextField(
+            TextFormField(
               //TODO check the maximum length that the string can take here
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+              ],
               autofocus: true,
               textAlign: TextAlign.center,
               onChanged: (newValue) {
@@ -48,10 +52,9 @@ class AddItemScreen extends StatelessWidget {
               ),
               color: kPurpleColor,
               onPressed: () {
-                
                 Provider.of<UserModel>(context, listen: false)
                     .addItem(newItemString);
-                
+
                 Navigator.pop(context);
               },
             ),

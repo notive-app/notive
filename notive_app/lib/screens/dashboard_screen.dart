@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/dashboard.dart';
 import 'package:notive_app/models/user_model.dart';
@@ -17,7 +18,10 @@ class DashboardScreen extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             title: Text("Please Enter the List Name:"),
-            content: TextField(
+            content: TextFormField(
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(40),
+              ],
               controller: customController,
             ),
             actions: <Widget>[
