@@ -10,6 +10,8 @@ import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:notive_app/screens/theme.dart';
 
 import 'models/user_model.dart';
 
@@ -23,25 +25,36 @@ void main() {
 //        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
         //Provider(create: (context) => Dashboard()),
       ],
-      child: NotiveApp(),
+      child: MyApp(),
     ),
   );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeChanger>(
+      create: (_) => ThemeChanger(ThemeData.light()),
+      child: new NotiveApp(),
+    );
+  }
 }
 
 class NotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 //    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
-
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: kOffWhiteColor,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        // additional settings go here
-      ),
+//      theme: ThemeData(
+//        brightness: Brightness.light,
+//        primaryColor: kOffWhiteColor,
+//      ),
+//      darkTheme: ThemeData(
+//        brightness: Brightness.dark,
+//        // additional settings go here
+//      ),
+      theme: theme.getTheme(),
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
