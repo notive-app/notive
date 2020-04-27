@@ -112,7 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           .login(data);
 
                   if (result) {
-                    Navigator.pushNamed(context, DashboardScreen.id);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => DashboardScreen()),
+                        (Route<dynamic> route) => false);
                   } else {
                     //show error message
                     errorAlert(context);
