@@ -14,6 +14,7 @@ class UserModel extends ChangeNotifier {
   String surname;
   int curListIndex;
   String password;
+  String chosenTheme;
 
   int userMapIndex = 0; // open first list in map by default
   List<ListModel> _lists = []; //stands for unarchived lists

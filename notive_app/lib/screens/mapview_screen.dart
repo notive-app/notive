@@ -111,8 +111,7 @@ class MapViewScreen extends StatelessWidget {
               child: ListTile(
                 leading: Icon(Icons.place, color: kPurpleColor, size: 45.0),
                 title: Text('$placeName' + ' ($distance metres)'),
-                subtitle:
-                    Text('$address'),
+                subtitle: Text('$address'),
               ),
             );
           },

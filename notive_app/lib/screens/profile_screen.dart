@@ -1,19 +1,16 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notive_app/components/app_themes.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
+import 'package:notive_app/models/theme_manager.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:provider/provider.dart';
-import 'package:notive_app/screens/theme.dart';
-
-import 'constants.dart';
-import 'constants.dart';
-import 'constants.dart';
-import 'constants.dart';
-import 'constants.dart';
 import 'range_settings_screen.dart';
 //import 'package:notive_app/models/user_model.dart';
 
@@ -28,6 +25,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String userName;
   bool _darkMode = false; //
   bool _pushNot = true;
+
+//  addBoolToSF() async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    prefs.setBool('_darkMode', true);
+//  }
+//
+//  _setDarkTheme() async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    bool darkTheme = (prefs.getBool('darkTheme'));
+//    print('DarkTheme: $darkTheme.');
+//    await prefs.setBool('darkTheme', true);
+//  }
+
+  final lightTheme = AppTheme.values[2];
+  final darkTheme = AppTheme.values[1];
 
   Future<String> createDialogBox(BuildContext context) async {
     TextEditingController customController = TextEditingController();
@@ -61,19 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //static const String id = 'profile_screen';
   @override
   Widget build(BuildContext context) {
-    ThemeChanger _themeChanger = Provider.of<ThemeChanger>(context);
-
-//    bool switchTheme(bool darkMode) {
-////      bool switchTheme = darkMode;
-////      if (!switchTheme) {
-////        _themeChanger.setTheme(ThemeData.light());
-//////        return _darkMode = !darkMode;
-////      } else {
-////        _themeChanger.setTheme(ThemeData.dark());
-//////        return _darkMode = !darkMode;
-////      }
-//      return !darkMode;
-//    }
+    ThemeManager _themeManager = Provider.of<ThemeManager>(context);
 
     return Consumer<UserModel>(builder: (context, user, child) {
       userEmail = user.email;
@@ -216,15 +216,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Card(
                       child: FlatButton(
                           child: Text('Light Theme'),
-                          onPressed: () =>
-                              _themeChanger.setTheme(ThemeData.light())),
+                          onPressed: () {
+                            user.chosenTheme = 'light';
+                            _themeManager.setTheme(lightTheme);
+//                            DynamicTheme.of(context)
+//                                .setBrightness(Brightness.light);
+
+                            //_themeChanger.setTheme('light');
+                          }),
                     ),
                     Card(
                       child: FlatButton(
-                        child: Text('Dark Theme'),
-                        onPressed: () =>
-                            _themeChanger.setTheme(ThemeData.dark()),
-                      ),
+                          child: Text('Dark Theme'),
+                          onPressed: () {
+                            user.chosenTheme = 'dark';
+                            _themeManager.setTheme(darkTheme);
+//                            DynamicTheme.of(context)
+//                                .setBrightness(Brightness.dark);
+                            //ThemeChanger.of(context).setTheme('dark');
+                            //_themeChanger.setTheme('dark');
+                          }),
                     ),
                   ],
                 ),
