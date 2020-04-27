@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
 class NotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    rebuildAllChildren(context);
 //    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
     final manager = Provider.of<ThemeManager>(context);
     return MaterialApp(
@@ -58,5 +59,14 @@ class NotiveApp extends StatelessWidget {
         MapViewScreen.id: (context) => MapViewScreen(),
       },
     );
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+
+    (context as Element).visitChildren(rebuild);
   }
 }
