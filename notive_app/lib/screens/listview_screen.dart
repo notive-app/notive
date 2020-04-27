@@ -7,9 +7,11 @@ class ListViewScreen extends StatelessWidget {
   static const String id = 'listview_screen';
   final String listName;
 
-  ListViewScreen({this.listName: '',});
-  
-   @override
+  ListViewScreen({
+    this.listName: '',
+  });
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

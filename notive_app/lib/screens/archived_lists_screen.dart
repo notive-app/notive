@@ -8,14 +8,16 @@ class ArchivedListsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNav(selectedIndex: 1,),
+      bottomNavigationBar: CustomBottomNav(
+        selectedIndex: 1,
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
           'Archived Lists',
         ),
       ),
-      body: Dashboard(type:'archived'),
+      body: Dashboard(type: 'archived'),
     );
   }
 }
