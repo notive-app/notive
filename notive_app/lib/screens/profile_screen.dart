@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String userEmail;
   String userName;
-  bool _darkMode = false; //
+  bool _darkMode = false; 
   bool _pushNot = true;
 
 //  addBoolToSF() async {
@@ -78,6 +78,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Consumer<UserModel>(builder: (context, user, child) {
       userEmail = user.email;
       userName = user.name;
+      if(user.chosenTheme == 'dark'){
+        _darkMode = true;
+      }
+      else{
+        _darkMode = false;
+      }
+
       return Scaffold(
         bottomNavigationBar: CustomBottomNav(
           selectedIndex: 3,
@@ -184,60 +191,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: kLightBlueColor,
                   ),
                 ),
-//                Card(
-//                  child: SwitchListTile(
-//                    activeColor: kLightBlueColor,
-//                    value: _darkMode,
-//                    title: Text("Go Dark"),
-//                    onChanged: (value) {
-//                      setState(() {
-//                        _darkMode = switchTheme(value);
-//                      });
-//                    },
-//                  ),
-//                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Select Theme',
-                      style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        fontSize: 16.0,
-                        color: kLightBlueColor,
-                        letterSpacing: 2.5,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Card(
-                      child: FlatButton(
-                          child: Text('Light Theme'),
-                          onPressed: () {
-                            user.chosenTheme = 'light';
-                            _themeManager.setTheme(lightTheme);
-//                            DynamicTheme.of(context)
-//                                .setBrightness(Brightness.light);
-
-                            //_themeChanger.setTheme('light');
-                          }),
-                    ),
-                    Card(
-                      child: FlatButton(
-                          child: Text('Dark Theme'),
-                          onPressed: () {
-                            user.chosenTheme = 'dark';
-                            _themeManager.setTheme(darkTheme);
-//                            DynamicTheme.of(context)
-//                                .setBrightness(Brightness.dark);
-                            //ThemeChanger.of(context).setTheme('dark');
-                            //_themeChanger.setTheme('dark');
-                          }),
-                    ),
-                  ],
+                Card(
+                  child: SwitchListTile(
+                    activeColor: kLightBlueColor,
+                    value: _darkMode,
+                    title: Text("Enable Dark Theme"),
+                    onChanged: (value) {
+                      setState(() {
+                        _darkMode = value;
+                        if(_darkMode == true){
+                          //dark mode 
+                          user.chosenTheme = 'dark';
+                          _themeManager.setTheme(darkTheme);
+                        }
+                        else{
+                          //light mode 
+                          user.chosenTheme = 'light';
+                          _themeManager.setTheme(lightTheme);
+                        }
+                        print(value);
+                      });
+                    },
+                  ),
                 ),
 
                 Card(
@@ -248,6 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onChanged: (value) {
                       setState(() {
                         _pushNot = value;
+                        print(_pushNot);
                       });
                     },
                   ),
@@ -265,32 +241,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                 ),
-
-                /*   SizedBox(
-                  width: 250.0,
-                  child: RaisedButton(
-                    color: kPurpleColor,
-                    textColor: Colors.white,
-                    disabledColor: Colors.grey,
-                    disabledTextColor: Colors.black,
-                    padding: EdgeInsets.all(10.0),
-                    splashColor: Colors.purpleAccent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20.0),
-                        side: BorderSide()),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsScreen()),
-                      );
-                    },
-                    child: Text(
-                      "Settings",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                ), */
                 SizedBox(
                   width: 250.0,
                   child: RaisedButton(
@@ -317,14 +267,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-
-                /* RoundedButton(
-              title: 'Update data',
-              colour: kLightBlueColor,
-              onPressed: () {
-                Navigator.pushNamed(context, ProfileScreen.id);
-              },
-            ), */
               ],
             ),
           ),
