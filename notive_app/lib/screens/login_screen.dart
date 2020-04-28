@@ -126,15 +126,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 },
               ),
-              Text(
-                'Forgot password?',
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
             ],
           ),
         ),
