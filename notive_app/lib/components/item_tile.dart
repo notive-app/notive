@@ -28,10 +28,59 @@ class ItemTile extends StatelessWidget {
               ? TextStyle(decoration: TextDecoration.lineThrough)
               : null,
         ),
-        trailing: Checkbox(
-          activeColor: kLightBlueColor,
-          value: isChecked,
-          onChanged: checkCallback,
+        trailing: Wrap(
+          spacing: 1,
+          children: [
+            Checkbox(
+              activeColor: kLightBlueColor,
+              value: isChecked,
+              onChanged: checkCallback,
+            ),
+            PopupMenuButton(
+                itemBuilder: (context) {
+                  var menu = List<PopupMenuEntry<Object>>();
+                    menu.add(PopupMenuItem(
+                      child: Text("Edit Item"),
+                      value: 1,
+                    ));
+                  
+                  menu.add(PopupMenuItem(
+                    child: Text("Delete Item"),
+                    value: 2,
+                  ));
+                  menu.add(PopupMenuItem(
+                    child: Text("Check/Uncheck Item"),
+                    value: 3,
+                  ));
+                  return menu;
+                },
+                initialValue: 0,
+                onSelected: (value) {
+                  if (value == 1) {
+                    //Edit item 
+                    changeItemName();
+
+                  } else if (value == 2) {
+                    //Delete item 
+                    deleteCallback();
+
+                  } else if (value == 3) {
+                    //Check uncheck item
+                    checkCallback();
+                  }
+                },
+                icon: Icon(
+                  Icons.dehaze,
+                  size: 25,
+                  //color: Colors.white,
+                ),
+                //color:, //can be changed
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  //side: BorderSide(color: Colors.black87),
+                ),
+              ),
+          ],
         ),
       ),
       onLongPress: deleteCallback,

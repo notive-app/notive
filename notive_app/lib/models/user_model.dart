@@ -93,6 +93,7 @@ class UserModel extends ChangeNotifier {
       setLists(response);
       setAllItemVenues();
       notifyListeners();
+      print(this.lists);
       return true;
     }
     return false;
@@ -256,6 +257,8 @@ class UserModel extends ChangeNotifier {
 
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
+    this._lists = [];
+    
     for (int i = 0; i < lists.length; i++) {
       if (lists[i].isArchived == false) {
         _lists.add(lists[i]);
