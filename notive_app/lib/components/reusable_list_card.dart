@@ -57,6 +57,10 @@ class ReusableListCard extends StatelessWidget {
                     child: Text("Rename List"),
                     value: 4,
                   ));
+                  menu.add(PopupMenuItem(
+                    child: Text("List Configuration"),
+                    value: 6,
+                  ));
                   return menu;
                 },
                 initialValue: 0,
@@ -66,6 +70,7 @@ class ReusableListCard extends StatelessWidget {
                     archiveList();
                   } else if (value == 2) {
                     //Mute List
+                    //TODO
                   } else if (value == 3) {
                     //Delete List
                     deleteCallback();
@@ -74,6 +79,9 @@ class ReusableListCard extends StatelessWidget {
                     changeListName();
                   } else if (value == 5) {
                     unarchiveList();
+                  } else if(value == 6) {
+                    //Open list configuration
+                    //TODO
                   }
                 },
                 icon: Icon(

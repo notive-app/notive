@@ -48,8 +48,9 @@ class ItemTile extends StatelessWidget {
                     child: Text("Delete Item"),
                     value: 2,
                   ));
+
                   menu.add(PopupMenuItem(
-                    child: Text("Check/Uncheck Item"),
+                    child: Text("Item Configuration"),
                     value: 3,
                   ));
                   return menu;
@@ -63,10 +64,10 @@ class ItemTile extends StatelessWidget {
                   } else if (value == 2) {
                     //Delete item 
                     deleteCallback();
+                    
+                  } else if(value == 3){
 
-                  } else if (value == 3) {
-                    //Check uncheck item
-                    checkCallback();
+                    //Item configuration page 
                   }
                 },
                 icon: Icon(
