@@ -47,9 +47,15 @@ class ItemModel {
       "ll": ll
     };
     List<dynamic> response = await sendFRequest(params);
-    List<dynamic> venueList = response[1]["response"]["venues"];
-    for(var i=0; i<venueList.length; i++){
-      addVenue(Venue.fromJson(venueList[i]));
+    if(response[0]==200){
+      List<dynamic> venueList = response[1]["response"]["venues"];
+      for(var i=0; i<venueList.length; i++){
+        addVenue(Venue.fromJson(venueList[i]));
+      }
+    }
+    else{
+      // problem is due to foursquare servers/requests 
+      print(response[1]);
     }
   }
 
