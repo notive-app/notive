@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
+import 'package:notive_app/components/config_slider.dart';
+//import 'package:provider/provider.dart';
 import 'package:notive_app/screens/constants.dart';
 
 class ItemTile extends StatelessWidget {
@@ -17,6 +20,32 @@ class ItemTile extends StatelessWidget {
       this.deleteCallback,
       this.insertCallback,
       this.changeItemName});
+
+  Future<String> createConfigBox(BuildContext context) async {
+        double _freqValue = 10.0;
+
+    //TextEditingController customController = TextEditingController();
+    // create a pop up screen upon clicking add button
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Change Item Configuration"),
+            actions: <Widget>[
+              ConfigSlider(),
+              MaterialButton(
+                color: kLightBlueColor,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                elevation: 0.5,
+                child: Text("Save"),
+              )
+            ],
+          );
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +95,7 @@ class ItemTile extends StatelessWidget {
                     deleteCallback();
                     
                   } else if(value == 3){
-
+                      createConfigBox(context);
                     //Item configuration page 
                   }
                 },
