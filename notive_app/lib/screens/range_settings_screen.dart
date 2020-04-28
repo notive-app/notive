@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
+import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/screens/constants.dart';
 
 class RangeSettingsScreen extends StatefulWidget {
   static const String id = 'range_settings_screen';
+  ItemModel item;
+
+  RangeSettingsScreen({this.item});
+
   @override
   _RangeSettingsScreenState createState() => _RangeSettingsScreenState();
 }
@@ -11,13 +16,14 @@ class RangeSettingsScreen extends StatefulWidget {
 class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
   double _distValue = 0.0;
   double _freqValue = 10.0;
+  // access to item by using "widget.item"
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Range Settings',
+          'Range Settings: ' +  widget.item.name,
         ),
         leading: BackButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -57,7 +63,7 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                           foreground: Paint()
                             ..style = PaintingStyle.stroke
                             ..strokeWidth = 6
-                            ..color = Colors.white10,
+                            //..color = Colors.white10,
                         ),
                       ),
                       // Solid text as fill.
@@ -66,7 +72,7 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
+                          //color: Colors.white,
                         ),
                       ),
                     ],
@@ -84,11 +90,11 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                 thumbColor: kDarkPurpleColor,
                 start: Icon(
                   Icons.timer_off,
-                  color: Colors.white,
+                  //color: Colors.white,
                 ),
                 end: Icon(
                   Icons.timer,
-                  color: Colors.white,
+                  //color: Colors.white,
                 ),
               ),
               SizedBox(
@@ -101,24 +107,24 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                   child: Stack(
                 //alignment: ,
                 children: <Widget>[
+                  // Text(
+                  //   'Preffered Frequency',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     fontSize: 15,
+                  //     foreground: Paint()
+                  //       ..style = PaintingStyle.stroke
+                  //       ..strokeWidth = 6
+                  //       //..color = Colors.white10,
+                  //   ),
+                  // ),
+                  // // Solid text as fill.
                   Text(
                     'Preffered Frequency',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 6
-                        ..color = Colors.white10,
-                    ),
-                  ),
-                  // Solid text as fill.
-                  Text(
-                    'Preffered Frequency',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
+                      //color: Colors.white,
                     ),
                   ),
                 ],

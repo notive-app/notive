@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
-import 'package:notive_app/components/config_slider.dart';
 //import 'package:provider/provider.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/screens/range_settings_screen.dart';
 
 class ItemTile extends StatelessWidget {
   final bool isChecked;
@@ -12,6 +10,7 @@ class ItemTile extends StatelessWidget {
   final Function deleteCallback;
   final Function insertCallback;
   final Function changeItemName;
+  final Function configCallBack;
 
   ItemTile(
       {this.isChecked,
@@ -19,33 +18,8 @@ class ItemTile extends StatelessWidget {
       this.checkCallback,
       this.deleteCallback,
       this.insertCallback,
-      this.changeItemName});
-
-  Future<String> createConfigBox(BuildContext context) async {
-        double _freqValue = 10.0;
-
-    //TextEditingController customController = TextEditingController();
-    // create a pop up screen upon clicking add button
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Change Item Configuration"),
-            actions: <Widget>[
-              ConfigSlider(),
-              MaterialButton(
-                color: kLightBlueColor,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                elevation: 0.5,
-                child: Text("Save"),
-              )
-            ],
-          );
-        });
-  }
-
+      this.changeItemName,
+      this.configCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -66,50 +40,48 @@ class ItemTile extends StatelessWidget {
               onChanged: checkCallback,
             ),
             PopupMenuButton(
-                itemBuilder: (context) {
-                  var menu = List<PopupMenuEntry<Object>>();
-                    menu.add(PopupMenuItem(
-                      child: Text("Edit Item"),
-                      value: 1,
-                    ));
-                  
-                  menu.add(PopupMenuItem(
-                    child: Text("Delete Item"),
-                    value: 2,
-                  ));
+              itemBuilder: (context) {
+                var menu = List<PopupMenuEntry<Object>>();
+                menu.add(PopupMenuItem(
+                  child: Text("Edit Item"),
+                  value: 1,
+                ));
 
-                  menu.add(PopupMenuItem(
-                    child: Text("Item Configuration"),
-                    value: 3,
-                  ));
-                  return menu;
-                },
-                initialValue: 0,
-                onSelected: (value) {
-                  if (value == 1) {
-                    //Edit item 
-                    changeItemName();
+                menu.add(PopupMenuItem(
+                  child: Text("Delete Item"),
+                  value: 2,
+                ));
 
-                  } else if (value == 2) {
-                    //Delete item 
-                    deleteCallback();
-                    
-                  } else if(value == 3){
-                      createConfigBox(context);
-                    //Item configuration page 
-                  }
-                },
-                icon: Icon(
-                  Icons.dehaze,
-                  size: 25,
-                  //color: Colors.white,
-                ),
-                //color:, //can be changed
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  //side: BorderSide(color: Colors.black87),
-                ),
+                menu.add(PopupMenuItem(
+                  child: Text("Item Configuration"),
+                  value: 3,
+                ));
+                return menu;
+              },
+              initialValue: 0,
+              onSelected: (value) {
+                if (value == 1) {
+                  //Edit item
+                  changeItemName();
+                } else if (value == 2) {
+                  //Delete item
+                  deleteCallback();
+                } else if (value == 3) {
+                  //Item configuration page
+                  configCallBack();
+                }
+              },
+              icon: Icon(
+                Icons.dehaze,
+                size: 25,
+                //color: Colors.white,
               ),
+              //color:, //can be changed
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                //side: BorderSide(color: Colors.black87),
+              ),
+            ),
           ],
         ),
       ),
@@ -118,4 +90,3 @@ class ItemTile extends StatelessWidget {
     );
   }
 }
-
