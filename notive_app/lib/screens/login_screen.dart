@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
   String email;
   String password;
-  
+
   Future<void> errorAlert(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -104,17 +104,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     showSpinner = true;
                   });
 
-                  var data = Map<String,dynamic>();
+                  var data = Map<String, dynamic>();
                   data["email"] = email;
                   data["password"] = password;
-                  var result = await Provider.of<UserModel>(context, listen: false).
-                      login(data);
+                  var result =
+                      await Provider.of<UserModel>(context, listen: false)
+                          .login(data);
 
-                  if(result){
-                    Navigator.pushNamed(context, DashboardScreen.id);
-                  }
-                  else{
-                    //show error message 
+                  if (result) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => DashboardScreen()),
+                        (Route<dynamic> route) => false);
+                  } else {
+                    //show error message
                     errorAlert(context);
                   }
 

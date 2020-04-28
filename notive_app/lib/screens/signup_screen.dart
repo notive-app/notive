@@ -31,7 +31,8 @@ class _SignupScreenState extends State<SignupScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This e-mail is already in use \nor Invalid e-mail adress'),
+                Text(
+                    'This e-mail is already in use \nor Invalid e-mail adress'),
               ],
             ),
           ),
@@ -134,9 +135,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             .signUp(data);
 
                     if (result) {
-                      Navigator.pushNamed(context, DashboardScreen.id);
-                    }
-                    else{
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => DashboardScreen()),
+                          (Route<dynamic> route) => false);
+                    } else {
                       errorAlert(context);
                     }
 

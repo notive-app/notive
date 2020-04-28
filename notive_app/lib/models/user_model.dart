@@ -13,6 +13,8 @@ class UserModel extends ChangeNotifier {
   String name;
   String surname;
   int curListIndex;
+  String password;
+  String chosenTheme;
 
   int userMapIndex = 0; // open first list in map by default
   List<ListModel> _lists = []; //stands for unarchived lists
@@ -22,6 +24,10 @@ class UserModel extends ChangeNotifier {
   String long;
 
   UserModel({this.id, this.email, this.name, this.surname});
+
+  void setPassword(newPass) {
+    password = newPass;
+  }
 
   // fix this method--should we hold markers of users ?
   Set<Marker> getMarkers() {
@@ -175,6 +181,15 @@ class UserModel extends ChangeNotifier {
     List<dynamic> result = await updateUserList(data, list.id);
     if (result[0] == 200) {
       list.setName(newName);
+      notifyListeners();
+    }
+  }
+
+  void changePassword(UserModel user, String newPass) async {
+    Map<String, dynamic> data = {"email": user.email, "password": newPass};
+    List<dynamic> result = await updateUserPassword(data, user);
+    if (result[0] == 200) {
+      user.setPassword(newPass);
       notifyListeners();
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notive_app/models/theme_manager.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
@@ -10,38 +11,41 @@ import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:dynamic_theme/theme_switcher_widgets.dart';
 
 import 'models/user_model.dart';
 
-//import 'package:http/http.dart' as http;
-
-void main() {
+void main() async {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<UserModel>(create: (context) => UserModel()),
-//        ChangeNotifierProvider<ListModel>(create: (context) => ListModel()),
-        //Provider(create: (context) => Dashboard()),
       ],
-      child: NotiveApp(),
+      child: MyApp(),
     ),
   );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeManager>(
+      create: (_) => ThemeManager(),
+      child: new NotiveApp(),
+    );
+  }
 }
 
 class NotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    rebuildAllChildren(context);
 //    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
-
+    final manager = Provider.of<ThemeManager>(context);
     return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: kOffWhiteColor,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        // additional settings go here
-      ),
+      theme: manager.themeData,
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
@@ -55,5 +59,14 @@ class NotiveApp extends StatelessWidget {
         MapViewScreen.id: (context) => MapViewScreen(),
       },
     );
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+
+    (context as Element).visitChildren(rebuild);
   }
 }
