@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/theme_manager.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
@@ -10,6 +11,7 @@ import 'package:notive_app/screens/profile_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
+import 'package:notive_app/util/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
@@ -18,6 +20,14 @@ import 'package:dynamic_theme/theme_switcher_widgets.dart';
 import 'models/user_model.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var _firebaseMessaging = FirebaseMessaging();
+  _firebaseMessaging.configure(
+    onMessage: messageHandler,
+    onBackgroundMessage: backgroundMessageHandler,
+    onLaunch: launchMessageHandler,
+    onResume: resumeMessageHandler,
+  );
   runApp(
     MultiProvider(
       providers: [
