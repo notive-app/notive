@@ -125,8 +125,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     });
 
                     var data = Map<String, dynamic>();
-                    data["email"] = email;
-                    data["password"] = password;
+                    data["email"] = email.trim();
+                    data["password"] = password.trim();
                     data["name"] = username;
                     data["surname"] = surname;
 

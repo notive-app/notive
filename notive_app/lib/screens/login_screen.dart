@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   var data = Map<String, dynamic>();
                   email = email.trim(); //to avoid spacees at the end of the email field
                   data["email"] = email;
-                  data["password"] = password;
+                  data["password"] = password.trim();
                   var result =
                       await Provider.of<UserModel>(context, listen: false)
                           .login(data);
