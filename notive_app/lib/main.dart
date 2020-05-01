@@ -8,6 +8,7 @@ import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/login_screen.dart';
 import 'package:notive_app/screens/mapview_screen.dart';
 import 'package:notive_app/screens/profile_screen.dart';
+import 'package:notive_app/screens/range_settings_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
@@ -67,6 +68,7 @@ class NotiveApp extends StatelessWidget {
         SettingsScreen.id: (context) => SettingsScreen(),
         ArchivedListsScreen.id: (context) => ArchivedListsScreen(),
         MapViewScreen.id: (context) => MapViewScreen(),
+        RangeSettingsScreen.id: (context) => RangeSettingsScreen(),
       },
     );
   }

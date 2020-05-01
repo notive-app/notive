@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notive_app/components/item_tile.dart';
+import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:notive_app/screens/range_settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class ItemsList extends StatelessWidget {
@@ -85,6 +87,10 @@ class ItemsList extends StatelessWidget {
               },
               changeItemName: (){
                 changeItemName(context, user, index);
+              },
+              configCallBack: (){
+                ItemModel currentItem = user.lists[user.curListIndex].items[index];
+                Navigator.push(context,MaterialPageRoute(builder: (context) => RangeSettingsScreen(item: currentItem,)),);
               },
             );
           },

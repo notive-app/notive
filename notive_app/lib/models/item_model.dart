@@ -10,6 +10,8 @@ class ItemModel {
   int listId;
   int createdAt;
   List<Venue> _venues = [];
+  int selectedDist;
+  int selectedFreq;
 
   ItemModel(
       {this.id,
@@ -63,6 +65,17 @@ class ItemModel {
     _venues.add(venue);
   }
 
+  void setSelectedDist(double distance)
+  {
+    this.selectedDist = distance.round();
+    //TO DO (REQUEST FOR UPDATING DIST RANGE)
+  }
+
+  void setSelectedFreq(double freq)
+  {
+    this.selectedFreq = freq.round();
+    //TO DO (REQUEST FOR UPDATING FREQ RANGE)
+  }
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     bool flag = false;
 
