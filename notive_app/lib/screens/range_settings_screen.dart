@@ -15,7 +15,7 @@ class RangeSettingsScreen extends StatefulWidget {
 
 class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
   double _distValue = 0.0;
-  double _freqValue = 10.0;
+  double _freqValue = 60.0;
   // access to item by using "widget.item"
 
   @override
@@ -40,12 +40,16 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                 onChanged: (double newValue) {
                   setState(() {
                     _distValue = newValue;
+                    widget.item.setSelectedDist(_distValue);
                   });
                 },
                 min: 0.0,
-                max: 100.0,
+                max: 10000.0,
                 sliderColor: kPurpleColor,
                 thumbColor: kDarkPurpleColor,
+                valueTextStyle: TextStyle(color: Colors.white,
+                                          fontSize: 20,
+                                          ),
               ),
               SizedBox(
                 height: 10,
@@ -55,7 +59,7 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                   child: Stack(
                     //alignment: ,
                     children: <Widget>[
-                      Text(
+                      /* Text(
                         'Preffered Distance',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -65,10 +69,10 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                             ..strokeWidth = 6
                             //..color = Colors.white10,
                         ),
-                      ),
+                      ), */
                       // Solid text as fill.
                       Text(
-                        'Preffered Distance',
+                        'Preferred Distance (in meters)',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -82,19 +86,23 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                 onChanged: (double newValue) {
                   setState(() {
                     _freqValue = newValue;
+                    widget.item.setSelectedFreq(_freqValue);
                   });
                 },
                 min: 0.0,
                 max: 500.0,
                 sliderColor: kPurpleColor,
                 thumbColor: kDarkPurpleColor,
+                valueTextStyle: TextStyle(color: Colors.white,
+                                          fontSize: 20,
+                                          ),
                 start: Icon(
                   Icons.timer_off,
-                  //color: Colors.white,
+                  color: Colors.white,
                 ),
                 end: Icon(
                   Icons.timer,
-                  //color: Colors.white,
+                  color: Colors.white,
                 ),
               ),
               SizedBox(
@@ -120,7 +128,7 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                   // ),
                   // // Solid text as fill.
                   Text(
-                    'Preffered Frequency',
+                    'Preferred Frequency (in minutes)',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
