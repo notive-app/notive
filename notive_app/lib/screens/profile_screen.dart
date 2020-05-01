@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                 ),
-                Card(
+                /* Card(
                   child: ListTile(
                     title: Text("Change Default Range Settings"),
                     subtitle: Text("Rating, Price, Distance"),
@@ -240,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-                ),
+                ), */
                 SizedBox(
                   width: 250.0,
                   child: RaisedButton(
