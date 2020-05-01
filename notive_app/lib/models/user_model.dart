@@ -58,7 +58,7 @@ class UserModel extends ChangeNotifier {
     return markers;
   }
 
-  List<Venue> getVenues() {
+  List<Venue> getVenues(int prefDistance) { //GETS DISTANCE TO GET VENUES
     if (this.lists.length == 0) {
       return null;
     }
@@ -68,7 +68,10 @@ class UserModel extends ChangeNotifier {
       for (int i = 0; i < items.length; i++) {
         for (int j = 0; j < items[i].venues.length; j++) {
           Venue currVenue = items[i].venues[j];
-          venues.add(currVenue);
+          
+          if(currVenue.distance <= prefDistance){
+              venues.add(currVenue);
+          }          
         }
       }
     }

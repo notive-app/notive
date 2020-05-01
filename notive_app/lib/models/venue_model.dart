@@ -9,7 +9,7 @@ class Venue {
   Venue(this.id, this.name, this.lat, this.lng, this.distance, this.address);
 
   factory Venue.fromJson(Map<String, dynamic> json) {
-    print(json);
+    //print(json);
 
       Venue newVenue = Venue(
           json["id"],
