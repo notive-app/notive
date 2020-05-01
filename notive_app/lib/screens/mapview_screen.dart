@@ -58,8 +58,9 @@ class MapViewScreen extends StatelessWidget {
           topLeft: Radius.circular(24.0),
           topRight: Radius.circular(24.0),
         );
-        int numOfVenues = user.getVenues().length;
-        List<Venue> venues = user.getVenues();
+        int tempDistance = 5000; //JUST FOR DEMO PURPOSES
+        int numOfVenues = user.getVenues(tempDistance).length;
+        List<Venue> venues = user.getVenues(tempDistance);
         return Scaffold(
           bottomNavigationBar: CustomBottomNav(
             selectedIndex: 2,
@@ -70,7 +71,7 @@ class MapViewScreen extends StatelessWidget {
           ),
           body: SlidingUpPanel(
             panelBuilder: (ScrollController sc) =>
-                _scrollingList(sc, numOfVenues, venues),
+                _scrollingList(sc, numOfVenues, venues, tempDistance), //PREF DISTANCE VERILECEK TEMP YERINE
             body: Center(
               child: Map(),
             ),
@@ -90,7 +91,7 @@ class MapViewScreen extends StatelessWidget {
   }
 
   Widget _scrollingList(
-      ScrollController sc, int numOfVenues, List<Venue> venues) {
+      ScrollController sc, int numOfVenues, List<Venue> venues, int prefDist) {
     return ListView.builder(
       controller: sc,
       itemCount: numOfVenues,
@@ -100,9 +101,14 @@ class MapViewScreen extends StatelessWidget {
             children: List.generate(
           numOfVenues,
           (index) {
-            var placeName = venues[index].name;
-            var address = venues[index].address;
-            var distance = venues[index].distance;
+            var placeName;
+            var address;
+            var distance;
+            if(venues[index].distance < prefDist){
+              placeName = venues[index].name;
+              address = venues[index].address;
+              distance = venues[index].distance;
+            }
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
