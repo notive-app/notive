@@ -6,6 +6,7 @@ import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
 import 'package:notive_app/util/request.dart';
+import 'package:notive_app/util/dbWrapper.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
@@ -103,6 +104,8 @@ class UserModel extends ChangeNotifier {
       setAllItemVenues();
       notifyListeners();
       print(this.lists);
+      DBWrapper dbw = new DBWrapper();
+      dbw.addUser(this);
       return true;
     }
     return false;
