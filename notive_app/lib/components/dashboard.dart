@@ -93,6 +93,7 @@ class Dashboard extends StatelessWidget {
     return Consumer<UserModel>(
       builder: (context, user, child) {
         List<ListModel> list = [];
+        
         if (type == 'regular') {
           list = user.lists;
         } else if (type == 'archived') {
