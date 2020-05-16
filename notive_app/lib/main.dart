@@ -1,8 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/theme_manager.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
-import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/dashboard_screen.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:notive_app/screens/login_screen.dart';
@@ -15,10 +14,12 @@ import 'package:notive_app/screens/welcome_screen.dart';
 import 'package:notive_app/util/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dynamic_theme/dynamic_theme.dart';
-import 'package:dynamic_theme/theme_switcher_widgets.dart';
 
 import 'models/user_model.dart';
+
+
+var email;
+var password;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,11 @@ void main() async {
     onLaunch: launchMessageHandler,
     onResume: resumeMessageHandler,
   );
+
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  email = prefs.getString('email');
+  password = prefs.getString('password');
   runApp(
     MultiProvider(
       providers: [
@@ -55,9 +61,18 @@ class NotiveApp extends StatelessWidget {
     rebuildAllChildren(context);
 //    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
     final manager = Provider.of<ThemeManager>(context);
+    var initialRoute = WelcomeScreen.id;
+    if (email != null && password != null){
+        initialRoute = DashboardScreen.id;
+        var data = Map<String, dynamic>();
+        data["email"] = email;
+        data["password"] = password;
+        Provider.of<UserModel>(context, listen: false).login(data);
+    }
+
     return MaterialApp(
       theme: manager.themeData,
-      initialRoute: WelcomeScreen.id,
+      initialRoute: initialRoute,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
