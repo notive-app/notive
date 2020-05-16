@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>399915783050-jd9qf0g2kg96gqieqvvpu92d9ojah060.apps.googleusercontent.com</string>
+	<string>578021704018-ko9dc2soif2slt7nljgsas9g6loc71v2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.399915783050-jd9qf0g2kg96gqieqvvpu92d9ojah060</string>
+	<string>com.googleusercontent.apps.578021704018-ko9dc2soif2slt7nljgsas9g6loc71v2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDJqevdrrWVJjfwWwAxwrYODmeqdbtgMuo</string>
+	<string>AIzaSyAhVgAI_ttE-XEnR1vusj0x7tLw23obIRI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>399915783050</string>
+	<string>578021704018</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.hygge.notiveApp</string>
 	<key>PROJECT_ID</key>
-	<string>notive-269915</string>
+	<string>notive-e52d1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>notive-269915.appspot.com</string>
+	<string>notive-e52d1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:399915783050:ios:c2f280915670c2d19bee73</string>
+	<string>1:578021704018:ios:a44128d7d3e4c0563bba8b</string>
 	<key>DATABASE_URL</key>
-	<string>https://notive-269915.firebaseio.com</string>
+	<string>https://notive-e52d1.firebaseio.com</string>
 </dict>
 </plist>

@@ -1,12 +1,14 @@
 import 'dart:collection';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
-import 'package:notive_app/util/request.dart';
 import 'package:notive_app/util/dbWrapper.dart';
+import 'package:notive_app/util/request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel extends ChangeNotifier {
   int id;
@@ -20,7 +22,6 @@ class UserModel extends ChangeNotifier {
   int userMapIndex = 0; // open first list in map by default
   List<ListModel> _lists = []; //stands for unarchived lists
   List<ListModel> _archivedLists = [];
-  bool isLoggedIn = false;
   String lat;
   String long;
 
@@ -98,17 +99,27 @@ class UserModel extends ChangeNotifier {
 
       this.lat = position.latitude.toString();
       this.long = position.longitude.toString();
-      isLoggedIn = true;
+
+//      this.lat = "39.920335";
+//      this.long = "32.854009";
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var prevEmail = prefs.getString('email');
+
+      if (prevEmail == null){
+        await prefs.setString('email', email);
+        await prefs.setString('password', data["password"]);
+      }
+
       response = await fillUserLists();
       setLists(response);
       setAllItemVenues();
       notifyListeners();
-      print(this.lists);
       DBWrapper dbw = new DBWrapper();
       dbw.addUser(this);
-      return true;
+      return Future<bool>.value(true);
     }
-    return false;
+    return Future<bool>.value(false);
   }
 
   Future<bool> signUp(Map<String, dynamic> data) async {
@@ -124,9 +135,11 @@ class UserModel extends ChangeNotifier {
     return false;
   }
 
-  void logout() {
+  void logout() async{
     logoutUser();
-    isLoggedIn = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("email");
+    await prefs.remove("password");
     notifyListeners();
   }
 
