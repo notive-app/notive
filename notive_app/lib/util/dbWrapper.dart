@@ -11,7 +11,7 @@ class DBWrapper {
   final FirebaseMessaging fcm = new FirebaseMessaging();
   
   
-  DBWraooer(){
+  DBWrapper(){
     fcm.configure(
     onMessage: messageHandler,
     onBackgroundMessage: backgroundMessageHandler,
