@@ -1,18 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
+import 'package:notive_app/components/item_checkbox.dart';
 import 'package:notive_app/components/map.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'constants.dart';
-import 'package:provider/provider.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/models/venue_model.dart';
+import 'package:provider/provider.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import 'constants.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
 
   @override
   Widget build(BuildContext context) {
+    Future<List> filterByItem(BuildContext context, UserModel user) async {
+      return await showGeneralDialog<List>(
+          barrierColor: Colors.black.withOpacity(0.7),
+          transitionBuilder: (context, a1, a2, widget) {
+            final curvedValue = Curves.fastOutSlowIn.transform(a1.value) - 1.0;
+            return Transform(
+              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+              child: Opacity(
+                opacity: a1.value,
+                child: AlertDialog(
+                  shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0)),
+                  title: Text(
+                    'Filter items',
+                    textAlign: TextAlign.center,
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(user.lists[user.userMapIndex].itemsCount, (index) {
+                      return ItemCheckBox(
+                        item: user.lists[user.userMapIndex].items[index],
+                      );
+                    }),
+                  ),
+                ),
+              ),
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierDismissible: true,
+          barrierLabel: '',
+          context: context,
+          pageBuilder: (context, animation1, animation2) {});
+    }
+
     Future<List> chooseList(BuildContext context, UserModel user) async {
       return await showGeneralDialog<List>(
           barrierColor: Colors.black.withOpacity(0.7),
@@ -26,7 +64,7 @@ class MapViewScreen extends StatelessWidget {
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0)),
                   title: Text(
-                    'Choose',
+                    'Choose a list',
                     textAlign: TextAlign.center,
                   ),
                   content: Column(
@@ -58,9 +96,12 @@ class MapViewScreen extends StatelessWidget {
           topLeft: Radius.circular(24.0),
           topRight: Radius.circular(24.0),
         );
-        int tempDistance = 5000; //JUST FOR DEMO PURPOSES
-        int numOfVenues = user.getVenues(tempDistance).length;
-        List<Venue> venues = user.getVenues(tempDistance);
+        List<Venue> venues = user.getVenues();
+        int numOfVenues = 0;
+        if (venues != null) {
+          numOfVenues = venues.length;
+        }
+
         return Scaffold(
           bottomNavigationBar: CustomBottomNav(
             selectedIndex: 2,
@@ -71,27 +112,71 @@ class MapViewScreen extends StatelessWidget {
           ),
           body: SlidingUpPanel(
             panelBuilder: (ScrollController sc) =>
-                _scrollingList(sc, numOfVenues, venues, tempDistance), //PREF DISTANCE VERILECEK TEMP YERINE
+                _scrollingList(sc, numOfVenues, venues),
             body: Center(
               child: Map(),
             ),
             borderRadius: radius,
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: kLightBlueColor,
-            onPressed: () async {
-              chooseList(context, user);
-            },
-            child: Icon(Icons.list),
-            elevation: 5.0,
+          floatingActionButton: SpeedDial(
+            // both default to 16
+            marginRight: 18,
+            marginBottom: 20,
+            animatedIcon: AnimatedIcons.menu_close,
+            animatedIconTheme: IconThemeData(size: 22.0),
+            // this is ignored if animatedIcon is non null
+            // child: Icon(Icons.add),
+            visible: true,
+            // If true user is forced to close dial manually
+            // by tapping main button and overlay is not rendered.
+            closeManually: false,
+            curve: Curves.bounceIn,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.5,
+            onOpen: () {},
+            onClose: () {},
+            tooltip: 'Speed Dial',
+            heroTag: 'speed-dial-hero-tag',
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            elevation: 8.0,
+            shape: CircleBorder(),
+            children: [
+              SpeedDialChild(
+                  child: Icon(Icons.filter_list),
+                  backgroundColor: Colors.red,
+                  label: 'Filter items',
+                  labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+                onTap: () async {
+                  filterByItem(context, user);
+                },
+              ),
+              SpeedDialChild(
+                child: Icon(Icons.list),
+                backgroundColor: Colors.blue,
+                label: 'Choose a list',
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+                onTap: () async {
+                  chooseList(context, user);
+                },
+              ),
+            ],
           ),
+//          floatingActionButton: FloatingActionButton(
+//            backgroundColor: kLightBlueColor,
+//            onPressed: () async {
+//              chooseList(context, user);
+//            },
+//            child: Icon(Icons.list),
+//            elevation: 5.0,
+//          ),
         );
       },
     );
   }
 
   Widget _scrollingList(
-      ScrollController sc, int numOfVenues, List<Venue> venues, int prefDist) {
+      ScrollController sc, int numOfVenues, List<Venue> venues) {
     return ListView.builder(
       controller: sc,
       itemCount: numOfVenues,
@@ -104,11 +189,10 @@ class MapViewScreen extends StatelessWidget {
             var placeName;
             var address;
             var distance;
-            if(venues[index].distance < prefDist){
-              placeName = venues[index].name;
-              address = venues[index].address;
-              distance = venues[index].distance;
-            }
+
+            placeName = venues[index].name;
+            address = venues[index].address;
+            distance = venues[index].distance;
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -126,3 +210,4 @@ class MapViewScreen extends StatelessWidget {
     );
   }
 }
+

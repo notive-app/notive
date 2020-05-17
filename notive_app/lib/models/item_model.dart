@@ -12,13 +12,16 @@ class ItemModel {
   List<Venue> _venues = [];
   int selectedDist;
   int selectedFreq;
+  bool isFiltered = true;
 
-  ItemModel(
-      {this.id,
-      this.name,
-      this.isCompleted,
-      this.listId,
-      this.createdAt,
+  ItemModel({
+    this.id,
+    this.name,
+    this.isCompleted,
+    this.listId,
+    this.createdAt,
+    this.selectedDist,
+    this.selectedFreq
       });
 
   UnmodifiableListView<Venue> get venues{
@@ -33,6 +36,10 @@ class ItemModel {
     this.name = newName;
   }
 
+  void setFiltered(bool newFiltered){
+    this.isFiltered = newFiltered;
+  }
+
   void checkCompletion() {
     isCompleted = !isCompleted;
   }
@@ -41,15 +48,21 @@ class ItemModel {
     this._venues = venues;
   }
 
+  void removeVenueAtIndex(int i){
+    this._venues.removeAt(i);
+  }
+
   void setVenuesFromFSQ(String lat, String long) async{
     String query = this.name;
     String ll = lat + ", " + long;
     Map<String, String> params = {
       "query": query,
-      "ll": ll
+      "ll": ll,
+      "radius": this.selectedDist.toString()
     };
     List<dynamic> response = await sendFRequest(params);
     if(response[0]==200){
+      _venues = [];
       List<dynamic> venueList = response[1]["response"]["venues"];
       for(var i=0; i<venueList.length; i++){
         addVenue(Venue.fromJson(venueList[i]));
@@ -68,14 +81,13 @@ class ItemModel {
   void setSelectedDist(double distance)
   {
     this.selectedDist = distance.round();
-    //TO DO (REQUEST FOR UPDATING DIST RANGE)
   }
 
   void setSelectedFreq(double freq)
   {
     this.selectedFreq = freq.round();
-    //TO DO (REQUEST FOR UPDATING FREQ RANGE)
   }
+
   factory ItemModel.fromJson(Map<String, dynamic> json) {
     bool flag = false;
 
@@ -89,6 +101,8 @@ class ItemModel {
         isCompleted: flag,
         listId: json['list_id'],
         createdAt: json['created_at'],
+        selectedDist: json['distance'],
+        selectedFreq: json['frequency'],
         );
     return newModel;
   }

@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
@@ -40,27 +39,30 @@ class UserModel extends ChangeNotifier {
     Set<Marker> markers = new Set();
     if (items != null) {
       for (int i = 0; i < items.length; i++) {
-        for (int j = 0; j < items[i].venues.length; j++) {
-          Venue currVenue = items[i].venues[j];
-          LatLng venuePosition =
-              new LatLng(currVenue.lat, currVenue.lng); //check item class
-          markers.add(Marker(
-              markerId: MarkerId(venuePosition.toString()),
-              position: venuePosition,
-              infoWindow: InfoWindow(
-                title: currVenue.name,
-                snippet: items[i].name,
-                //onTap: () {},
-              ),
-              onTap: () {},
-              icon: BitmapDescriptor.defaultMarker));
+        if (items[i].isFiltered == true && items[i].isCompleted == false){
+          for (int j = 0; j < items[i].venues.length; j++) {
+            Venue currVenue = items[i].venues[j];
+            LatLng venuePosition =
+            new LatLng(currVenue.lat, currVenue.lng); //check item class
+            markers.add(Marker(
+                markerId: MarkerId(venuePosition.toString()),
+                position: venuePosition,
+                infoWindow: InfoWindow(
+                  title: currVenue.name,
+                  snippet: items[i].name,
+                  //onTap: () {},
+                ),
+                onTap: () {},
+                icon: BitmapDescriptor.defaultMarker));
+          }
         }
+
       }
     }
     return markers;
   }
 
-  List<Venue> getVenues(int prefDistance) { //GETS DISTANCE TO GET VENUES
+  List<Venue> getVenues() {
     if (this.lists.length == 0) {
       return null;
     }
@@ -68,12 +70,10 @@ class UserModel extends ChangeNotifier {
     List<ItemModel> items = this.lists[this.userMapIndex].items;
     if (items != null) {
       for (int i = 0; i < items.length; i++) {
-        for (int j = 0; j < items[i].venues.length; j++) {
-          Venue currVenue = items[i].venues[j];
-          
-          if(currVenue.distance <= prefDistance){
-              venues.add(currVenue);
-          }          
+        if (items[i].isFiltered == true && items[i].isCompleted == false){
+          for (int j = 0; j < items[i].venues.length; j++) {
+            venues.add(items[i].venues[j]);
+          }
         }
       }
     }
@@ -94,14 +94,14 @@ class UserModel extends ChangeNotifier {
       this.email = user["email"];
       this.name = user["name"];
       this.surname = user["surname"];
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//      Position position = await Geolocator()
+//          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//
+//      this.lat = position.latitude.toString();
+//      this.long = position.longitude.toString();
 
-      this.lat = position.latitude.toString();
-      this.long = position.longitude.toString();
-
-//      this.lat = "39.920335";
-//      this.long = "32.854009";
+      this.lat = "39.920335";
+      this.long = "32.854009";
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var prevEmail = prefs.getString('email');
@@ -253,8 +253,12 @@ class UserModel extends ChangeNotifier {
           name: itemName,
           isCompleted: false,
           listId: this._lists[this.curListIndex].id,
-          createdAt: result[1]['data']['created_at']);
+          createdAt: result[1]['data']['created_at'],
+          selectedDist: 5000,
+          selectedFreq: 60,
+      );
       this._lists[curListIndex].addItem(item);
+      print(item.selectedDist);
       notifyListeners();
     }
     //TODO add warning message in case of failure
@@ -289,6 +293,50 @@ class UserModel extends ChangeNotifier {
     }
   }
 
+  void changeItemDesiredDist(ItemModel item, double newDist) async {
+    Map<String, dynamic> data = {"distance": newDist.round().toString()};
+    List<dynamic> result = await updateUserItem(data, item);
+    if (result[0] == 200) {
+      var oldDist = item.selectedDist.toDouble();
+      item.setSelectedDist(newDist);
+
+      // if new distance is larger, this means we can get more venues
+      if (oldDist < newDist){
+        setItemVenues(item);
+      }
+      else{
+        int i = 0;
+        if (item.venues != null){
+          while (i < item.venues.length){
+            if (item.venues[i].distance > item.selectedDist){
+              item.removeVenueAtIndex(i);
+            }else{
+              i += 1;
+            }
+          }
+        }
+      }
+    }
+    else{
+      print(result);
+    }
+    notifyListeners();
+  }
+
+  void changeItemDesiredFreq(ItemModel item, double newFreq) async {
+    Map<String, dynamic> data = {"frequency": newFreq.round().toString()};
+    List<dynamic> result = await updateUserItem(data, item);
+    if (result[0] == 200) {
+      item.setSelectedFreq(newFreq.toDouble());
+//      notifyListeners();
+    }
+  }
+
+  void changeItemIsFiltered(ItemModel item, bool newValue){
+    item.setFiltered(newValue);
+    notifyListeners();
+  }
+
   //just being used after login, therefore there is no need for notifying listeners
   void setLists(List<ListModel> lists) {
     this._lists = [];
@@ -312,6 +360,5 @@ class UserModel extends ChangeNotifier {
         await setItemVenues(lists[i].items[j]);
       }
     }
-    //notifyListeners();
   }
 }
