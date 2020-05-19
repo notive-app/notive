@@ -14,8 +14,6 @@ import 'constants.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
-  double _panelHeightOpen;
-  double _panelHeightClosed = 95.0;
 
   @override
   Widget build(BuildContext context) {
