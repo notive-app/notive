@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 import 'package:notive_app/models/item_model.dart';
+import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
+import 'package:provider/provider.dart';
 
 class RangeSettingsScreen extends StatefulWidget {
   static const String id = 'range_settings_screen';
@@ -14,19 +16,25 @@ class RangeSettingsScreen extends StatefulWidget {
 }
 
 class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
-  double _distValue = 0.0;
-  double _freqValue = 60.0;
-  // access to item by using "widget.item"
 
   @override
   Widget build(BuildContext context) {
+    double _distValue = widget.item.selectedDist.toDouble();
+    double _freqValue = widget.item.selectedFreq.toDouble();
+
+    // access to item by using "widget.item"
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Range Settings: ' +  widget.item.name,
         ),
         leading: BackButton(
-          onPressed: () => Navigator.of(context).pop(),
+
+          onPressed: (){
+            Provider.of<UserModel>(context, listen: false).changeItemDesiredDist(widget.item, _distValue);
+            Provider.of<UserModel>(context, listen: false).changeItemDesiredFreq(widget.item, _freqValue);
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: Padding(

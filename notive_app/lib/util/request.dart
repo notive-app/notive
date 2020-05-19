@@ -58,11 +58,7 @@ Future<List<dynamic>> sendFRequest(Map<String, String> params) async {
   params["client_id"] = "CFOUGMPKOX5SNJK2LF4CWDBOBZKWS3G4BBF1BWJC3C5CBCXR";
   params["client_secret"] = "GCNWT1DEHDKT524H5YGNBAO25BA03S3LVFAYEXLEAO03UP0M";
   params["v"] = "20200101";
-
-//  Position position = await Geolocator()
-//        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-//  String ll = position.latitude.toString() + ", " + position.longitude.toString();
-//  params["ll"] = ll;
+  params["intent"] = "browse";
 
   var uriWithParams = Uri.https(baseURL, secondary, params);
   final response = await http.get(
@@ -71,9 +67,6 @@ Future<List<dynamic>> sendFRequest(Map<String, String> params) async {
   );
   updateCookie(response);
   final responseJson = json.decode(response.body);
-//  print("response");
-//  print( response.statusCode);
-//  print( responseJson);
   return [response.statusCode, responseJson];
 }
 
@@ -163,8 +156,6 @@ Future<List<ListModel>> fillUserLists() async {
     if (responseItems != null) {
       for (var i = 0; i < responseItems.length; i++) {
         ItemModel itemToAdd = ItemModel.fromJson(responseItems[i]);
-//        String query = itemToAdd.name;
-//        itemToAdd.setItemData(query);
         listItems.add(itemToAdd);
       }
     }

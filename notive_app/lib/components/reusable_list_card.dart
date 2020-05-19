@@ -1,7 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/screens/constants.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class ReusableListCard extends StatelessWidget {
   final Color color;
@@ -57,10 +57,6 @@ class ReusableListCard extends StatelessWidget {
                     child: Text("Rename List"),
                     value: 4,
                   ));
-                  menu.add(PopupMenuItem(
-                    child: Text("List Configuration"),
-                    value: 6,
-                  ));
                   return menu;
                 },
                 initialValue: 0,
@@ -79,9 +75,6 @@ class ReusableListCard extends StatelessWidget {
                     changeListName();
                   } else if (value == 5) {
                     unarchiveList();
-                  } else if(value == 6) {
-                    //Open list configuration
-                    //TODO
                   }
                 },
                 icon: Icon(

@@ -20,6 +20,7 @@ import 'models/user_model.dart';
 
 var email;
 var password;
+var buildCount = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,10 +60,12 @@ class NotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     rebuildAllChildren(context);
-//    var log = Provider.of<UserModel>(context, listen: false).isLoggedIn;
     final manager = Provider.of<ThemeManager>(context);
     var initialRoute = WelcomeScreen.id;
-    if (email != null && password != null){
+
+    // build count is required because this widget is built twice at the start, i dont know why
+    if (email != null && password != null && buildCount == 0){
+        buildCount += 1;
         initialRoute = DashboardScreen.id;
         var data = Map<String, dynamic>();
         data["email"] = email;

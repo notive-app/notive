@@ -39,6 +39,7 @@ dependencies:
   auto_size_text: ^2.1.0
   shared_preferences: ^0.5.7
   dynamic_theme: ^1.0.1
+  flutter_speed_dial: ^1.2.5
 
 dev_dependencies:
   flutter_test:
