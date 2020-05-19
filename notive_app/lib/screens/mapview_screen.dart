@@ -116,10 +116,15 @@ class MapViewScreen extends StatelessWidget {
           body: SlidingUpPanel(
             header: Padding(
               padding: const EdgeInsets.all(10.0),
+//              child: Icon(
+//                Icons.linear_scale,
+//                color: Colors.black,
+//              ),
             ),
+            collapsed: _floatingCollapsed(),
             maxHeight: MediaQuery.of(context).size.height * 0.50,
-            //backdropEnabled: true,
-            //backdropTapClosesPanel: true,
+            backdropEnabled: true,
+            backdropTapClosesPanel: true,
             borderRadius: radius,
             panelBuilder: (ScrollController sc) =>
                 _scrollingList(sc, numOfVenues, venues, map),
@@ -244,4 +249,22 @@ class MapViewScreen extends StatelessWidget {
       },
     );
   }
+}
+
+Widget _floatingCollapsed() {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.blueGrey,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(24.0),
+        topRight: Radius.circular(24.0),
+      ),
+    ),
+    child: Center(
+      child: Text(
+        "Slide to see in list view",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+  );
 }
