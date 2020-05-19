@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
 import 'package:notive_app/components/item_checkbox.dart';
 import 'package:notive_app/components/map.dart';
@@ -89,7 +90,7 @@ class MapViewScreen extends StatelessWidget {
           context: context,
           pageBuilder: (context, animation1, animation2) {});
     }
-
+    Map map = new Map();
     return Consumer<UserModel>(
       builder: (context, user, child) {
         BorderRadiusGeometry radius = BorderRadius.only(
@@ -112,9 +113,9 @@ class MapViewScreen extends StatelessWidget {
           ),
           body: SlidingUpPanel(
             panelBuilder: (ScrollController sc) =>
-                _scrollingList(sc, numOfVenues, venues),
+                _scrollingList(sc, numOfVenues, venues, map),
             body: Center(
-              child: Map(),
+              child: map,
             ),
             borderRadius: radius,
           ),
@@ -176,7 +177,7 @@ class MapViewScreen extends StatelessWidget {
   }
 
   Widget _scrollingList(
-      ScrollController sc, int numOfVenues, List<Venue> venues) {
+      ScrollController sc, int numOfVenues, List<Venue> venues, Map map) {
     return ListView.builder(
       controller: sc,
       itemCount: numOfVenues,
@@ -189,10 +190,15 @@ class MapViewScreen extends StatelessWidget {
             var placeName;
             var address;
             var distance;
+            var lat;
+            var lng;
 
             placeName = venues[index].name;
             address = venues[index].address;
             distance = venues[index].distance;
+            lat = venues[index].lat;
+            lng = venues[index].lng;
+
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -202,6 +208,13 @@ class MapViewScreen extends StatelessWidget {
                 leading: Icon(Icons.place, color: kPurpleColor, size: 45.0),
                 title: Text('$placeName' + ' ($distance metres)'),
                 subtitle: Text('$address'),
+                onTap: () {
+                  sc.animateTo(
+                      0.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300));
+                  map.changeCameraPos(LatLng(lat, lng));
+                },
               ),
             );
           },
