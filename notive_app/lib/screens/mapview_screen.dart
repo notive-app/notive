@@ -14,6 +14,8 @@ import 'constants.dart';
 
 class MapViewScreen extends StatelessWidget {
   static const String id = 'mapview_screen';
+  double _panelHeightOpen;
+  double _panelHeightClosed = 95.0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,8 @@ class MapViewScreen extends StatelessWidget {
                   ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: List.generate(user.lists[user.userMapIndex].itemsCount, (index) {
+                    children: List.generate(
+                        user.lists[user.userMapIndex].itemsCount, (index) {
                       return ItemCheckBox(
                         item: user.lists[user.userMapIndex].items[index],
                       );
@@ -90,6 +93,7 @@ class MapViewScreen extends StatelessWidget {
           context: context,
           pageBuilder: (context, animation1, animation2) {});
     }
+
     Map map = new Map();
     return Consumer<UserModel>(
       builder: (context, user, child) {
@@ -112,12 +116,18 @@ class MapViewScreen extends StatelessWidget {
             title: Text('Map View'),
           ),
           body: SlidingUpPanel(
+            header: Padding(
+              padding: const EdgeInsets.all(10.0),
+            ),
+            maxHeight: MediaQuery.of(context).size.height * 0.50,
+            //backdropEnabled: true,
+            //backdropTapClosesPanel: true,
+            borderRadius: radius,
             panelBuilder: (ScrollController sc) =>
                 _scrollingList(sc, numOfVenues, venues, map),
             body: Center(
               child: map,
             ),
-            borderRadius: radius,
           ),
           floatingActionButton: SpeedDial(
             // both default to 16
@@ -144,10 +154,10 @@ class MapViewScreen extends StatelessWidget {
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                  child: Icon(Icons.filter_list),
-                  backgroundColor: Colors.red,
-                  label: 'Filter items',
-                  labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+                child: Icon(Icons.filter_list),
+                backgroundColor: Colors.red,
+                label: 'Filter items',
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
                 onTap: () async {
                   filterByItem(context, user);
                 },
@@ -183,44 +193,57 @@ class MapViewScreen extends StatelessWidget {
       itemCount: numOfVenues,
       itemBuilder: (BuildContext context, int i) {
         return Column(
-            //padding: const EdgeInsets.all(12.0),
-            children: List.generate(
-          numOfVenues,
-          (index) {
-            var placeName;
-            var address;
-            var distance;
-            var lat;
-            var lng;
-
-            placeName = venues[index].name;
-            address = venues[index].address;
-            distance = venues[index].distance;
-            lat = venues[index].lat;
-            lng = venues[index].lng;
-
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
+          children: <Widget>[
+            SizedBox(
+              height: 10.0,
+            ),
+            Center(
+              child: Icon(
+                Icons.linear_scale,
+                color: Colors.black,
               ),
-              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-              child: ListTile(
-                leading: Icon(Icons.place, color: kPurpleColor, size: 45.0),
-                title: Text('$placeName' + ' ($distance metres)'),
-                subtitle: Text('$address'),
-                onTap: () {
-                  sc.animateTo(
-                      0.0,
-                      curve: Curves.easeOut,
-                      duration: const Duration(milliseconds: 300));
-                  map.changeCameraPos(LatLng(lat, lng));
+            ),
+            Column(
+              children: List.generate(
+                numOfVenues,
+                (index) {
+                  var placeName;
+                  var address;
+                  var distance;
+                  var lat;
+                  var lng;
+
+                  placeName = venues[index].name;
+                  address = venues[index].address;
+                  distance = venues[index].distance;
+                  lat = venues[index].lat;
+                  lng = venues[index].lng;
+
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                    child: ListTile(
+                      leading:
+                          Icon(Icons.place, color: kPurpleColor, size: 45.0),
+                      title: Text('$placeName' + ' ($distance metres)'),
+                      subtitle: Text('$address'),
+                      onTap: () {
+                        sc.animateTo(0.0,
+                            curve: Curves.easeOut,
+                            duration: const Duration(milliseconds: 300));
+                        map.changeCameraPos(LatLng(lat, lng));
+                      },
+                    ),
+                  );
                 },
               ),
-            );
-          },
-        ));
+            ),
+          ],
+        );
       },
     );
   }
 }
-
