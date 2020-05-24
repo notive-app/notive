@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/user_model.dart';
 
-
 var email;
 var password;
 var buildCount = 0;
@@ -31,7 +30,6 @@ void main() async {
     onLaunch: launchMessageHandler,
     onResume: resumeMessageHandler,
   );
-
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   email = prefs.getString('email');
@@ -64,13 +62,13 @@ class NotiveApp extends StatelessWidget {
     var initialRoute = WelcomeScreen.id;
 
     // build count is required because this widget is built twice at the start, i dont know why
-    if (email != null && password != null && buildCount == 0){
-        buildCount += 1;
-        initialRoute = DashboardScreen.id;
-        var data = Map<String, dynamic>();
-        data["email"] = email;
-        data["password"] = password;
-        Provider.of<UserModel>(context, listen: false).login(data);
+    if (email != null && password != null && buildCount == 0) {
+      buildCount += 1;
+      initialRoute = DashboardScreen.id;
+      var data = Map<String, dynamic>();
+      data["email"] = email;
+      data["password"] = password;
+      Provider.of<UserModel>(context, listen: false).login(data);
     }
 
     return MaterialApp(

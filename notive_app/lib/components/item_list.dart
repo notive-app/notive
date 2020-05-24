@@ -7,7 +7,8 @@ import 'package:notive_app/screens/range_settings_screen.dart';
 import 'package:provider/provider.dart';
 
 class ItemsList extends StatelessWidget {
-  Future<void> deleteAlert(BuildContext context, UserModel user, int index) async {
+  Future<void> deleteAlert(
+      BuildContext context, UserModel user, int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -41,7 +42,8 @@ class ItemsList extends StatelessWidget {
     );
   }
 
-  Future<String> changeItemName(BuildContext context, UserModel user, int index) async {
+  Future<String> changeItemName(
+      BuildContext context, UserModel user, int index) async {
     TextEditingController customController = TextEditingController();
     // create a pop up screen upon clicking add button
     return showDialog(
@@ -58,7 +60,8 @@ class ItemsList extends StatelessWidget {
                 onPressed: () {
                   // close the dialog box when submit is clicked, change the name
                   var newName = customController.text.toString();
-                  user.changeItemName(user.lists[user.curListIndex].items[index], newName);
+                  user.changeItemName(
+                      user.lists[user.curListIndex].items[index], newName);
                   Navigator.of(context).pop();
                 },
                 elevation: 0.5,
@@ -73,29 +76,49 @@ class ItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserModel>(
       builder: (context, user, child) {
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            return ItemTile(
-              itemString: user.lists[user.curListIndex].items[index].name,
-              isChecked: user.lists[user.curListIndex].items[index].isCompleted,
-              checkCallback: (bool checkBoxState) {
-                user.checkItem(user.lists[user.curListIndex].items[index]);
-              },
-              deleteCallback: () {
-                //show dialog box
-                deleteAlert(context, user, index);
-              },
-              changeItemName: (){
-                changeItemName(context, user, index);
-              },
-              configCallBack: (){
-                ItemModel currentItem = user.lists[user.curListIndex].items[index];
-                Navigator.push(context,MaterialPageRoute(builder: (context) => RangeSettingsScreen(item: currentItem,)),);
-              },
-            );
-          },
-          itemCount: user.lists[user.curListIndex].itemsCount,
-        );
+        if (user.lists[user.curListIndex].itemsCount == 0) {
+          return Container(
+            child: Center(
+              child: Image(
+                image: AssetImage('images/noItem.png'),
+                height: MediaQuery.of(context).size.height * 0.30,
+              ),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return ItemTile(
+                itemString: user.lists[user.curListIndex].items[index].name,
+                isChecked:
+                    user.lists[user.curListIndex].items[index].isCompleted,
+                checkCallback: (bool checkBoxState) {
+                  user.checkItem(user.lists[user.curListIndex].items[index]);
+                },
+                deleteCallback: () {
+                  //show dialog box
+                  deleteAlert(context, user, index);
+                },
+                changeItemName: () {
+                  changeItemName(context, user, index);
+                },
+                configCallBack: () {
+                  ItemModel currentItem =
+                      user.lists[user.curListIndex].items[index];
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RangeSettingsScreen(
+                        item: currentItem,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            itemCount: user.lists[user.curListIndex].itemsCount,
+          );
+        }
       },
     );
   }

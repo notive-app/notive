@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notive_app/components/app_themes.dart';
 import 'package:notive_app/components/custom_bottom_nav.dart';
+import 'package:notive_app/components/rounded_button.dart';
 import 'package:notive_app/models/theme_manager.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/settings_screen.dart';
@@ -23,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String userEmail;
   String userName;
-  bool _darkMode = false; 
+  bool _darkMode = false;
   bool _pushNot = true;
 
 //  addBoolToSF() async {
@@ -48,7 +49,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Please Enter New Password:"),
+            title: Text(
+              "Enter your New Password:",
+              style: TextStyle(fontSize: 16.0),
+            ),
             content: TextFormField(
               inputFormatters: [
                 LengthLimitingTextInputFormatter(40),
@@ -56,14 +60,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               controller: customController,
             ),
             actions: <Widget>[
-              MaterialButton(
-                color: kLightBlueColor,
-                onPressed: () {
-                  // close the dialog box when submit is clicked.
-                  Navigator.of(context).pop(customController.text.toString());
-                },
-                elevation: 0.5,
-                child: Text("Submit"),
+              Center(
+                child: MaterialButton(
+                  color: kLightBlueColor,
+                  onPressed: () {
+                    // close the dialog box when submit is clicked.
+                    Navigator.of(context).pop(customController.text.toString());
+                  },
+                  elevation: 0.5,
+                  child: Text("Submit"),
+                ),
               )
             ],
           );
@@ -78,10 +84,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Consumer<UserModel>(builder: (context, user, child) {
       userEmail = user.email;
       userName = user.name;
-      if(user.chosenTheme == 'dark'){
+      if (user.chosenTheme == 'dark') {
         _darkMode = true;
-      }
-      else{
+      } else {
         _darkMode = false;
       }
 
@@ -97,177 +102,189 @@ class _ProfileScreenState extends State<ProfileScreen> {
         //backgroundColor: Colors.blueGrey[500],
         body: SingleChildScrollView(
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 40.0,
-                  backgroundImage: AssetImage('images/profile.png'),
-                ),
-                SizedBox(
-                  height: 6.0,
-                ),
-                Text(
-                  '$userName',
-                  style: TextStyle(
-                    fontFamily: 'SourceSansPro',
-                    fontSize: 16.0,
-                    color: kLightBlueColor,
-                    letterSpacing: 2.5,
-                    fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 30.0,
                   ),
-                ),
-                SizedBox(
-                  width: 220.0,
-                  height: 20.0,
-                  child: Divider(
-                    color: kLightBlueColor,
-                  ),
-                ),
-                Card(
-                  //padding: EdgeInsets.all(10.0),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  margin:
-                      EdgeInsets.only(left: 70.0, right: 70.0, bottom: 10.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.email,
-                      color: kPurpleColor,
-                      size: 25.0,
+                  Container(
+                    //width: MediaQuery.of(context).size.width * 0.50,
+                    child: CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.15,
+                      backgroundImage: AssetImage('images/profile.png'),
                     ),
-                    title: Text(
-                      '$userEmail',
-                      style: TextStyle(
-                        color: Colors.blueGrey[900],
-                        fontSize: 15.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
                       ),
-                    ),
-                  ),
-                ),
-                Card(
-                  //padding: EdgeInsets.all(10.0),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  margin: EdgeInsets.only(left: 70.0, right: 70.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.lock,
-                      color: kPurpleColor,
-                      size: 25.0,
-                    ),
-                    title: Text(
-                      'Change Password',
-                      style: TextStyle(
-                        color: Colors.blueGrey[900],
-                        fontSize: 15.0,
-                      ),
-                    ),
-                    trailing: IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: kDarkPurpleColor,
+                      Center(
+                        child: Text(
+                          '$userName',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontSize: 16.0,
+                            color: kMediumOrange,
+                            letterSpacing: 2.5,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        splashColor: kPurpleColor,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.80,
+                        height: 30.0,
+                        child: Divider(
+                          color: kLightBlueColor,
+                        ),
+                      ),
+                      Card(
+                        //padding: EdgeInsets.all(10.0),
+                        color: kLightestBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        margin: EdgeInsets.only(
+                            left: 10.0, right: 10.0, bottom: 10.0),
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.email,
+                            color: kDarkBlueColor,
+                            size: 25.0,
+                          ),
+                          title: Text(
+                            '$userEmail',
+                            style: TextStyle(
+                              color: Colors.blueGrey[900],
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        //padding: EdgeInsets.all(10.0),
+                        color: kGrayColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.lock,
+                            color: kDarkBlueColor,
+                            size: 25.0,
+                          ),
+                          title: Text(
+                            'Change Password',
+                            style: TextStyle(
+                              color: Colors.blueGrey[900],
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          trailing: IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: kDarkPurpleColor,
+                              ),
+                              splashColor: kPurpleColor,
+                              onPressed: () {
+                                createDialogBox(context).then((String newPass) {
+                                  if (newPass != null) {
+                                    user.changePassword(user, newPass);
+                                    //Navigator.pop(context);
+                                  }
+                                });
+                              }),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 220.0,
+                        height: 20.0,
+                        child: Divider(
+                          color: kLightBlueColor,
+                        ),
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: kGrayColor, width: 1),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        margin: EdgeInsets.only(
+                            left: 10.0, right: 10.0, bottom: 10.0),
+                        child: SwitchListTile(
+                          activeColor: kLightBlueColor,
+                          value: _darkMode,
+                          title: Text("Enable Dark Theme"),
+                          onChanged: (value) {
+                            setState(() {
+                              _darkMode = value;
+                              if (_darkMode == true) {
+                                //dark mode
+                                user.chosenTheme = 'dark';
+                                _themeManager.setTheme(darkTheme);
+                              } else {
+                                //light mode
+                                user.chosenTheme = 'light';
+                                _themeManager.setTheme(lightTheme);
+                              }
+                              print(value);
+                            });
+                          },
+                        ),
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(color: kGrayColor, width: 1),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        margin: EdgeInsets.only(
+                            left: 10.0, right: 10.0, bottom: 10.0),
+                        child: SwitchListTile(
+                          activeColor: kLightBlueColor,
+                          value: _pushNot,
+                          title: Text("Push Notifications"),
+                          onChanged: (value) {
+                            setState(() {
+                              _pushNot = value;
+                              print(_pushNot);
+                            });
+                          },
+                        ),
+                      ),
+                      /* Card(
+                        child: ListTile(
+                          title: Text("Change Default Range Settings"),
+                          subtitle: Text("Rating, Price, Distance"),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RangeSettingsScreen()),
+                            );
+                          },
+                        ),
+                      ), */
+                      RoundedButton(
+                        title: 'Log Out',
+                        colour: kLightBlueColor,
                         onPressed: () {
-                          createDialogBox(context).then((String newPass) {
-                            if (newPass != null) {
-                              user.changePassword(user, newPass);
-                              //Navigator.pop(context);
-                            }
-                          });
-                        }),
+                          Provider.of<UserModel>(context, listen: false)
+                              .logout();
+                          //Navigator.pushNamed(context, WelcomeScreen.id);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => WelcomeScreen()),
+                              (Route<dynamic> route) => false);
+                        },
+                      )
+                    ],
                   ),
-                ),
-                SizedBox(
-                  width: 220.0,
-                  height: 20.0,
-                  child: Divider(
-                    color: kLightBlueColor,
-                  ),
-                ),
-                Card(
-                  child: SwitchListTile(
-                    activeColor: kLightBlueColor,
-                    value: _darkMode,
-                    title: Text("Enable Dark Theme"),
-                    onChanged: (value) {
-                      setState(() {
-                        _darkMode = value;
-                        if(_darkMode == true){
-                          //dark mode 
-                          user.chosenTheme = 'dark';
-                          _themeManager.setTheme(darkTheme);
-                        }
-                        else{
-                          //light mode 
-                          user.chosenTheme = 'light';
-                          _themeManager.setTheme(lightTheme);
-                        }
-                        print(value);
-                      });
-                    },
-                  ),
-                ),
-
-                Card(
-                  child: SwitchListTile(
-                    activeColor: kLightBlueColor,
-                    value: _pushNot,
-                    title: Text("Push Notifications"),
-                    onChanged: (value) {
-                      setState(() {
-                        _pushNot = value;
-                        print(_pushNot);
-                      });
-                    },
-                  ),
-                ),
-                /* Card(
-                  child: ListTile(
-                    title: Text("Change Default Range Settings"),
-                    subtitle: Text("Rating, Price, Distance"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RangeSettingsScreen()),
-                      );
-                    },
-                  ),
-                ), */
-                SizedBox(
-                  width: 250.0,
-                  child: RaisedButton(
-                    color: kLightBlueColor,
-                    textColor: Colors.white,
-                    disabledColor: Colors.grey,
-                    disabledTextColor: Colors.black,
-                    padding: EdgeInsets.all(10.0),
-                    splashColor: Colors.purpleAccent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20.0),
-                        side: BorderSide()),
-                    onPressed: () {
-                      Provider.of<UserModel>(context, listen: false).logout();
-                      //Navigator.pushNamed(context, WelcomeScreen.id);
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => WelcomeScreen()),
-                          (Route<dynamic> route) => false);
-                    },
-                    child: Text(
-                      "Log out",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

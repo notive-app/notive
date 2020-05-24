@@ -158,7 +158,7 @@ class MapViewScreen extends StatelessWidget {
             children: [
               SpeedDialChild(
                 child: Icon(Icons.filter_list),
-                backgroundColor: Colors.red,
+                backgroundColor: kRed,
                 label: 'Filter items',
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
                 onTap: () async {
@@ -167,7 +167,7 @@ class MapViewScreen extends StatelessWidget {
               ),
               SpeedDialChild(
                 child: Icon(Icons.list),
-                backgroundColor: Colors.blue,
+                backgroundColor: kDeepBlue,
                 label: 'Choose a list',
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
                 onTap: () async {
@@ -224,21 +224,25 @@ class MapViewScreen extends StatelessWidget {
 
                   return Card(
                     shape: RoundedRectangleBorder(
+                      side: BorderSide(color: kLightOrange, width: 1),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     margin:
-                        EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                    child: ListTile(
-                      leading:
-                          Icon(Icons.place, color: kPurpleColor, size: 45.0),
-                      title: Text('$placeName' + ' ($distance metres)'),
-                      subtitle: Text('$address'),
-                      onTap: () {
-                        sc.animateTo(0.0,
-                            curve: Curves.easeOut,
-                            duration: const Duration(milliseconds: 300));
-                        map.changeCameraPos(LatLng(lat, lng));
-                      },
+                        EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: ListTile(
+                        leading:
+                            Icon(Icons.place, color: kMediumOrange, size: 45.0),
+                        title: Text('$placeName' + ' ($distance metres)'),
+                        subtitle: Text('$address'),
+                        onTap: () {
+                          sc.animateTo(0.0,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300));
+                          map.changeCameraPos(LatLng(lat, lng));
+                        },
+                      ),
                     ),
                   );
                 },
@@ -254,7 +258,7 @@ class MapViewScreen extends StatelessWidget {
 Widget _floatingCollapsed() {
   return Container(
     decoration: BoxDecoration(
-      color: Colors.blueGrey,
+      color: kDeepOrange,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(24.0),
         topRight: Radius.circular(24.0),

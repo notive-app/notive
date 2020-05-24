@@ -9,6 +9,18 @@ const Color kLightBlueColor = Color(0xFF4D9CD0);
 const Color kOffWhiteColor = Color(0xFFFAFAFA);
 const Color kGrayColor = Color(0xFFD0D3D4);
 
+const Color kDarkest = Color(0xFF1B1415);
+const Color kDeepOrange = Color(0xFFD8420D);
+const Color kMediumOrange = Color(0xFFe26831);
+const Color kLightOrange = Color(0xFFeb9771);
+const Color kDeepYellow = Color(0xFFF0900B);
+const Color kDeepBlue = Color(0xFF114384);
+const Color kLightBlue = Color(0xFF1B6BC0);
+const Color kLightestBlue = Color(0xFFADD8E6);
+const Color kRed = Color(0xFFD1000B);
+const Color kMilitary = Color(0xFF806F5F);
+const Color kGrey = Color(0xFF908C8C);
+
 //from icon_content.dart
 const double iconSize = 70.0;
 const double fontSize = 18.0;
@@ -80,11 +92,11 @@ const kTextFieldDecorationLog = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kLightBlueColor, width: 1.0),
+    borderSide: BorderSide(color: Colors.black26, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kLightBlueColor, width: 2.0),
+    borderSide: BorderSide(color: kDeepOrange, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
@@ -96,11 +108,11 @@ const kTextFieldDecorationSign = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kPurpleColor, width: 1.0),
+    borderSide: BorderSide(color: Colors.black26, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kPurpleColor, width: 2.0),
+    borderSide: BorderSide(color: kDeepYellow, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );

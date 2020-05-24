@@ -6,6 +6,7 @@ import 'package:notive_app/models/user_model.dart';
 import 'package:notive_app/screens/constants.dart';
 import 'package:notive_app/screens/listview_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:random_color/random_color.dart';
 
 class Dashboard extends StatelessWidget {
   final String type;
@@ -89,43 +90,64 @@ class Dashboard extends StatelessWidget {
                 )),
       );
     }
-    
+
     return Consumer<UserModel>(
       builder: (context, user, child) {
         List<ListModel> list = [];
-        
+
         if (type == 'regular') {
           list = user.lists;
         } else if (type == 'archived') {
           list = user.archivedLists;
         }
-        return GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(list.length, (index) {
-            return ReusableListCard(
-              color: kPurpleColor,
-              list: list[index],
-              onPress: () {
-                if (list[index].isArchived == false) {
-                  user.curListIndex = index;
-                  openListView(list[index].name);
-                } else {}
-              },
-              deleteCallback: () {
-                deleteAlert(context, user, list[index]);
-              },
-              changeListName: () {
-                changeListName(context, user, list[index]);
-              },
-              archiveList: () {
-                user.archiveList(list[index]);
-              },
-              unarchiveList: () {
-                user.unarchiveList(list[index]);
-              },
-            );
-          }),
-        );
+
+        if (user.lists.length == 0 && type == 'regular') {
+          return Container(
+            child: Center(
+              child: Image(
+                image: AssetImage('images/noList.png'),
+                height: MediaQuery.of(context).size.height * 0.30,
+              ),
+            ),
+          );
+        } else if (user.archivedLists.length == 0 && type == 'archived') {
+          return Container(
+            child: Center(
+              child: Image(
+                image: AssetImage('images/noList.png'),
+                height: MediaQuery.of(context).size.height * 0.30,
+              ),
+            ),
+          );
+        } else {
+          return GridView.count(
+            crossAxisCount: 2,
+            children: List.generate(list.length, (index) {
+              return ReusableListCard(
+                color: RandomColor().randomColor(colorHue: ColorHue.blue),
+                list: list[index],
+                onPress: () {
+                  if (list[index].isArchived == false) {
+                    user.curListIndex = index;
+                    openListView(list[index].name);
+                  } else {}
+                },
+                deleteCallback: () {
+                  deleteAlert(context, user, list[index]);
+                },
+                changeListName: () {
+                  changeListName(context, user, list[index]);
+                },
+                archiveList: () {
+                  user.archiveList(list[index]);
+                },
+                unarchiveList: () {
+                  user.unarchiveList(list[index]);
+                },
+              );
+            }),
+          );
+        }
       },
     );
   }
