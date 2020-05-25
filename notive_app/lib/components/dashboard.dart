@@ -144,6 +144,9 @@ class Dashboard extends StatelessWidget {
                 unarchiveList: () {
                   user.unarchiveList(list[index]);
                 },
+                toggleIsMuted: () {
+                  user.changeListIsMuted(list[index]);
+                },
               );
             }),
           );

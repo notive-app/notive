@@ -11,6 +11,7 @@ class ReusableListCard extends StatelessWidget {
   final Function changeListName;
   final Function archiveList;
   final Function unarchiveList;
+  final Function toggleIsMuted;
 
   ReusableListCard(
       {@required this.color,
@@ -19,11 +20,16 @@ class ReusableListCard extends StatelessWidget {
       this.deleteCallback,
       this.changeListName,
       this.archiveList,
-      this.unarchiveList});
+      this.unarchiveList,
+      this.toggleIsMuted});
 
   @override
   Widget build(BuildContext context) {
     var listName = this.list.name;
+    var isMutedText = "Mute List";
+    if (this.list.isMuted == true){
+      isMutedText = "Unmute List";
+    }
     return GestureDetector(
       onTap: onPress,
       child: Container(
@@ -40,7 +46,7 @@ class ReusableListCard extends StatelessWidget {
                       value: 1,
                     ));
                     menu.add(PopupMenuItem(
-                      child: Text("Mute List"),
+                      child: Text(isMutedText),
                       value: 2,
                     ));
                   } else {
@@ -66,7 +72,7 @@ class ReusableListCard extends StatelessWidget {
                     archiveList();
                   } else if (value == 2) {
                     //Mute List
-                    //TODO
+                    toggleIsMuted();
                   } else if (value == 3) {
                     //Delete List
                     deleteCallback();

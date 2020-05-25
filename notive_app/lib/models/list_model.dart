@@ -1,4 +1,5 @@
 import 'dart:collection';
+
 import 'package:notive_app/models/item_model.dart';
 
 class ListModel {
@@ -55,6 +56,10 @@ class ListModel {
 
   void setArchived(bool archiveCondition) {
     isArchived = archiveCondition;
+  }
+
+  void toggleMuted() {
+    isMuted = !isMuted;
   }
 
   factory ListModel.fromJson(Map<String, dynamic> json) {
