@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
@@ -94,14 +95,14 @@ class UserModel extends ChangeNotifier {
       this.email = user["email"];
       this.name = user["name"];
       this.surname = user["surname"];
-//      Position position = await Geolocator()
-//          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-//
-//      this.lat = position.latitude.toString();
-//      this.long = position.longitude.toString();
+      Position position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-      this.lat = "39.920335";
-      this.long = "32.854009";
+      this.lat = position.latitude.toString();
+      this.long = position.longitude.toString();
+
+//      this.lat = "39.920335";
+//      this.long = "32.854009";
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var prevEmail = prefs.getString('email');

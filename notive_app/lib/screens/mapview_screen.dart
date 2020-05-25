@@ -157,7 +157,10 @@ class MapViewScreen extends StatelessWidget {
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                child: Icon(Icons.filter_list),
+                child: Icon(
+                  Icons.filter_list,
+                  color: Colors.white,
+                ),
                 backgroundColor: kRed,
                 label: 'Filter items',
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -166,7 +169,10 @@ class MapViewScreen extends StatelessWidget {
                 },
               ),
               SpeedDialChild(
-                child: Icon(Icons.list),
+                child: Icon(
+                  Icons.list,
+                  color: Colors.white,
+                ),
                 backgroundColor: kDeepBlue,
                 label: 'Choose a list',
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),

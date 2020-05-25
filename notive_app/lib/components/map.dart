@@ -32,7 +32,7 @@ class Map extends StatelessWidget {
         onCameraMove: _onCameraMove,
         myLocationEnabled: true,
         compassEnabled: true,
-        myLocationButtonEnabled: false,
+        myLocationButtonEnabled: true,
       ));
     });
   }
