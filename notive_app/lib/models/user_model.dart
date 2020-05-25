@@ -204,6 +204,16 @@ class UserModel extends ChangeNotifier {
     }
   }
 
+  void changeListIsMuted(ListModel list) async {
+    List<dynamic> result = await toggleMuteList(list.id);
+    print(result);
+    if (result[0] == 200) {
+
+      list.toggleMuted();
+      notifyListeners();
+    }
+  }
+
   void changePassword(UserModel user, String newPass) async {
     Map<String, dynamic> data = {"email": user.email, "password": newPass};
     List<dynamic> result = await updateUserPassword(data, user);
@@ -258,7 +268,7 @@ class UserModel extends ChangeNotifier {
           selectedFreq: 60,
       );
       this._lists[curListIndex].addItem(item);
-      print(item.selectedDist);
+      setItemVenues(item);
       notifyListeners();
     }
     //TODO add warning message in case of failure
@@ -289,6 +299,7 @@ class UserModel extends ChangeNotifier {
     List<dynamic> result = await updateUserItem(data, item);
     if (result[0] == 200) {
       item.setName(newName);
+      setItemVenues(item);
       notifyListeners();
     }
   }

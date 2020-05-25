@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notive_app/components/rounded_button.dart';
 import 'package:notive_app/models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:notive_app/components/item_tile.dart';
@@ -27,7 +28,7 @@ class AddItemScreen extends StatelessWidget {
             Text(
               'Add a New Item',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 25.0, color: kPurpleColor),
+              style: TextStyle(fontSize: 25.0, color: kDeepYellow),
             ),
             TextFormField(
               //TODO check the maximum length that the string can take here
@@ -43,14 +44,10 @@ class AddItemScreen extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
-            FlatButton(
-              child: Text(
-                'Add the Item',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              color: kPurpleColor,
+            RoundedButton(
+              title: 'Add the Item',
+              textColor: kDarkest,
+              colour: kDeepYellow,
               onPressed: () {
                 Provider.of<UserModel>(context, listen: false)
                     .addItem(newItemString);

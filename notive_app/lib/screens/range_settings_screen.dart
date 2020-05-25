@@ -16,7 +16,6 @@ class RangeSettingsScreen extends StatefulWidget {
 }
 
 class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
-
   @override
   Widget build(BuildContext context) {
     double _distValue = widget.item.selectedDist.toDouble();
@@ -26,23 +25,36 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Range Settings: ' +  widget.item.name,
+          'Range Settings: ' + widget.item.name,
         ),
         leading: BackButton(
-
-          onPressed: (){
-            Provider.of<UserModel>(context, listen: false).changeItemDesiredDist(widget.item, _distValue);
-            Provider.of<UserModel>(context, listen: false).changeItemDesiredFreq(widget.item, _freqValue);
+          onPressed: () {
+            Provider.of<UserModel>(context, listen: false)
+                .changeItemDesiredDist(widget.item, _distValue);
+            Provider.of<UserModel>(context, listen: false)
+                .changeItemDesiredFreq(widget.item, _freqValue);
             Navigator.of(context).pop();
           },
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.only(
+          left: 30.0,
+          right: 30.0,
+        ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Container(
+                child: Image(
+                  image: AssetImage('images/settings.png'),
+                  height: MediaQuery.of(context).size.height * 0.23,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               FluidSlider(
                 value: _distValue,
                 onChanged: (double newValue) {
@@ -53,42 +65,29 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                 },
                 min: 0.0,
                 max: 10000.0,
-                sliderColor: kPurpleColor,
-                thumbColor: kDarkPurpleColor,
-                valueTextStyle: TextStyle(color: Colors.white,
-                                          fontSize: 20,
-                                          ),
+                sliderColor: kLightBlueColor,
+                thumbColor: kDeepBlue,
+                valueTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
+              Container(
+                child: Text(
+                  'Preferred Distance (in meters)',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    //color: Colors.white,
+                  ),
+                ),
+              ),
               SizedBox(
-                  height: 50.0,
-                  child: Stack(
-                    //alignment: ,
-                    children: <Widget>[
-                      /* Text(
-                        'Preffered Distance',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 6
-                            //..color = Colors.white10,
-                        ),
-                      ), */
-                      // Solid text as fill.
-                      Text(
-                        'Preferred Distance (in meters)',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          //color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  )),
+                height: 20.0,
+              ),
               FluidSlider(
                 value: _freqValue,
                 onChanged: (double newValue) {
@@ -99,11 +98,12 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
                 },
                 min: 0.0,
                 max: 500.0,
-                sliderColor: kPurpleColor,
-                thumbColor: kDarkPurpleColor,
-                valueTextStyle: TextStyle(color: Colors.white,
-                                          fontSize: 20,
-                                          ),
+                sliderColor: kLightOrange,
+                thumbColor: kMediumOrange,
+                valueTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
                 start: Icon(
                   Icons.timer_off,
                   color: Colors.white,
@@ -116,35 +116,16 @@ class _RangeSettingsScreenState extends State<RangeSettingsScreen> {
               SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                  //height: 40.0,
-                  //width: 200,
-
-                  child: Stack(
-                //alignment: ,
-                children: <Widget>[
-                  // Text(
-                  //   'Preffered Frequency',
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //     fontSize: 15,
-                  //     foreground: Paint()
-                  //       ..style = PaintingStyle.stroke
-                  //       ..strokeWidth = 6
-                  //       //..color = Colors.white10,
-                  //   ),
-                  // ),
-                  // // Solid text as fill.
-                  Text(
-                    'Preferred Frequency (in minutes)',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      //color: Colors.white,
-                    ),
+              Container(
+                child: Text(
+                  'Preferred Frequency (in minutes)',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    //color: Colors.white,
                   ),
-                ],
-              ))
+                ),
+              ),
             ]),
       ),
     );

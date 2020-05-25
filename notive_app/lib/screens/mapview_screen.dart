@@ -35,7 +35,8 @@ class MapViewScreen extends StatelessWidget {
                   ),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: List.generate(user.lists[user.userMapIndex].itemsCount, (index) {
+                    children: List.generate(
+                        user.lists[user.userMapIndex].itemsCount, (index) {
                       return ItemCheckBox(
                         item: user.lists[user.userMapIndex].items[index],
                       );
@@ -90,6 +91,7 @@ class MapViewScreen extends StatelessWidget {
           context: context,
           pageBuilder: (context, animation1, animation2) {});
     }
+
     Map map = new Map();
     return Consumer<UserModel>(
       builder: (context, user, child) {
@@ -112,12 +114,23 @@ class MapViewScreen extends StatelessWidget {
             title: Text('Map View'),
           ),
           body: SlidingUpPanel(
+            header: Padding(
+              padding: const EdgeInsets.all(10.0),
+//              child: Icon(
+//                Icons.linear_scale,
+//                color: Colors.black,
+//              ),
+            ),
+            collapsed: _floatingCollapsed(),
+            maxHeight: MediaQuery.of(context).size.height * 0.50,
+            backdropEnabled: true,
+            backdropTapClosesPanel: true,
+            borderRadius: radius,
             panelBuilder: (ScrollController sc) =>
                 _scrollingList(sc, numOfVenues, venues, map),
             body: Center(
               child: map,
             ),
-            borderRadius: radius,
           ),
           floatingActionButton: SpeedDial(
             // both default to 16
@@ -144,17 +157,17 @@ class MapViewScreen extends StatelessWidget {
             shape: CircleBorder(),
             children: [
               SpeedDialChild(
-                  child: Icon(Icons.filter_list),
-                  backgroundColor: Colors.red,
-                  label: 'Filter items',
-                  labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+                child: Icon(Icons.filter_list),
+                backgroundColor: kRed,
+                label: 'Filter items',
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
                 onTap: () async {
                   filterByItem(context, user);
                 },
               ),
               SpeedDialChild(
                 child: Icon(Icons.list),
-                backgroundColor: Colors.blue,
+                backgroundColor: kDeepBlue,
                 label: 'Choose a list',
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
                 onTap: () async {
@@ -183,44 +196,79 @@ class MapViewScreen extends StatelessWidget {
       itemCount: numOfVenues,
       itemBuilder: (BuildContext context, int i) {
         return Column(
-            //padding: const EdgeInsets.all(12.0),
-            children: List.generate(
-          numOfVenues,
-          (index) {
-            var placeName;
-            var address;
-            var distance;
-            var lat;
-            var lng;
-
-            placeName = venues[index].name;
-            address = venues[index].address;
-            distance = venues[index].distance;
-            lat = venues[index].lat;
-            lng = venues[index].lng;
-
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
+          children: <Widget>[
+            SizedBox(
+              height: 10.0,
+            ),
+            Center(
+              child: Icon(
+                Icons.linear_scale,
+                color: Colors.black,
               ),
-              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-              child: ListTile(
-                leading: Icon(Icons.place, color: kPurpleColor, size: 45.0),
-                title: Text('$placeName' + ' ($distance metres)'),
-                subtitle: Text('$address'),
-                onTap: () {
-                  sc.animateTo(
-                      0.0,
-                      curve: Curves.easeOut,
-                      duration: const Duration(milliseconds: 300));
-                  map.changeCameraPos(LatLng(lat, lng));
+            ),
+            Column(
+              children: List.generate(
+                numOfVenues,
+                (index) {
+                  var placeName;
+                  var address;
+                  var distance;
+                  var lat;
+                  var lng;
+
+                  placeName = venues[index].name;
+                  address = venues[index].address;
+                  distance = venues[index].distance;
+                  lat = venues[index].lat;
+                  lng = venues[index].lng;
+
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: kLightOrange, width: 1),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: ListTile(
+                        leading:
+                            Icon(Icons.place, color: kMediumOrange, size: 45.0),
+                        title: Text('$placeName' + ' ($distance metres)'),
+                        subtitle: Text('$address'),
+                        onTap: () {
+                          sc.animateTo(0.0,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300));
+                          map.changeCameraPos(LatLng(lat, lng));
+                        },
+                      ),
+                    ),
+                  );
                 },
               ),
-            );
-          },
-        ));
+            ),
+          ],
+        );
       },
     );
   }
 }
 
+Widget _floatingCollapsed() {
+  return Container(
+    decoration: BoxDecoration(
+      color: kDeepOrange,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(24.0),
+        topRight: Radius.circular(24.0),
+      ),
+    ),
+    child: Center(
+      child: Text(
+        "Slide to see in list view",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+  );
+}
