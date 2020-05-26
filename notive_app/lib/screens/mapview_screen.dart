@@ -22,29 +22,48 @@ class MapViewScreen extends StatelessWidget {
           barrierColor: Colors.black.withOpacity(0.7),
           transitionBuilder: (context, a1, a2, widget) {
             final curvedValue = Curves.fastOutSlowIn.transform(a1.value) - 1.0;
-            return Transform(
-              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-              child: Opacity(
-                opacity: a1.value,
-                child: AlertDialog(
-                  shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.0)),
-                  title: Text(
-                    'Filter items',
-                    textAlign: TextAlign.center,
-                  ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(
-                        user.lists[user.userMapIndex].itemsCount, (index) {
-                      return ItemCheckBox(
-                        item: user.lists[user.userMapIndex].items[index],
-                      );
-                    }),
+
+            if (user.listsCount == 0){
+              return Transform(
+                transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                child: Opacity(
+                  opacity: a1.value,
+                  child: AlertDialog(
+                    shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0)),
+                    title: Text(
+                      'Filter items',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
+            else{
+              return Transform(
+                transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                child: Opacity(
+                  opacity: a1.value,
+                  child: AlertDialog(
+                    shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0)),
+                    title: Text(
+                      'Filter items',
+                      textAlign: TextAlign.center,
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(
+                          user.lists[user.userMapIndex].itemsCount, (index) {
+                        return ItemCheckBox(
+                          item: user.lists[user.userMapIndex].items[index],
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              );
+            }
           },
           transitionDuration: Duration(milliseconds: 200),
           barrierDismissible: true,
@@ -176,14 +195,6 @@ class MapViewScreen extends StatelessWidget {
               ),
             ],
           ),
-//          floatingActionButton: FloatingActionButton(
-//            backgroundColor: kLightBlueColor,
-//            onPressed: () async {
-//              chooseList(context, user);
-//            },
-//            child: Icon(Icons.list),
-//            elevation: 5.0,
-//          ),
         );
       },
     );
