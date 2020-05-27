@@ -124,7 +124,7 @@ class Dashboard extends StatelessWidget {
             crossAxisCount: 2,
             children: List.generate(list.length, (index) {
               return ReusableListCard(
-                color: RandomColor().randomColor(colorHue: ColorHue.blue),
+                color: list[index].color,
                 list: list[index],
                 onPress: () {
                   if (list[index].isArchived == false) {

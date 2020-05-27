@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:ui';
 
 import 'package:notive_app/models/item_model.dart';
+import 'package:random_color/random_color.dart';
 
 class ListModel {
   final int id;
@@ -12,6 +14,7 @@ class ListModel {
   List<ItemModel> _items = [];
   bool isArchived;
   bool isMuted;
+  Color color  = RandomColor().randomColor(colorHue: ColorHue.blue);
 
   ListModel(
       {this.id,
