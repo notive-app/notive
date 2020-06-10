@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:notive_app/models/theme_manager.dart';
 import 'package:notive_app/screens/archived_lists_screen.dart';
@@ -11,7 +10,6 @@ import 'package:notive_app/screens/range_settings_screen.dart';
 import 'package:notive_app/screens/settings_screen.dart';
 import 'package:notive_app/screens/signup_screen.dart';
 import 'package:notive_app/screens/welcome_screen.dart';
-import 'package:notive_app/util/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,13 +21,6 @@ var buildCount = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var _firebaseMessaging = FirebaseMessaging();
-  _firebaseMessaging.configure(
-    onMessage: messageHandler,
-    onBackgroundMessage: backgroundMessageHandler,
-    onLaunch: launchMessageHandler,
-    onResume: resumeMessageHandler,
-  );
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   email = prefs.getString('email');

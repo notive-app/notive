@@ -1,12 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
-import 'package:notive_app/util/dbWrapper.dart';
 import 'package:notive_app/util/request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -95,14 +93,14 @@ class UserModel extends ChangeNotifier {
       this.email = user["email"];
       this.name = user["name"];
       this.surname = user["surname"];
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//      Position position = await Geolocator()
+//          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//
+//      this.lat = position.latitude.toString();
+//      this.long = position.longitude.toString();
 
-      this.lat = position.latitude.toString();
-      this.long = position.longitude.toString();
-
-//      this.lat = "39.920335";
-//      this.long = "32.854009";
+      this.lat = "39.920335";
+      this.long = "32.854009";
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var prevEmail = prefs.getString('email');
@@ -116,8 +114,6 @@ class UserModel extends ChangeNotifier {
       setLists(response);
       setAllItemVenues();
       notifyListeners();
-      DBWrapper dbw = new DBWrapper();
-      dbw.addUser(this);
       return Future<bool>.value(true);
     }
     return Future<bool>.value(false);
@@ -362,14 +358,14 @@ class UserModel extends ChangeNotifier {
     }
   }
 
-  void setItemVenues(ItemModel item) async {
-    await item.setVenuesFromFSQ(this.lat, this.long);
+  void setItemVenues(ItemModel item, {bool isLogin=false}) async {
+    await item.setVenuesFromFSQ(this.lat, this.long, isLogin);
   }
 
   void setAllItemVenues() async {
     for (var i = 0; i < lists.length; i++) {
       for (var j = 0; j < lists[i].items.length; j++) {
-        await setItemVenues(lists[i].items[j]);
+        await setItemVenues(lists[i].items[j], isLogin: true);
       }
     }
   }

@@ -1,7 +1,9 @@
 import 'dart:collection';
 
 import 'package:notive_app/models/venue_model.dart';
+import 'package:notive_app/util/notification.dart' as notif;
 import 'package:notive_app/util/request.dart';
+
 
 class ItemModel {
   final int id;
@@ -52,7 +54,7 @@ class ItemModel {
     this._venues.removeAt(i);
   }
 
-  void setVenuesFromFSQ(String lat, String long) async{
+  void setVenuesFromFSQ(String lat, String long, bool isLogin) async{
     String query = this.name;
     String ll = lat + ", " + long;
     Map<String, String> params = {
@@ -64,9 +66,14 @@ class ItemModel {
     if(response[0]==200){
       _venues = [];
       List<dynamic> venueList = response[1]["response"]["venues"];
+      if(isLogin == false){
+        notif.Notification notification = new notif.Notification();
+        notification.showNotificationWithoutSound(this.name);
+      }
       for(var i=0; i<venueList.length; i++){
         addVenue(Venue.fromJson(venueList[i]));
       }
+
     }
     else{
       // problem is due to foursquare servers/requests 
