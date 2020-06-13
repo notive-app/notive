@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notive_app/models/item_model.dart';
 import 'package:notive_app/models/list_model.dart';
 import 'package:notive_app/models/venue_model.dart';
-import 'package:notive_app/util/dbWrapper.dart';
 import 'package:notive_app/util/request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -101,9 +100,6 @@ class UserModel extends ChangeNotifier {
       this.lat = position.latitude.toString();
       this.long = position.longitude.toString();
 
-//      this.lat = "39.920335";
-//      this.long = "32.854009";
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var prevEmail = prefs.getString('email');
 
@@ -116,8 +112,6 @@ class UserModel extends ChangeNotifier {
       setLists(response);
       setAllItemVenues();
       notifyListeners();
-      DBWrapper dbw = new DBWrapper();
-      dbw.addUser(this);
       return Future<bool>.value(true);
     }
     return Future<bool>.value(false);
@@ -309,28 +303,7 @@ class UserModel extends ChangeNotifier {
     Map<String, dynamic> data = {"distance": newDist.round().toString()};
     List<dynamic> result = await updateUserItem(data, item);
     if (result[0] == 200) {
-      var oldDist = item.selectedDist.toDouble();
-      item.setSelectedDist(newDist);
-
-      // if new distance is larger, this means we can get more venues
-      if (oldDist < newDist){
-        setItemVenues(item);
-      }
-      else{
-        int i = 0;
-        if (item.venues != null){
-          while (i < item.venues.length){
-            if (item.venues[i].distance > item.selectedDist){
-              item.removeVenueAtIndex(i);
-            }else{
-              i += 1;
-            }
-          }
-        }
-      }
-    }
-    else{
-      print(result);
+      setItemVenues(item);
     }
     notifyListeners();
   }
@@ -362,14 +335,14 @@ class UserModel extends ChangeNotifier {
     }
   }
 
-  void setItemVenues(ItemModel item) async {
-    await item.setVenuesFromFSQ(this.lat, this.long);
+  void setItemVenues(ItemModel item, {bool isLogin=false}) async {
+    await item.setVenuesFromFSQ(this.lat, this.long, isLogin);
   }
 
   void setAllItemVenues() async {
     for (var i = 0; i < lists.length; i++) {
       for (var j = 0; j < lists[i].items.length; j++) {
-        await setItemVenues(lists[i].items[j]);
+        await setItemVenues(lists[i].items[j], isLogin: true);
       }
     }
   }
