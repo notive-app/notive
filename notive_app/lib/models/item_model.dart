@@ -66,7 +66,7 @@ class ItemModel {
     if(response[0]==200){
       _venues = [];
       List<dynamic> venueList = response[1]["response"]["venues"];
-      if(isLogin == false){
+      if(venueList.length > 0 && isLogin == false){
         notif.Notification notification = new notif.Notification();
         notification.showNotificationWithoutSound(this.name);
       }

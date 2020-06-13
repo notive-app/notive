@@ -14,8 +14,8 @@ class Notification {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
-      'Location fetched',
-      name,
+      'There are opportunities close to you!',
+      '$name',
       platformChannelSpecifics,
       payload: '',
     );
