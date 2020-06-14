@@ -41,6 +41,7 @@ dependencies:
   dynamic_theme: ^1.0.1
   flutter_speed_dial: ^1.2.5
   flutter_local_notifications: ^1.4.4+1
+  slider: ^0.0.1
 
 dev_dependencies:
   flutter_test:
