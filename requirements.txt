@@ -17,7 +17,7 @@ imagesize==1.2.0
 itsdangerous==1.1.0
 Jinja2==2.10.3
 kiwisolver==1.1.0
-lxml==4.3.4
+lxml==4.6.2
 macholib==1.11
 Mako==1.1.1
 Markdown==3.1.1
