@@ -15,7 +15,7 @@ Flask==1.1.1
 idna==2.8
 imagesize==1.2.0
 itsdangerous==1.1.0
-Jinja2==2.10.3
+Jinja2==2.11.3
 kiwisolver==1.1.0
 lxml==4.3.4
 macholib==1.11
