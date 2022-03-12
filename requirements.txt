@@ -26,7 +26,7 @@ matplotlib==3.1.2
 numpy==1.18.0
 packaging==20.1
 pdoc3==0.7.4
-Pillow==6.2.0
+Pillow==9.0.1
 pycparser==2.19
 Pygments==2.5.2
 PyInstaller==3.6
