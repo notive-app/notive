@@ -19,7 +19,7 @@ Jinja2==2.10.3
 kiwisolver==1.1.0
 lxml==4.3.4
 macholib==1.11
-Mako==1.1.1
+Mako==1.2.2
 Markdown==3.1.1
 MarkupSafe==1.1.1
 matplotlib==3.1.2
